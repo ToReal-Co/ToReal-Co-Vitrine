@@ -34,7 +34,7 @@ const Header = () => {
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>
-      <ul className="hidden lg:flex items-center gap-12 text-base font-medium text-darkBlue">
+      <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-darkBlue">
         <li className="hover:cursor-pointer">Services</li>
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
