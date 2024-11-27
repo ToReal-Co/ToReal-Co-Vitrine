@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import './styles/App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
 
 function App() {
-
   return (
-    <h1 className="text-5xl font-bold underline">
-    ToReal&Co Ahmed
-  </h1>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
