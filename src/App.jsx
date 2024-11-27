@@ -3,11 +3,13 @@ import HomePage from './pages/HomePage';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </Router>
+    <div className="bg-trWhite font-outfit">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
