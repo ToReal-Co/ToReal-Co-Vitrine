@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../assets/images/logoToReal.png";
 import BookaCallButton from "./BookACallButton";
-import "boxicons";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
