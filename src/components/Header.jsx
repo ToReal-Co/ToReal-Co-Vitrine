@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-8 h-auto">
+    <header className="flex justify-between items-center py-4">
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>
@@ -50,7 +50,7 @@ const Header = () => {
         Book a call
       </BookaCallButton>
 
-      {/* Hamburger Icon for Mobile (Visible only on small screens) */}
+      {}
       <div
         className="lg:hidden hover:cursor-pointer"
         onClick={() => setIsMenuOpen(!isMenuOpen)}

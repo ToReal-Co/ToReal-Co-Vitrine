@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      rotate: {
+        '5': '-5deg',
+        '4': '5deg',
+      },
+
       colors: {
         darkBlue: '#041136',
         trBlue: '#1170EA',
