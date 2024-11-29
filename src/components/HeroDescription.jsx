@@ -1,5 +1,5 @@
 import React from 'react';
-import logoWithoutText from "../assets/images/logoWithoutText.png";
+import logoWithoutText from "../assets/images/logoWithoutText.svg";
 import BookaCallButton from '../common/BookACallButton';
 const HeroDescription = () => {
 
