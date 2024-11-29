@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import logo from "../assets/images/logoToReal.png";
 import BookaCallButton from "../common/BookACallButton";
 import "boxicons";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-4">
+    <header className="flex justify-between items-center py-8 h-auto px-8">
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>

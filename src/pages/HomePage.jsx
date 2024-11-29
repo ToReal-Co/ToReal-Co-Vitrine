@@ -1,5 +1,7 @@
 import React from 'react';
 import HeroSection from '../sections/Hero';
+import Footer from "../components/Footer"; 
+import Faq from '../sections/Faq'
 import WhatsAppButton from '../common/WhatsAppButton';
 import Header from '../components/Header'
 
@@ -8,8 +10,11 @@ const HomePage = () => {
     <div className=" h-full w-full px-8 text-xl md:text-4xl lg:text-8xl">
       <Header/>
       <HeroSection/>
-
+<Faq/>
+     <Footer/>
     <WhatsAppButton/>
+    
+
     </div>
   );
 };
