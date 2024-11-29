@@ -10,24 +10,24 @@ const IphoneSectionComponent = () => {
 
     return( 
     
-        <div className="grid sm:gap-64 grid-cols-2 sm:grid-cols-4 mx-auto max-w-screen-md place-items-center my-12">
-  <div className="p-2">
-    <div className="transform rotate-5">
-      <IphoneVideo video={video} />
+      <div className="flex justify-center flex-row items-center mx-auto my-6 space-x-16">
+      <div className="transform rotate-5">
+        <IphoneVideo video={video} />
+      </div>
+      <div>
+        <IphoneVideo video={video2} />
+      </div>
+      <div className="hidden md:block">
+        <IphoneVideo video={video3} />
+      </div>
+      <div className="hidden lg:block transform rotate-4">
+        <IphoneVideo video={video4} />
+      </div>
     </div>
-  </div>
-  <div className="p-2">
-    <IphoneVideo video={video2} />
-  </div>
-  <div className="p-2">
-    <IphoneVideo video={video3} />
-  </div>
-  <div className="p-2">
-    <div className="transform rotate-4">
-      <IphoneVideo video={video4} />
-    </div>
-  </div>
-</div>
+    
+
+    
+
 
 
       
