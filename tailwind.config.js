@@ -11,6 +11,9 @@ export default {
         '5': '-5deg',
         '4': '5deg',
       },
+      width: {
+        '1/50': '2%', 
+      },
 
       colors: {
         darkBlue: '#041136',
