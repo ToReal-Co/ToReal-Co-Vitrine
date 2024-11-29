@@ -1,5 +1,5 @@
 import React from "react";
-import BookaCallButton from "./BookACallButton";
+import BookaCallButton from "../common/BookACallButton";
 import logo from "../assets/images/logoToReal.svg";
 import linkedinIcon from "../assets/icons/linkedin.svg";
 import xIcon from "../assets/icons/x.svg";

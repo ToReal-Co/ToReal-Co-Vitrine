@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import logo from "../assets/images/logoToReal.png";
+import logo from "../assets/images/logoToReal.svg";
 import BookaCallButton from "../common/BookACallButton";
 import "boxicons";
 
