@@ -41,7 +41,7 @@ const Header = () => {
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
         <li className="hover:cursor-pointer">Pricing</li>
-        <li className="hover:cursor-pointer">FAQ</li>
+        <li className="hover:cursor-pointer"><a href="#FAQ">FAQ</a></li>
       </ul>
 
       <BookaCallButton
@@ -83,7 +83,7 @@ const Header = () => {
           <li className="list-none hover:cursor-pointer text-darkBlue">Who we are</li>
           <li className="list-none hover:cursor-pointer text-darkBlue">Projects</li>
           <li className="list-none hover:cursor-pointer text-darkBlue">Pricing</li>
-          <li className="list-none hover:cursor-pointer text-darkBlue">FAQ</li>
+          <li className="list-none hover:cursor-pointer text-darkBlue"><a href="#FAQ">FAQ</a></li>
         
 
         {/* Mobile Book a Call Button */}
