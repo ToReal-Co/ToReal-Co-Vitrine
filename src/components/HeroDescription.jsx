@@ -1,11 +1,11 @@
 import React from 'react';
 import logoWithoutText from "../assets/images/logoWithoutText.png";
-import BookaCallButton from '../components/BookACallButton';
+import BookaCallButton from '../common/BookACallButton';
 const HeroDescription = () => {
 
 
     return(
- <div className="flex flex-col items-center justify-center text-center py-8">
+ <div className="flex flex-col items-center justify-center text-center my-1 lg:my-16">
             <div className="font-semibold text-darkBlue p-6 max-w-4xl mx-auto">
                 <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl py-3 leading-relaxed">
                      From concept 

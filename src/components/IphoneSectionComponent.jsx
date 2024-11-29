@@ -1,5 +1,5 @@
 import React from "react";
-import IphoneVideo from "./IphoneVideo";
+import IphoneVideo from "../common/IphoneVideo";
 import video from '../assets/videos/video1.mp4'
 import video2 from '../assets/videos/video2.mp4'
 import video3 from '../assets/videos/video3.mp4'
@@ -10,7 +10,7 @@ const IphoneSectionComponent = () => {
 
     return( 
     
-        <div className="grid sm:gap-64 grid-cols-2 sm:grid-cols-4 mx-auto max-w-screen-md place-items-center mb-12">
+        <div className="grid sm:gap-64 grid-cols-2 sm:grid-cols-4 mx-auto max-w-screen-md place-items-center my-12">
   <div className="p-2">
     <div className="transform rotate-5">
       <IphoneVideo video={video} />

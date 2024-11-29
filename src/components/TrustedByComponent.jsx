@@ -10,7 +10,7 @@ const TrustedByComponent = () => {
     return (
         <div className="my-24">
             <div className="text-center mb-6">
-            <p className="font-medium text-4xl">
+            <p className="font-medium text-4xl text-darkBlue">
                 Trusted By <span className="text-trBlue">11</span> Companies
             </p>
         </div>
