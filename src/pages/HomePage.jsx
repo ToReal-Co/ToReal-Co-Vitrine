@@ -7,7 +7,7 @@ import Header from '../components/Header'
 
 const HomePage = () => {
   return (
-    <div className=" h-full w-full px-8 text-xl md:text-4xl lg:text-8xl">
+    <div className=" h-full w-full text-xl md:text-4xl lg:text-8xl">
       <Header/>
       <HeroSection/>
 <Faq/>

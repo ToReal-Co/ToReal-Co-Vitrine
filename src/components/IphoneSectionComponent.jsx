@@ -15,7 +15,7 @@ const IphoneSectionComponent = () => {
   };
 
   return (
-    <div className="flex justify-center items-center space-x-2 w-full">
+    <div className="flex justify-center items-center space-x-2 w-full px-8 ">
       <div
         className={`transform rotate-5 ${selected === 0 ? 'z-10' : ''}`}
         onClick={() => handleClick(0)}
