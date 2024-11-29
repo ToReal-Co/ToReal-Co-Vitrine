@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../assets/images/logoToReal.png";
+import logo from "../assets/images/logoToReal.svg";
 import BookaCallButton from "./BookACallButton";
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-8 h-auto">
+    <header className="flex justify-between items-center py-8 h-auto px-8">
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>
