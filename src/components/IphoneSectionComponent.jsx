@@ -10,21 +10,21 @@ const IphoneSectionComponent = () => {
 
     return( 
     
-      <div className="flex justify-center flex-row items-center mx-auto my-6 space-x-16">
-      <div className="transform rotate-5">
-        <IphoneVideo video={video} />
+      <div className="flex justify-center flex-row items-center mx-auto my-6 space-x-2 sm:space-x-8 md:space-x-16">
+        <div className="transform rotate-5">
+          <IphoneVideo video={video} />
+        </div>
+        <div>
+          <IphoneVideo video={video2} />
+        </div>
+        <div className="hidden md:block">
+          <IphoneVideo video={video3} />
+        </div>
+        <div className="hidden lg:block transform rotate-4">
+          <IphoneVideo video={video4} />
+        </div>
       </div>
-      <div>
-        <IphoneVideo video={video2} />
-      </div>
-      <div className="hidden md:block">
-        <IphoneVideo video={video3} />
-      </div>
-      <div className="hidden lg:block transform rotate-4">
-        <IphoneVideo video={video4} />
-      </div>
-    </div>
-    
+
 
     
 
