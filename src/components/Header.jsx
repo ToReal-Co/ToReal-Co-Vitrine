@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
-import logo from "../assets/images/logoToReal.svg";
-import BookaCallButton from "./BookACallButton";
+
+import logo from "../assets/images/logoToReal.png";
+import BookaCallButton from "../common/BookACallButton";
+import "boxicons";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +36,7 @@ const Header = () => {
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>
-      <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-darkBlue">
+      <ul className='hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50'>
         <li className="hover:cursor-pointer">Services</li>
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
@@ -42,14 +45,14 @@ const Header = () => {
       </ul>
 
       <BookaCallButton
-        className="hidden lg:flex"
+        className='hidden lg:flex'
         color="blue"
         onClick={handleRedirect}
       >
         Book a call
       </BookaCallButton>
 
-      {/* Hamburger Icon for Mobile (Visible only on small screens) */}
+      {}
       <div
         className="lg:hidden hover:cursor-pointer"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
