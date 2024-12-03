@@ -57,7 +57,7 @@ const Header = () => {
         className="lg:hidden hover:cursor-pointer"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
-        <box-icon name="menu-alt-right" color="#041136"></box-icon>
+        <box-icon name="menu-alt-right" color="#041136" size="48px" ></box-icon>
       </div>
 
       {/* Overlay to disable content behind the drawer */}

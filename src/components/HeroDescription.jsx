@@ -5,7 +5,7 @@ const HeroDescription = () => {
 
 
     return(
- <div className="flex flex-col items-center justify-center text-center my-8 sm:my-12 px-4 sm:px-8">
+ <div className="flex flex-col items-center justify-center text-center my-8 mb-32 sm:mb-32 px-4 sm:px-8">
     <div className="font-semibold text-darkBlue p-4 sm:p-6 max-w-2xl sm:max-w-4xl mx-auto">
         <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl py-2 sm:py-3 leading-relaxed">
             From concept
