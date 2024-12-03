@@ -7,7 +7,10 @@
   padding: 7px;
   position: relative;
   box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.486);
-  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease; /* Smooth transition for resizing */
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    border-radius 0.3s ease; /* Smooth transition for resizing */
 }
 
 .card-int {
@@ -67,24 +70,38 @@
   background-color: rgba(0, 0, 255, 0.212);
 }
 
-.btn1, .btn2, .btn3, .btn4 {
+.btn1,
+.btn2,
+.btn3,
+.btn4 {
   position: absolute;
   width: 2px;
 }
 
-.btn1, .btn2, .btn3 {
+.btn1,
+.btn2,
+.btn3 {
   height: 45px;
   top: 30%;
   right: -4px;
-  background-image: linear-gradient(to right, #111111, #222222, #333333, #464646, #595959);
+  background-image: linear-gradient(
+    to right,
+    #111111,
+    #222222,
+    #333333,
+    #464646,
+    #595959
+  );
 }
 
-.btn2, .btn3 {
+.btn2,
+.btn3 {
   transform: scale(-1);
   left: -4px;
 }
 
-.btn2, .btn3 {
+.btn2,
+.btn3 {
   transform: scale(-1);
   height: 30px;
 }

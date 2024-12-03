@@ -1,13 +1,16 @@
-import React from "react";
-import BookaCallButton from "../common/BookACallButton";
-import logo from "../assets/images/logoToReal.svg";
-import linkedinIcon from "../assets/icons/linkedin.svg";
-import xIcon from "../assets/icons/x.svg";
-import whatsappIcon from "../assets/icons/whatsApp.svg";
+import React from 'react';
+import BookaCallButton from '../common/BookACallButton';
+import logo from '../assets/images/logoToReal.svg';
+import linkedinIcon from '../assets/icons/linkedin.svg';
+import xIcon from '../assets/icons/x.svg';
+import whatsappIcon from '../assets/icons/whatsApp.svg';
 
 const Footer = () => {
   const handleRedirect = () => {
-    window.open("https://calendly.com/d/crkr-jbr-n53/one-off-meeting", "_blank");
+    window.open(
+      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      '_blank'
+    );
   };
 
   return (
@@ -32,14 +35,10 @@ const Footer = () => {
 
         {/* Right Section - Button */}
         <div className="flex justify-center md:justify-end mt-6">
-  <BookaCallButton
-    color="blue"
-    onClick={handleRedirect}
-  >
-    Book a call
-  </BookaCallButton>
-</div>
-
+          <BookaCallButton color="blue" onClick={handleRedirect}>
+            Book a call
+          </BookaCallButton>
+        </div>
       </div>
 
       {/* Bottom Section */}
@@ -61,9 +60,17 @@ const Footer = () => {
             Bring your digital vision to life
           </div>
           <div className="flex justify-center md:justify-end gap-3">
-            <img src={linkedinIcon} alt="linkedin" className="w-6 md:w-8 h-6 md:h-8" />
+            <img
+              src={linkedinIcon}
+              alt="linkedin"
+              className="w-6 md:w-8 h-6 md:h-8"
+            />
             <img src={xIcon} alt="x" className="w-6 md:w-8 h-6 md:h-8" />
-            <img src={whatsappIcon} alt="whatsapp" className="w-6 md:w-8 h-6 md:h-8" />
+            <img
+              src={whatsappIcon}
+              alt="whatsapp"
+              className="w-6 md:w-8 h-6 md:h-8"
+            />
           </div>
         </div>
       </div>

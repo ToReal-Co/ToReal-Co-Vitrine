@@ -1,23 +1,27 @@
-import React, { useState, useRef, useEffect } from "react";
-import plusIcon from "../assets/icons/plus.svg";
-import minusIcon from "../assets/icons/minus.svg";
+import React, { useState, useRef, useEffect } from 'react';
+import plusIcon from '../assets/icons/plus.svg';
+import minusIcon from '../assets/icons/minus.svg';
 
 const faqs = [
   {
-    question: "How do you ensure the quality of your work?",
-    answer: "We ensure quality through rigorous testing, peer reviews, and adhering to industry best practices.",
+    question: 'How do you ensure the quality of your work?',
+    answer:
+      'We ensure quality through rigorous testing, peer reviews, and adhering to industry best practices.',
   },
   {
-    question: "What tools and technologies do you use?",
-    answer: "We use cutting-edge tools such as React, Tailwind, Node.js, and various cloud services to deliver high-quality solutions.",
+    question: 'What tools and technologies do you use?',
+    answer:
+      'We use cutting-edge tools such as React, Tailwind, Node.js, and various cloud services to deliver high-quality solutions.',
   },
   {
-    question: "How do you ensure the quality of your work?",
-    answer: "We ensure quality through rigorous testing, peer reviews, and adhering to industry best practices.",
+    question: 'How do you ensure the quality of your work?',
+    answer:
+      'We ensure quality through rigorous testing, peer reviews, and adhering to industry best practices.',
   },
   {
-    question: "Can you develop Web3 or blockchain-based applications?",
-    answer: "Yes, we have expertise in developing Web3 and blockchain-based applications using technologies like Ethereum, Solidity, and more.",
+    question: 'Can you develop Web3 or blockchain-based applications?',
+    answer:
+      'Yes, we have expertise in developing Web3 and blockchain-based applications using technologies like Ethereum, Solidity, and more.',
   },
 ];
 
@@ -49,17 +53,20 @@ const Faq = () => {
 
       {/* Subtitle */}
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-[24px] sm:text-[32px] font-semibold text-darkBlue">Frequently asked questions</h2>
+        <h2 className="text-[24px] sm:text-[32px] font-semibold text-darkBlue">
+          Frequently asked questions
+        </h2>
         <p className="text-[18px] sm:text-[24px] mt-4 leading-[1.5] px-4 sm:px-6">
-          Quick answers to questions you may have. Can’t find what you’re looking for?{" "}
+          Quick answers to questions you may have. Can’t find what you’re
+          looking for?{' '}
           <a
-      href="https://calendly.com/d/crkr-jbr-n53/one-off-meeting"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-trBlue cursor-pointer"
-    >
-      Book a call now
-    </a>
+            href="https://calendly.com/d/crkr-jbr-n53/one-off-meeting"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-trBlue cursor-pointer"
+          >
+            Book a call now
+          </a>
         </p>
       </div>
 
@@ -77,23 +84,28 @@ const Faq = () => {
             >
               <img
                 src={openFaqIndex === index ? minusIcon : plusIcon}
-                alt={openFaqIndex === index ? "Minus" : "Plus"}
+                alt={openFaqIndex === index ? 'Minus' : 'Plus'}
                 className="w-6 h-6 shrink-0"
               />
-              <span className="text-[16px] sm:text-[20px] font-medium flex-1 ml-4">{faq.question}</span>
+              <span className="text-[16px] sm:text-[20px] font-medium flex-1 ml-4">
+                {' '}
+                {faq.question}
+              </span>
             </button>
-
             {/* Description with Animation */}
             <div
               ref={(el) => (descriptionRefs.current[index] = el)}
               className={`transition-all duration-500 ease-in-out px-6 ${
-                openFaqIndex === index ? "opacity-100" : "opacity-0"
+                openFaqIndex === index ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
-                maxHeight: openFaqIndex === index ? `${maxHeight[index]}px` : "0",
+                maxHeight:
+                  openFaqIndex === index ? `${maxHeight[index]}px` : '0',
               }}
             >
-              <p className="pb-4 text-[14px] sm:text-[16px] text-regular">{faq.answer}</p>
+              <p className="pb-4 text-[14px] sm:text-[16px] text-regular">
+                {faq.answer}
+              </p>
             </div>
           </div>
         ))}

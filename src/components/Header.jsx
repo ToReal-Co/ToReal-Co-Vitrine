@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import logo from "../assets/images/logoToReal.svg";
-import BookaCallButton from "../common/BookACallButton";
-import "boxicons";
-
+import logo from '../assets/images/logoToReal.svg';
+import BookaCallButton from '../common/BookACallButton';
+import 'boxicons';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleRedirect = () => {
-    window.open("https://calendly.com/d/crkr-jbr-n53/one-off-meeting", "_blank");
+    window.open(
+      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      '_blank'
+    );
   };
 
   useEffect(() => {
@@ -19,10 +21,10 @@ const Header = () => {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -36,16 +38,18 @@ const Header = () => {
       <a href="/">
         <img src={logo} alt="" className="w-24" />
       </a>
-      <ul className='hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50'>
+      <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50">
         <li className="hover:cursor-pointer">Services</li>
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
         <li className="hover:cursor-pointer">Pricing</li>
-        <li className="hover:cursor-pointer"><a href="#FAQ">FAQ</a></li>
+        <li className="hover:cursor-pointer">
+          <a href="#FAQ">FAQ</a>
+        </li>
       </ul>
 
       <BookaCallButton
-        className='hidden lg:flex'
+        className="hidden lg:flex"
         color="blue"
         onClick={handleRedirect}
       >
@@ -57,7 +61,7 @@ const Header = () => {
         className="lg:hidden hover:cursor-pointer"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
-        <box-icon name="menu-alt-right" color="#041136" size="48px" ></box-icon>
+        <box-icon name="menu-alt-right" color="#041136" size="48px"></box-icon>
       </div>
 
       {/* Overlay to disable content behind the drawer */}
@@ -74,17 +78,25 @@ const Header = () => {
           bg-trWhite shadow-lg flex flex-col p-6 
           items-start gap-6 font-medium text-base 
           transform transition-transform duration-300
-          ${isMenuOpen ? "translate-x-0 opacity-100 z-20" : "-translate-x-full opacity-0"}
+          ${isMenuOpen ? 'translate-x-0 opacity-100 z-20' : '-translate-x-full opacity-0'}
         `}
-        style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}
+        style={{ transition: 'transform 0.3s ease, opacity 0.3s ease' }}
       >
-        
-          <li className="list-none hover:cursor-pointer text-darkBlue">Services</li>
-          <li className="list-none hover:cursor-pointer text-darkBlue">Who we are</li>
-          <li className="list-none hover:cursor-pointer text-darkBlue">Projects</li>
-          <li className="list-none hover:cursor-pointer text-darkBlue">Pricing</li>
-          <li className="list-none hover:cursor-pointer text-darkBlue"><a href="#FAQ">FAQ</a></li>
-        
+        <li className="list-none hover:cursor-pointer text-darkBlue">
+          Services
+        </li>
+        <li className="list-none hover:cursor-pointer text-darkBlue">
+          Who we are
+        </li>
+        <li className="list-none hover:cursor-pointer text-darkBlue">
+          Projects
+        </li>
+        <li className="list-none hover:cursor-pointer text-darkBlue">
+          Pricing
+        </li>
+        <li className="list-none hover:cursor-pointer text-darkBlue">
+          <a href="#FAQ">FAQ</a>
+        </li>
 
         {/* Mobile Book a Call Button */}
         <BookaCallButton

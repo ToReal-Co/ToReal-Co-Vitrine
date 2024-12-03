@@ -3,17 +3,13 @@ import IphoneSectionComponent from '../components/IphoneSectionComponent';
 import TrustedByComponent from '../components/TrustedByComponent';
 import HeroDescription from '../components/HeroDescription';
 
-
 const HeroSection = () => {
   return (
     <div>
-        <HeroDescription/>
-        <IphoneSectionComponent/>
-        <TrustedByComponent/>
+      <HeroDescription />
+      <IphoneSectionComponent />
+      <TrustedByComponent />
     </div>
-    
-    
-
   );
 };
 
