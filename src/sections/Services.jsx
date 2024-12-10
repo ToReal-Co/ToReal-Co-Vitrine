@@ -71,14 +71,14 @@ const Services = () => {
                   {/* Titre avec ligne verticale */}
                   <div className="flex-1 flex items-center space-x-4">
                     <div className="h-6 w-[4px] bg-darkBlue rounded-lg"></div>
-                    <h2 className="text-lg sm:text-xl font-semibold">
+                    <h2 className="text-lg sm:text-xl text-darkBlue font-semibold">
                       {service.title}
                     </h2>
                   </div>
 
                   {/* Description */}
                   <div className="flex-1 w-full">
-                    <p className="text-sm sm:text-base">
+                    <p className="text-sm sm:text-base text-darkBlue">
                       {service.description}
                     </p>
                   </div>
@@ -94,7 +94,7 @@ const Services = () => {
 
           {/* Description en bas */}
           <div className="flex items-center justify-between mt-16 sm:mt-16 md:mt-16 lg:mt-32">
-            <p className="text-sm sm:text-base">
+            <p className="text-sm sm:text-base text-darkBlue">
               Crafting Digital Solutions with <br />
               Innovation and Expertise
             </p>
