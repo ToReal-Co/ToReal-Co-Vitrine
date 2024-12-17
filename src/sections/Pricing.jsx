@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import checkIcon from "../assets/icons/check.svg";
 import airbnbIcon from "../assets/brands/airbnbIcon.png";
 import instagramIcon from "../assets/brands/instgramIcon.png";
 import uberIcon from "../assets/brands/uberIcon.png";
 
 const Pricing = () => {
+  const [currency, setCurrency] = useState("USD");
+  const [conversionRate, setConversionRate] = useState(1);
+  const API_KEY = "fa9d916961334fd89a8c7c95654487a6";
+
+  const allowedCurrencies = ["USD", "EUR", "TND"];
+
+  useEffect(() => {
+    const fetchCurrency = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`
+        );
+        const fetchedCurrency = response.data.currency.code;
+        const conversionRate = response.data.currency.rate;
+
+        if (allowedCurrencies.includes(fetchedCurrency)) {
+          setCurrency(fetchedCurrency);
+          setConversionRate(conversionRate || 1);
+        } else {
+          setCurrency("USD");
+          setConversionRate(1);
+        }
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+        setCurrency("USD");
+        setConversionRate(1);
+      }
+    };
+
+    fetchCurrency();
+  }, []);
+
+  // Convert price function
+  const convertPrice = (priceUSD) => {
+    return Math.round(priceUSD * conversionRate).toLocaleString() + ` ${currency}`;
+  };
+
   return (
     <section className="py-12 px-6 sm:px-10">
-      {/* Title */}
       <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Pricing</h1>
       </div>
 
-      {/* Pricing Cards */}
       <div className="flex flex-col lg:flex-row justify-center items-center gap-8 px-4 md:px-16 lg:px-24">
-        {/* Essential Card */}
         <div className="bg-blueBg text-darkBlue rounded-[20px] p-6 sm:p-8 flex flex-col justify-between w-full lg:w-[28%] h-auto">
           <div>
             <h2 className="text-[20px] sm:text-[22px] font-medium">Essential</h2>
@@ -23,7 +58,7 @@ const Pricing = () => {
               iOS & Android apps, landing page
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              $12,999
+            +{convertPrice(12999)}
             </h3>
             <ul className="mt-6 space-y-2">
               {[
@@ -49,8 +84,6 @@ const Pricing = () => {
             Book a Call
           </button>
         </div>
-
-        {/* Advanced Card */}
         <div className="bg-blueBg text-darkBlue rounded-[20px] p-6 sm:p-8 flex flex-col justify-between w-full lg:w-[28%] relative h-auto">
           <p className="text-[12px] sm:text-[14px] font-medium rounded-xl py-1 sm:py-2 px-3 sm:px-4 bg-darkBlue absolute top-[-20px] right-[10px] sm:right-[20px] text-white">
             Recommended
@@ -61,7 +94,7 @@ const Pricing = () => {
               iOS & Android apps, website, Back-office
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              $17,999
+              +{convertPrice(17999)}
             </h3>
             <ul className="mt-6 space-y-2">
               {[
@@ -90,7 +123,6 @@ const Pricing = () => {
           </button>
         </div>
 
-        {/* Ultimate Card */}
         <div className="bg-darkBlue text-white rounded-[20px] p-6 sm:p-8 flex flex-col justify-between w-full lg:w-[28%] h-auto">
           <div>
             <h2 className="text-[20px] sm:text-[22px] font-medium">Ultimate</h2>
@@ -98,9 +130,8 @@ const Pricing = () => {
               iOS & Android apps, website, AI integration, Back-office
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              +$27,000
+              +{convertPrice(27000)}
             </h3>
-            {/* Horizontal Scrollable List */}
             <p className="text-[12px] sm:text-[14px] font-normal mt-6">
               Develop an app similar to
             </p>
