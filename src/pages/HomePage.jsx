@@ -5,14 +5,15 @@ import Faq from '../sections/Faq';
 import WhatsAppButton from '../common/WhatsAppButton';
 import Header from '../components/Header';
 import Services from '../sections/Services';
+import WhoWeAre from '../sections/WhoWeAre';
 
 const HomePage = () => {
   return (
     <div className=" h-full w-full text-xl md:text-4xl lg:text-8xl">
       <Header />
       <HeroSection />
-    
       <Services />
+      <WhoWeAre />
       <Faq />
       <Footer />
       <WhatsAppButton />
