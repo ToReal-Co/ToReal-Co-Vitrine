@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import checkIcon from "../assets/icons/check.svg";
 import airbnbIcon from "../assets/brands/airbnbIcon.png";
@@ -9,9 +9,12 @@ const Pricing = () => {
   const [currency, setCurrency] = useState("USD");
   const [conversionRate, setConversionRate] = useState(1);
   const API_KEY = "fa9d916961334fd89a8c7c95654487a6";
-
+  const scrollContainerRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
   const allowedCurrencies = ["USD", "EUR", "TND"];
-
+  
   useEffect(() => {
     const fetchCurrency = async () => {
       try {
@@ -41,6 +44,24 @@ const Pricing = () => {
   // Convert price function
   const convertPrice = (priceUSD) => {
     return Math.round(priceUSD * conversionRate).toLocaleString() + ` ${currency}`;
+  };
+
+  const handleMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2; // Scroll speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
   };
 
   return (
@@ -135,8 +156,15 @@ const Pricing = () => {
             <p className="text-[12px] sm:text-[14px] font-normal mt-6">
               Develop an app similar to
             </p>
-            <div className="mt-6 overflow-x-auto">
-              <div className="flex space-x-4">
+            <div
+              className="mt-6 overflow-x-hidden scrollbar-none overflow-hidden"
+              ref={scrollContainerRef}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              <div className="flex space-x-4 cursor-grab active:cursor-grabbing">
                 {[
                   { brand: "Airbnb", price: "$40,000", icon: airbnbIcon },
                   { brand: "Instagram", price: "$38,000", icon: instagramIcon },
@@ -160,6 +188,7 @@ const Pricing = () => {
               </div>
             </div>
           </div>
+        
           <button className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-lightBlue transition">
             Book a Call
           </button>
