@@ -1,9 +1,9 @@
-import celio from '../assets/marquee/celio.png';
-import iotSqure from '../assets/marquee/iotSquare.png';
-import lego from '../assets/marquee/lego.png';
-import nikeledeon from '../assets/marquee/nikeledeon.png';
-import notion from '../assets/marquee/notion.png';
-import viber from '../assets/marquee/viber.png';
+import celio from '../assets/brands/celio.png';
+import iotSqure from '../assets/brands/iotSquare.png';
+import lego from '../assets/brands/lego.png';
+import nikeledeon from '../assets/brands/nikeledeon.png';
+import notion from '../assets/brands/notion.png';
+import viber from '../assets/brands/viber.png';
 import Marquee from 'react-fast-marquee';
 
 const TrustedByComponent = () => {
