@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import CapitalAchieved from '../components/CapitalAchieved';
+import Collaborators from '../components/collaborators';
+import ReleasedProjects from '../components/ReleasedProjects';
+import BookaCallButton from '../common/BookACallButton';
 
 const WhoWeAre = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(35); // Débuter à 35
   const [isInView, setIsInView] = useState(false);
   const ref = useRef(null);
 
@@ -25,9 +29,9 @@ const WhoWeAre = () => {
   useEffect(() => {
     if (isInView) {
       const target = 63;
-      const duration = 2000; // Durée totale en ms
-      let currentCount = 0;
-      let speed = 20; // Vitesse initiale de l'intervalle (en ms)
+      const duration = 1000;
+      let currentCount = 35;
+      let speed = 10;
       let lastTimestamp = Date.now();
 
       const increment = () => {
@@ -35,13 +39,11 @@ const WhoWeAre = () => {
         if (currentCount < target) {
           currentCount++;
           setCount(currentCount);
-
-          // Calcule la nouvelle vitesse en fonction de l'écart restant
           const remaining = target - currentCount;
-          speed = Math.max(50, duration / (remaining + 1)); // Ralentir progressivement, mais ne pas trop ralentir
+          speed = Math.max(50, duration / (remaining + 1));
 
           lastTimestamp = Date.now();
-          setTimeout(increment, speed); // Incrémenter avec un délai réduit
+          setTimeout(increment, speed);
         }
       };
 
@@ -57,34 +59,36 @@ const WhoWeAre = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-4">
-        <div className="w-full lg:w-[25%] flex flex-col gap-4 text-[24px] sm:text-[32px]">
-          <div className="bg-blueBg p-8 rounded-lg">
-            <p className="text-medium text-[22px]">Capital Achieved</p>
-
-            <p
-              ref={ref}
-              className="inset-0 flex items-center justify-center font-semibold text-[72px] my-12"
-            >
-              +{count}
-              <span className="text-trBlue">K</span>
-            </p>
-          </div>
+        <div className="w-full lg:w-[30%] flex flex-col gap-4 text-[24px] sm:text-[32px]">
+          <CapitalAchieved className="bg-blueBg p-8 rounded-lg" />
+          <Collaborators className="bg-blueBg p-8 rounded-lg relative" />
         </div>
 
         <div className="w-full lg:w-[80%] flex flex-col lg:flex-row gap-4 text-base">
-          <div className="bg-blueBg p-6 rounded-lg flex-1">
-            <p>Div 3</p>
-          </div>
-          <div className="bg-blueBg p-6 rounded-lg flex-1">
-            <p>Div 4</p>
+          <ReleasedProjects className="bg-blueBg p-6 rounded-lg flex-1 text-center relative min-h-[400px]" />
+
+          <div className="bg-blueBg p-6 rounded-lg flex-1 flex justify-center">
+            <p className="text-[32px] font-semibold text-darkBlue">
+              Released Projects
+            </p>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col-reverse lg:flex-row gap-4 lg:gap-4 mt-4 text-base">
-        <div className="bg-trBlue p-6 rounded-lg flex-1">
-          <p>Div 5</p>
+        <div className="bg-trBlue p-6 rounded-lg flex-1 flexrow">
+          <div className="flex">
+            <div className="w-[70%] p-4">
+              <p className="text-4xl font-semibold text-blueBg">
+                Ready to create your project?
+              </p>
+            </div>
+            <div className="w-[35%] flex items-center p-4">
+              <BookaCallButton color="white">Book a call</BookaCallButton>
+            </div>
+          </div>
         </div>
+
         <div className="bg-blueBg p-6 rounded-lg flex-1">
           <p>Div 6</p>
         </div>
