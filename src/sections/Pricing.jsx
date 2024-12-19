@@ -1,25 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import checkIcon from "../assets/icons/check.svg";
-import airbnbIcon from "../assets/brands/airbnbIcon.png";
-import instagramIcon from "../assets/brands/instgramIcon.png";
-import uberIcon from "../assets/brands/uberIcon.png";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import checkIcon from '../assets/icons/check.svg';
+import airbnbIcon from '../assets/brands/airbnbIcon.png';
+import instagramIcon from '../assets/brands/instgramIcon.png';
+import uberIcon from '../assets/brands/uberIcon.png';
+import tinderIcon from '../assets/brands/tinderIcon.png';
+import telegramIcon from '../assets/brands/telegramIcon.png';
 
 const Pricing = () => {
-  const [currency, setCurrency] = useState("USD");
+  const [currency, setCurrency] = useState('USD');
   const [conversionRate, setConversionRate] = useState(1);
-  const API_KEY = "fa9d916961334fd89a8c7c95654487a6";
+  const API_KEY = 'fa9d916961334fd89a8c7c95654487a6';
   const scrollContainerRef = useRef(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
-  const allowedCurrencies = ["USD", "EUR", "TND"];
-  
+  const allowedCurrencies = ['USD', 'EUR', 'TND'];
+
   useEffect(() => {
     const fetchCurrency = async () => {
       try {
         const response = await axios.get(
-          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`
+          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`,
         );
         const fetchedCurrency = response.data.currency.code;
         const conversionRate = response.data.currency.rate;
@@ -28,12 +30,12 @@ const Pricing = () => {
           setCurrency(fetchedCurrency);
           setConversionRate(conversionRate || 1);
         } else {
-          setCurrency("USD");
+          setCurrency('USD');
           setConversionRate(1);
         }
       } catch (error) {
-        console.error("Error fetching location data:", error);
-        setCurrency("USD");
+        console.error('Error fetching location data:', error);
+        setCurrency('USD');
         setConversionRate(1);
       }
     };
@@ -41,9 +43,10 @@ const Pricing = () => {
     fetchCurrency();
   }, []);
 
-  // Convert price function
   const convertPrice = (priceUSD) => {
-    return Math.round(priceUSD * conversionRate).toLocaleString() + ` ${currency}`;
+    return (
+      Math.round(priceUSD * conversionRate).toLocaleString() + ` ${currency}`
+    );
   };
 
   const handleMouseDown = (e) => {
@@ -56,7 +59,7 @@ const Pricing = () => {
     if (!isDragging.current) return;
     e.preventDefault();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2; // Scroll speed multiplier
+    const walk = (x - startX.current) * 1.1;
     scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
@@ -74,21 +77,23 @@ const Pricing = () => {
       <div className="flex flex-col lg:flex-row justify-center items-center gap-8 px-4 md:px-16 lg:px-24">
         <div className="bg-blueBg text-darkBlue rounded-[20px] p-6 sm:p-8 flex flex-col justify-between w-full lg:w-[28%] h-auto">
           <div>
-            <h2 className="text-[20px] sm:text-[22px] font-medium">Essential</h2>
+            <h2 className="text-[20px] sm:text-[22px] font-medium">
+              Essential
+            </h2>
             <p className="text-[14px] sm:text-[16px] font-normal mt-2">
               iOS & Android apps, landing page
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-            +{convertPrice(12999)}
+              +{convertPrice(12999)}
             </h3>
             <ul className="mt-6 space-y-2">
               {[
-                "UI/UX Design",
-                "Backend Development",
-                "Frontend (up to 10 screens)",
-                "Analytics Setup",
-                "Landing Page",
-                "Delivery in 45 days",
+                'UI/UX Design',
+                'Backend Development',
+                'Frontend (up to 10 screens)',
+                'Analytics Setup',
+                'Landing Page',
+                'Delivery in 45 days',
               ].map((feature, index) => (
                 <li key={index} className="flex items-center">
                   <img
@@ -119,14 +124,14 @@ const Pricing = () => {
             </h3>
             <ul className="mt-6 space-y-2">
               {[
-                "UI/UX Design",
-                "Backend Development",
-                "Frontend (up to 16 screens)",
-                "Advanced Analytics",
-                "Landing Page",
-                "Delivery in 65 days",
-                "Secure payment integration with Stripe and in-app options.",
-                "Back-office",
+                'UI/UX Design',
+                'Backend Development',
+                'Frontend (up to 16 screens)',
+                'Advanced Analytics',
+                'Landing Page',
+                'Delivery in 65 days',
+                'Secure payment integration with Stripe and in-app options.',
+                'Back-office',
               ].map((feature, index) => (
                 <li key={index} className="flex items-center">
                   <img
@@ -164,11 +169,13 @@ const Pricing = () => {
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
             >
-              <div className="flex space-x-4 cursor-grab active:cursor-grabbing">
+              <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[
-                  { brand: "Airbnb", price: "$40,000", icon: airbnbIcon },
-                  { brand: "Instagram", price: "$38,000", icon: instagramIcon },
-                  { brand: "Uber", price: "$42,000", icon: uberIcon },
+                  { brand: 'Airbnb', price: '$40,000', icon: airbnbIcon },
+                  { brand: 'Instagram', price: '$38,000', icon: instagramIcon },
+                  { brand: 'Uber', price: '$42,000', icon: uberIcon },
+                  { brand: 'telegram', price: '$26,000', icon: telegramIcon },
+                  { brand: 'tinder', price: '$22,000', icon: tinderIcon },
                 ].map((item, index) => (
                   <div
                     key={index}
@@ -181,6 +188,7 @@ const Pricing = () => {
                       src={item.icon}
                       alt={item.brand}
                       className="w-6 h-6 sm:w-8 sm:h-8"
+                      onDragStart={(e) => e.preventDefault()}
                     />
                     <p className="text-[13px] sm:text-[15px]">{item.price}</p>
                   </div>
@@ -188,7 +196,7 @@ const Pricing = () => {
               </div>
             </div>
           </div>
-        
+
           <button className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-lightBlue transition">
             Book a Call
           </button>
