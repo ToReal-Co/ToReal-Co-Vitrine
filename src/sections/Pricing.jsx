@@ -86,7 +86,7 @@ const Pricing = () => {
   };
 
   return (
-    <section className="py-12 px-6 sm:px-10">
+    <section id='pricing' className="py-12 px-6 sm:px-10">
       <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Pricing</h1>
