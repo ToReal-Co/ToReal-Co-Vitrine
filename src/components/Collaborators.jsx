@@ -5,35 +5,31 @@ import punk1 from '../assets/images/punk1.png';
 import punk2 from '../assets/images/punk2.png';
 
 const Collaborators = ({ className = '' }) => {
+  const collaborators = [
+    { src: ahmedPunk, alt: 'Collaborator 1', bgColor: '#6A8494' },
+    { src: kalechPunk, alt: 'Collaborator 2', bgColor: '#FF6F06' },
+    { src: punk1, alt: 'Collaborator 3', bgColor: '#DE89B5' },
+    { src: punk2, alt: 'Collaborator 4', bgColor: '#FFD800' },
+  ];
+
   return (
     <div className={className}>
-      <p className="text-medium text-[18px] text-center mb-6">
+      <p className="text-medium text-[18px] text-start mb-6">
         12 Collaborators
       </p>
 
-      <div className="flex justify-center items-center space-x-[-15px]">
-        <img
-          src={ahmedPunk}
-          alt="Collaborator 1"
-          className="w-16 h-16 rounded-full border-2 border-blueBg bg-[#6A8494]"
-        />
-        <img
-          src={kalechPunk}
-          alt="Collaborator 2"
-          className="w-16 h-16 rounded-full border-2 border-blueBg bg-[#FF6F06]"
-        />
-        <img
-          src={punk1}
-          alt="Collaborator 3"
-          className="w-16 h-16 rounded-full border-2 border-blueBg bg-[#DE89B5]"
-        />
-        <img
-          src={punk2}
-          alt="Collaborator 4"
-          className="w-16 h-16 rounded-full border-2 border-blueBg bg-[#FFD800]"
-        />
+      <div className="flex justify-start items-start space-x-[-15px]">
+        {collaborators.map((collaborator, index) => (
+          <img
+            key={index}
+            src={collaborator.src}
+            alt={collaborator.alt}
+            className={`w-14 h-14 rounded-full border-2 border-blueBg`}
+            style={{ backgroundColor: collaborator.bgColor }}
+          />
+        ))}
         {/* Rond bleu avec le texte +8 */}
-        <div className="w-16 h-16 rounded-full border-2 border-blueBg bg-trBlue flex items-center justify-center">
+        <div className="w-14 h-14 rounded-full border-2 border-blueBg bg-trBlue flex items-center justify-center">
           <p className="text-[14px] font-medium text-blueBg">+8</p>
         </div>
       </div>
