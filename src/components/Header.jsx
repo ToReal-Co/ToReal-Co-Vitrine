@@ -87,7 +87,8 @@ const Header = () => {
         style={{ transition: 'transform 0.3s ease, opacity 0.3s ease' }}
       >
         <li className="list-none hover:cursor-pointer text-darkBlue">
-          Services
+          <a href='#services'>Services</a>
+          
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           Who we are
@@ -96,7 +97,7 @@ const Header = () => {
           Projects
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
-          Pricing
+          <a href="#pricing">Pricing</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           <a href="#FAQ">FAQ</a>
