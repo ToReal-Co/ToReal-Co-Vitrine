@@ -12,9 +12,9 @@ const Pricing = () => {
   const [conversionRate, setConversionRate] = useState(1);
   const API_KEY = 'fa9d916961334fd89a8c7c95654487a6';
   const scrollContainerRef = useRef(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
   const allowedCurrencies = ['USD', 'EUR', 'TND'];
 
   useEffect(() => {
@@ -65,6 +65,24 @@ const Pricing = () => {
 
   const handleMouseUp = () => {
     isDragging.current = false;
+  };
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    isDragging = true;
+    startX = touch.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft = scrollContainerRef.current.scrollLeft;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const x = touch.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = x - startX;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    isDragging = false;
   };
 
   return (
@@ -165,9 +183,12 @@ const Pricing = () => {
               className="mt-6 overflow-x-hidden scrollbar-none overflow-hidden"
               ref={scrollContainerRef}
               onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
             >
               <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[
