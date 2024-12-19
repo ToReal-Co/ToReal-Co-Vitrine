@@ -1,13 +1,5 @@
 import React from 'react';
-
 import Pricing from '../sections/Pricing';
-
-
-const HomePage = () => {
-  return (
-    <div className=" h-full w-full">
-     <Pricing/>
-
 import HeroSection from '../sections/Hero';
 import Footer from '../components/Footer';
 import Faq from '../sections/Faq';
@@ -17,11 +9,11 @@ import Services from '../sections/Services';
 
 const HomePage = () => {
   return (
-    <div className=" h-full w-full text-xl md:text-4xl lg:text-8xl">
+    <div className=" h-full w-full">
       <Header />
       <HeroSection />
-    
       <Services />
+      <Pricing/>
       <Faq />
       <Footer />
       <WhatsAppButton />
