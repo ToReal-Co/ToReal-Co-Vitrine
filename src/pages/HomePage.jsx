@@ -1,4 +1,13 @@
 import React from 'react';
+
+import Pricing from '../sections/Pricing';
+
+
+const HomePage = () => {
+  return (
+    <div className=" h-full w-full">
+     <Pricing/>
+
 import HeroSection from '../sections/Hero';
 import Footer from '../components/Footer';
 import Faq from '../sections/Faq';
@@ -16,6 +25,7 @@ const HomePage = () => {
       <Faq />
       <Footer />
       <WhatsAppButton />
+
     </div>
   );
 };
