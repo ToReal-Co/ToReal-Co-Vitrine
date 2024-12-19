@@ -21,7 +21,7 @@ const Pricing = () => {
     const fetchCurrency = async () => {
       try {
         const response = await axios.get(
-          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`,
+          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`
         );
         const fetchedCurrency = response.data.currency.code;
         const conversionRate = response.data.currency.rate;
@@ -183,12 +183,12 @@ const Pricing = () => {
               className="mt-6 overflow-x-hidden scrollbar-none overflow-hidden"
               ref={scrollContainerRef}
               onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[

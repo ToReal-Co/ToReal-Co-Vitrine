@@ -13,11 +13,10 @@ const HomePage = () => {
       <Header />
       <HeroSection />
       <Services />
-      <Pricing/>
+      <Pricing />
       <Faq />
       <Footer />
       <WhatsAppButton />
-
     </div>
   );
 };
