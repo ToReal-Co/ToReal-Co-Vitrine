@@ -1,4 +1,5 @@
 import React from 'react';
+import Projects from '../sections/OurProjects';
 import Pricing from '../sections/Pricing';
 import HeroSection from '../sections/Hero';
 import Footer from '../components/Footer';
@@ -13,6 +14,7 @@ const HomePage = () => {
       <Header />
       <HeroSection />
       <Services />
+      <Projects/>
       <Pricing />
       <Faq />
       <Footer />
