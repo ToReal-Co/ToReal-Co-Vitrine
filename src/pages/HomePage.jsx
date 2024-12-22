@@ -1,11 +1,24 @@
 import React from 'react';
 import Projects from '../sections/OurProjects';
-
+import Pricing from '../sections/Pricing';
+import HeroSection from '../sections/Hero';
+import Footer from '../components/Footer';
+import Faq from '../sections/Faq';
+import WhatsAppButton from '../common/WhatsAppButton';
+import Header from '../components/Header';
+import Services from '../sections/Services';
 
 const HomePage = () => {
   return (
     <div className=" h-full w-full">
-     <Projects/>
+      <Header />
+      <HeroSection />
+      <Services />
+      <Projects/>
+      <Pricing />
+      <Faq />
+      <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
