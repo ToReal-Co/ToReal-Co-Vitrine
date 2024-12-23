@@ -13,10 +13,11 @@ const Collaborators = ({ className = '' }) => {
   ];
 
   return (
-    <div className={className}>
-      <p className="text-medium text-[18px] text-start mb-6">
-        12 Collaborators
-      </p>
+    <div className={`flex flex-col ${className}`}>
+      <div className="flex justify-between items-center mb-4">
+        {/* Titre */}
+        <p className="text-medium text-[18px] text-start">12 Collaborators</p>
+      </div>
 
       <div className="flex justify-start items-start space-x-[-15px]">
         {collaborators.map((collaborator, index) => (

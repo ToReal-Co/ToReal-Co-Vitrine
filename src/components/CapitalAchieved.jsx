@@ -55,7 +55,7 @@ const CapitalAchieved = ({ className = '' }) => {
 
       <p
         ref={ref}
-        className="inset-0 flex items-center justify-center font-semibold text-[72px] my-12"
+        className="inset-0 flex items-center justify-center font-semibold text-8xl my-6 h-full"
       >
         +{count}
         <span className="text-trBlue">K</span>

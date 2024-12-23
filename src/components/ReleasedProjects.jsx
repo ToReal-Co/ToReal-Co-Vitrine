@@ -10,18 +10,16 @@ const ReleasedProjects = ({ className = '' }) => {
       </p>
       <p className="text-[18px] text-trBlue mt-2">+11 Projects</p>
 
-      {/* Centered overlapping div */}
       <div className="flex items-center justify-center mt-16">
-        {/* Image */}
         <img
-          src={macbookImage} // Replace with your image path
+          src={macbookImage}
           alt="Released Projects"
           className="w-[300px] h-[200px]"
         />
         <img
-          src={iphoneImage} // Replace with your image path
+          src={iphoneImage}
           alt="Released Projects"
-          className="w-[300px] h-[200px] max-w-[150px] max-h-[250px] -ml-16 mb-6"
+          className="w-[130px] h-[200px] max-w-[150px] max-h-[190px] -ml-16 mb-6"
         />
       </div>
     </div>
