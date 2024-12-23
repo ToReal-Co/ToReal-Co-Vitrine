@@ -1,4 +1,6 @@
 import React from 'react';
+import Projects from '../sections/OurProjects';
+import Pricing from '../sections/Pricing';
 import HeroSection from '../sections/Hero';
 import Footer from '../components/Footer';
 import Faq from '../sections/Faq';
@@ -9,11 +11,13 @@ import WhoWeAre from '../sections/WhoWeAre';
 
 const HomePage = () => {
   return (
-    <div className=" h-full w-full text-xl md:text-4xl lg:text-8xl">
+    <div className=" h-full w-full">
       <Header />
       <HeroSection />
       <Services />
       <WhoWeAre />
+      <Projects/>
+      <Pricing />
       <Faq />
       <Footer />
       <WhatsAppButton />

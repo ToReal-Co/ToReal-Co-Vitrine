@@ -39,10 +39,14 @@ const Header = () => {
         <img src={logo} alt="" className="w-24" />
       </a>
       <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50">
-        <li className="hover:cursor-pointer">Services</li>
+        <li className="hover:cursor-pointer">
+          <a href='#services'>Services</a>
+        </li>
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
-        <li className="hover:cursor-pointer">Pricing</li>
+        <li className="hover:cursor-pointer">
+          <a href="#pricing">Pricing</a>
+        </li>
         <li className="hover:cursor-pointer">
           <a href="#FAQ">FAQ</a>
         </li>
@@ -83,7 +87,8 @@ const Header = () => {
         style={{ transition: 'transform 0.3s ease, opacity 0.3s ease' }}
       >
         <li className="list-none hover:cursor-pointer text-darkBlue">
-          Services
+          <a href='#services'>Services</a>
+          
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           Who we are
@@ -92,7 +97,7 @@ const Header = () => {
           Projects
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
-          Pricing
+          <a href="#pricing">Pricing</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           <a href="#FAQ">FAQ</a>
