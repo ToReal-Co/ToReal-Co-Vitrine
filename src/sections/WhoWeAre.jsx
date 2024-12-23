@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CapitalAchieved from '../components/CapitalAchieved';
-import Collaborators from '../components/collaborators';
+import Collaborators from '../components/Collaborators';
 import ReleasedProjects from '../components/ReleasedProjects';
 import OurPartners from '../components/OurPartners';
 import PresentedIn from '../components/PresentedIn';
