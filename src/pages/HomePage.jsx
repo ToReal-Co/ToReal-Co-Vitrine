@@ -7,6 +7,7 @@ import Faq from '../sections/Faq';
 import WhatsAppButton from '../common/WhatsAppButton';
 import Header from '../components/Header';
 import Services from '../sections/Services';
+import WhoWeAre from '../sections/WhoWeAre';
 
 const HomePage = () => {
   return (
@@ -14,7 +15,8 @@ const HomePage = () => {
       <Header />
       <HeroSection />
       <Services />
-      <Projects/>
+      <WhoWeAre />
+      <Projects />
       <Pricing />
       <Faq />
       <Footer />
