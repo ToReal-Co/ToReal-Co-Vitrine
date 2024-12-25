@@ -23,7 +23,7 @@ const WhoWeAre = () => {
 
           <div className="w-full lg:w-[80%] flex flex-col lg:flex-row gap-4 text-base">
             <ReleasedProjects className="bg-blueBg p-6 rounded-lg flex-1 text-center relative min-h-[400px] min-w-[300px]" />
-            <OurPartners className='bg-blueBg py-6  rounded-lg flex-1 text-center flex flex-col min-h-[350px] items-center ' />          </div>
+            <OurPartners className='bg-blueBg py-6  rounded-lg flex-1 text-center flex flex-col min-h-[350px] items-center ' />            </div>
         </div>
 
         <div className="flex flex-col-reverse lg:flex-row gap-4 lg:gap-4 mt-4 text-base">
