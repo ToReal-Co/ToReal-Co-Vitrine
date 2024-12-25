@@ -40,7 +40,7 @@ const Header = () => {
       </a>
       <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50">
         <li className="hover:cursor-pointer">
-          <a href='#services'>Services</a>
+          <a href="#services">Services</a>
         </li>
         <li className="hover:cursor-pointer">Who we are</li>
         <li className="hover:cursor-pointer">Projects</li>
@@ -87,8 +87,7 @@ const Header = () => {
         style={{ transition: 'transform 0.3s ease, opacity 0.3s ease' }}
       >
         <li className="list-none hover:cursor-pointer text-darkBlue">
-          <a href='#services'>Services</a>
-          
+          <a href="#services">Services</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           Who we are

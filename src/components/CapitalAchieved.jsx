@@ -1,8 +1,6 @@
-// src/components/CapitalAchieved.js
 import React, { useState, useEffect, useRef } from 'react';
 
 const CapitalAchieved = ({ className = '' }) => {
-  // Default className is an empty string
   const [count, setCount] = useState(35);
   const [isInView, setIsInView] = useState(false);
   const ref = useRef(null);
