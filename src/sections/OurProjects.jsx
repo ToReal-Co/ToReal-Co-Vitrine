@@ -98,10 +98,12 @@ function OurProjects() {
   const [visibleCount, setVisibleCount] = useState(6); // Number of projects to show initially
 
   const handleFlip = (index) => {
+    console.log(`Card at index ${index} clicked. Current flipped state: ${flipped[index]}`);
     const updatedFlipped = [...flipped];
     updatedFlipped[index] = !updatedFlipped[index];
     setFlipped(updatedFlipped);
   };
+  
 
   const handleViewMore = () => {
     if (visibleCount < projects.length) {
