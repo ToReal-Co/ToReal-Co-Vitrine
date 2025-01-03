@@ -2,6 +2,12 @@ import React from 'react';
 import BookaCallButton from '../common/BookACallButton';
 
 const CallToActionCard = ({ className = '' }) => {
+  const handleRedirect = () => {
+    window.open(
+      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      '_blank'
+    );
+  };
   return (
     <div className={className}>
       <div className="flex flex-col p-4 lg:flex-row items-center justify-around">
@@ -11,7 +17,9 @@ const CallToActionCard = ({ className = '' }) => {
           </p>
         </div>
         <div className="lg:w-full flex items-center justify-end p-4 bg-red-500x h-full">
-          <BookaCallButton color="white">Book a call</BookaCallButton>
+          <BookaCallButton color="white" onClick={handleRedirect}>
+            Book a call
+          </BookaCallButton>
         </div>
       </div>
     </div>

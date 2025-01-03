@@ -2,6 +2,12 @@ import React from 'react';
 import logoWithoutText from '../assets/images/logoWithoutText.svg';
 import BookaCallButton from '../common/BookACallButton';
 const HeroDescription = () => {
+  const handleRedirect = () => {
+    window.open(
+      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      '_blank'
+    );
+  };
   return (
     <div className="flex flex-col items-center justify-center text-center my-8 mb-32 sm:mb-32 px-4 sm:px-8">
       <div className="font-semibold text-darkBlue p-4 sm:p-6 max-w-2xl sm:max-w-4xl mx-auto">
@@ -30,10 +36,19 @@ const HeroDescription = () => {
         </p>
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 py-4">
-        <BookaCallButton color="blue" onClick={() => console.log('hello')}>
+        <BookaCallButton color="blue" onClick={handleRedirect}>
           Book a call
         </BookaCallButton>
-        <BookaCallButton color="dark" onClick={() => console.log('hello')}>
+        <BookaCallButton
+          color="dark"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor behavior
+            const pricingSection = document.querySelector('#pricing');
+            if (pricingSection) {
+              pricingSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
           View pricing
         </BookaCallButton>
       </div>

@@ -21,7 +21,7 @@ const Pricing = () => {
     const fetchCurrency = async () => {
       try {
         const response = await axios.get(
-          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`,
+          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`
         );
         const fetchedCurrency = response.data.currency.code;
         const conversionRate = response.data.currency.rate;
@@ -49,13 +49,11 @@ const Pricing = () => {
     );
   };
 
-  
-
   const handleMouseDown = (e) => {
     isDragging = true;
     startX = e.pageX - scrollContainerRef.current.offsetLeft;
     scrollLeft = scrollContainerRef.current.scrollLeft;
-    scrollContainerRef.current.style.cursor = "grabbing";
+    scrollContainerRef.current.style.cursor = 'grabbing';
   };
 
   const handleMouseMove = (e) => {
@@ -68,7 +66,7 @@ const Pricing = () => {
 
   const handleMouseUp = () => {
     isDragging = false;
-    scrollContainerRef.current.style.cursor = "grab";
+    scrollContainerRef.current.style.cursor = 'grab';
   };
 
   const handleTouchStart = (e) => {
@@ -91,7 +89,7 @@ const Pricing = () => {
   };
 
   return (
-    <section className="py-12 px-6 sm:px-10">
+    <section className="py-12 px-6 sm:px-10" id="pricing">
       <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Pricing</h1>
@@ -188,12 +186,12 @@ const Pricing = () => {
               className="mt-6 overflow-x-hidden scrollbar-none overflow-hidden"
               ref={scrollContainerRef}
               onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[

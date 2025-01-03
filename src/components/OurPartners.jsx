@@ -6,11 +6,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination } from 'swiper/modules';
 import partner1 from '../assets/images/partner1.png';
+import mallaAgency from '../assets/images/malla Agency.jpg';
 
 const partners = [
-  { logo: partner1, name: 'Partner 1' },
-  { logo: partner1, name: 'Partner 2' },
-  { logo: partner1, name: 'Partner 3' },
+  { logo: partner1, name: 'Flow', link: 'https://flow.com/' },
+  { logo: mallaAgency, name: 'Malla Agency' },
 ];
 const OurPartners = ({ className = '' }) => {
   return (
@@ -34,14 +34,16 @@ const OurPartners = ({ className = '' }) => {
             key={index}
             className="flex flex-col items-center justify-center "
           >
-            <img
-              src={partner.logo}
-              alt={partner.name}
-              className="w-32 h-32 lg:mt-0 mt-20 mb-8 lg:mb-0"
-            />
-            <p className="text-darkBlue mt-4 text-[18px] text-center">
-              {partner.name}
-            </p>
+            <a href={partner.link} target="_blank">
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                className="w-32 h-32 lg:mt-0 mt-20 mb-8 lg:mb-0"
+              />
+              <p className="text-darkBlue mt-4 text-[18px] text-center">
+                {partner.name}
+              </p>
+            </a>
           </SwiperSlide>
         ))}
       </Swiper>

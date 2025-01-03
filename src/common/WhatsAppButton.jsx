@@ -1,5 +1,5 @@
 import React from 'react';
-
+import whatsAppButton from '../assets/icons/whatsAppButton.png';
 const WhatsAppButton = () => {
   return (
     <a
@@ -8,10 +8,7 @@ const WhatsAppButton = () => {
       target="_blank"
       style={{ position: 'fixed', right: '15px', bottom: '15px', zIndex: 10 }}
     >
-      <img
-        src="https://i.ibb.co/VgSspjY/whatsapp-button.png"
-        alt="botão whatsapp"
-      />
+      <img src={whatsAppButton} alt="botão whatsapp" className="h-16 w-16" />
     </a>
   );
 };

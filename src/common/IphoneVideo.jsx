@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ipohoneVideo.css';
+import '../styles/iPhoneVideo.css';
 const IphoneVideo = ({ video }) => {
   return (
     <div className="card">
