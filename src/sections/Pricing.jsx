@@ -11,17 +11,17 @@ const Pricing = () => {
   const [currency, setCurrency] = useState('USD');
   const [conversionRate, setConversionRate] = useState(1);
   const API_KEY = 'fa9d916961334fd89a8c7c95654487a6';
+  const allowedCurrencies = ['USD', 'EUR', 'TND'];
   const scrollContainerRef = useRef(null);
   let isDragging = false;
   let startX = 0;
   let scrollLeft = 0;
-  const allowedCurrencies = ['USD', 'EUR', 'TND'];
 
   useEffect(() => {
     const fetchCurrency = async () => {
       try {
         const response = await axios.get(
-          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`
+          `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`,
         );
         const fetchedCurrency = response.data.currency.code;
         const conversionRate = response.data.currency.rate;
@@ -49,23 +49,28 @@ const Pricing = () => {
     );
   };
 
+  
+
   const handleMouseDown = (e) => {
-    isDragging.current = true;
-    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
+    isDragging = true;
+    startX = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft = scrollContainerRef.current.scrollLeft;
+    scrollContainerRef.current.style.cursor = "grabbing";
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging.current) return;
+    if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.1;
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+    const walk = x - startX;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUp = () => {
-    isDragging.current = false;
+    isDragging = false;
+    scrollContainerRef.current.style.cursor = "grab";
   };
+
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
     isDragging = true;
@@ -86,7 +91,7 @@ const Pricing = () => {
   };
 
   return (
-    <section id="pricing" className="py-12 px-6 sm:px-10">
+    <section className="py-12 px-6 sm:px-10">
       <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Pricing</h1>
@@ -183,12 +188,12 @@ const Pricing = () => {
               className="mt-6 overflow-x-hidden scrollbar-none overflow-hidden"
               ref={scrollContainerRef}
               onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
             >
               <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[
