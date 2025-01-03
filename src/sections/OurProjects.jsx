@@ -4,6 +4,16 @@ import sowbeezImage from '../assets/images/sowBeez.png';
 import djangoImage from '../assets/images/django.png';
 import berealLogo from '../assets/icons/bereal.png';
 
+const styles = {
+  rotateY180: {
+    transform: 'rotateY(180deg)',
+  },
+  transformBase: {
+    transformStyle: 'preserve-3d',
+    transition: 'transform 0.5s',
+  },
+};
+
 // Example project data
 const projects = [
   {
@@ -98,12 +108,13 @@ function OurProjects() {
   const [visibleCount, setVisibleCount] = useState(6); // Number of projects to show initially
 
   const handleFlip = (index) => {
-    console.log(`Card at index ${index} clicked. Current flipped state: ${flipped[index]}`);
+    console.log(
+      `Card at index ${index} clicked. Current flipped state: ${flipped[index]}`
+    );
     const updatedFlipped = [...flipped];
     updatedFlipped[index] = !updatedFlipped[index];
     setFlipped(updatedFlipped);
   };
-  
 
   const handleViewMore = () => {
     if (visibleCount < projects.length) {
@@ -136,11 +147,10 @@ function OurProjects() {
               }}
             >
               <div
-                className={`absolute inset-0 transition-transform duration-500 transform ${
-                  flipped[index] ? 'rotate-y-180' : ''
-                }`}
+                className="absolute inset-0"
                 style={{
-                  transformStyle: 'preserve-3d',
+                  ...styles.transformBase,
+                  ...(flipped[index] ? styles.rotateY180 : {}),
                 }}
                 onClick={() => handleFlip(index)}
               >
