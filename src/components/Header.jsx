@@ -43,10 +43,10 @@ const Header = () => {
           <a href="#services">Services</a>
         </li>
         <li className="hover:cursor-pointer">
-        <a href="#whoWeAre">Who we are</a>
+          <a href="#whoWeAre">Who we are</a>
         </li>
         <li className="hover:cursor-pointer">
-        <a href="#ourProjects">ourProjects</a>
+          <a href="#ourProjects">ourProjects</a>
         </li>
         <li className="hover:cursor-pointer">
           <a href="#pricing">Pricing</a>
@@ -94,10 +94,10 @@ const Header = () => {
           <a href="#services">Services</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
-        <a href="#whoWeAre">Who we are</a>
+          <a href="#whoWeAre">Who we are</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
-        <a href="#ourProjects">ourProjects</a>
+          <a href="#ourProjects">ourProjects</a>
         </li>
         <li className="list-none hover:cursor-pointer text-darkBlue">
           <a href="#pricing">Pricing</a>
