@@ -1,11 +1,18 @@
 import React from 'react';
 import whatsAppButton from '../assets/icons/whatsAppButton.png';
-import '../styles/whatsAppButton.css'
+import '../styles/whatsAppButton.css';
 
 const WhatsAppButton = () => {
+  const handleRedirect = () => {
+    window.open(
+      'https://api.whatsapp.com/message/MEPKHLI76T5BL1?autoload=1&app_absent=0',
+      '_blank'
+    );
+  };
+
   return (
-    /* From Uiverse.io by Gaurang7717 */
-    <button className="WABtn">
+    <button className="WABtn" onClick={handleRedirect}>
+      {/* WhatsApp Icon and Text */}
       <div className="sign">
         <svg className="socialSvg whatsappSvg" viewBox="0 0 16 16">
           <path
@@ -14,10 +21,8 @@ const WhatsAppButton = () => {
         </svg>
       </div>
 
-      <div className="text">Whatsapp</div>
+      <div className="text">WhatsApp</div>
     </button>
-
-   
   );
 };
 
