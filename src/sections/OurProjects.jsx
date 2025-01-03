@@ -116,7 +116,7 @@ function OurProjects() {
   };
 
   return (
-    <section className="our-projects py-10 px-6 sm:px-12">
+    <section className="our-projects py-10 px-6 sm:px-12" id="ourProjects">
       <div className="text-left flex text-[22px] sm:text-[32px] font-medium mb-10">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Our Projects</h1>
