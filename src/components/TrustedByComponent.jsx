@@ -19,7 +19,7 @@ const TrustedByComponent = () => {
         gradient={true}
         gradientColor="#F7F6F5"
         autoFill="true"
-        pauseOnHover={true}
+        pauseOnHover={false}
         className="hover:cursor-pointer my-12"
       >
         <div className="w-full flex justify-between items-center">

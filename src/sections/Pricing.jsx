@@ -195,11 +195,11 @@ const Pricing = () => {
             >
               <div className="flex space-x-4 cursor-grab active:cursor-grabbing select-none">
                 {[
-                  { brand: 'Airbnb', price: '$40,000', icon: airbnbIcon },
-                  { brand: 'Instagram', price: '$38,000', icon: instagramIcon },
-                  { brand: 'Uber', price: '$42,000', icon: uberIcon },
-                  { brand: 'telegram', price: '$26,000', icon: telegramIcon },
-                  { brand: 'tinder', price: '$22,000', icon: tinderIcon },
+                  { brand: 'Airbnb', price: `${currency}40,000`, icon: airbnbIcon },
+                  { brand: 'Instagram', price: `${currency}38,000`, icon: instagramIcon },
+                  { brand: 'Uber', price: `${currency}42,000`, icon: uberIcon },
+                  { brand: 'telegram', price: `${currency}26,000`, icon: telegramIcon },
+                  { brand: 'tinder', price: `${currency}22,000`, icon: tinderIcon },
                 ].map((item, index) => (
                   <div
                     key={index}
