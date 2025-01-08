@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
-import berealImage from '../assets/images/bereal.png';
-import sowbeezImage from '../assets/images/sowBeez.png';
-import djangoImage from '../assets/images/django.png';
+import podcastImage from '../assets/images/podcast.jpg';
+import kathrynImage from '../assets/images/kathryn.png';
+import clothesImage from '../assets/images/clothes.png';
+import childEducationImage from '../assets/images/childEducation.png';
+import bioFoodImage from '../assets/images/bioFood.png';
+import salesOverviewImage from '../assets/images/salesOverviewImage.png';
+import meditationImage from '../assets/images/meditationImage.png';
+import teamUnityImage from '../assets/images/teamUnity.png';
+import sushiImage from '../assets/images/sushi.png';
+import glamoraImage from '../assets/images/glamoraImage.png';
 import berealLogo from '../assets/icons/bereal.png';
 
 const styles = {
@@ -18,89 +25,74 @@ const styles = {
 const projects = [
   {
     name: 'Bereal',
-    image: berealImage,
+    image: podcastImage,
     logo: berealLogo,
     description:
       'Bereal is your personal companion for capturing and sharing real moments in a visually engaging way.',
   },
   {
     name: 'Sowbeez',
-    image: sowbeezImage,
+    image: kathrynImage,
     logo: berealLogo,
     description:
       'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  },
-  {
-    name: 'Django',
-    image: djangoImage,
-    logo: berealLogo,
-    description:
-      'Django is a powerful backend framework for building scalable and robust web applications efficiently.',
-  },
-  {
-    name: 'Bereal',
-    image: berealImage,
-    logo: berealLogo,
-    description:
-      'Bereal is your personal companion for capturing and sharing real moments in a visually engaging way.',
   },
   {
     name: 'Sowbeez',
-    image: sowbeezImage,
+    image: clothesImage,
     logo: berealLogo,
     description:
       'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  },
-  {
-    name: 'Django',
-    image: djangoImage,
-    logo: berealLogo,
-    description:
-      'Django is a powerful backend framework for building scalable and robust web applications efficiently.',
-  },
-  {
-    name: 'Bereal',
-    image: berealImage,
-    logo: berealLogo,
-    description:
-      'Bereal is your personal companion for capturing and sharing real moments in a visually engaging way.',
   },
   {
     name: 'Sowbeez',
-    image: sowbeezImage,
+    image: childEducationImage,
     logo: berealLogo,
     description:
       'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  },
-  {
-    name: 'Django',
-    image: djangoImage,
-    logo: berealLogo,
-    description:
-      'Django is a powerful backend framework for building scalable and robust web applications efficiently.',
-  },
-  {
-    name: 'Bereal',
-    image: berealImage,
-    logo: berealLogo,
-    description:
-      'Bereal is your personal companion for capturing and sharing real moments in a visually engaging way.',
   },
   {
     name: 'Sowbeez',
-    image: sowbeezImage,
+    image: bioFoodImage,
     logo: berealLogo,
     description:
       'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
   },
   {
-    name: 'Django',
-    image: djangoImage,
+    name: 'Sowbeez',
+    image: salesOverviewImage,
     logo: berealLogo,
     description:
-      'Django is a powerful backend framework for building scalable and robust web applications efficiently.',
+      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
   },
-  // Add more projects as needed
+  {
+    name: 'Sowbeez',
+    image: meditationImage,
+    logo: berealLogo,
+    description:
+      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+  },
+ {
+    name: 'Sowbeez',
+    image: teamUnityImage,
+    logo: berealLogo,
+    description:
+      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+  }, 
+ {
+    name: 'Sowbeez',
+    image: sushiImage,
+    logo: berealLogo,
+    description:
+      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+  }, 
+ {
+    name: 'Sowbeez',
+    image: glamoraImage,
+    logo: berealLogo,
+    description:
+      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+  }, 
 ];
 
 function OurProjects() {
@@ -136,7 +128,7 @@ function OurProjects() {
         {projects.slice(0, visibleCount).map((project, index) => (
           <div
             key={index}
-            className="relative w-full max-w-[480px] mx-auto"
+            className="relative w-full max-w-[480px] mx-auto cursor-pointer"
             style={{ perspective: '1000px' }} // Perspective for the flip effect
           >
             <div
