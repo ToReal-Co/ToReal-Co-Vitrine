@@ -20,7 +20,7 @@ const TrustedByComponent = () => {
         gradientColor="#F7F6F5"
         autoFill="true"
         pauseOnHover={false}
-        className="hover:cursor-pointer my-12"
+        className="my-12"
       >
         <div className="w-full flex justify-between items-center">
           <img className="px-12 h-8" src={celio} alt="Image description" />
