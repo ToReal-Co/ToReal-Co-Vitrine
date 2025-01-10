@@ -9,7 +9,16 @@ import meditationImage from '../assets/images/meditationImage.png';
 import teamUnityImage from '../assets/images/teamUnity.png';
 import sushiImage from '../assets/images/sushi.png';
 import glamoraImage from '../assets/images/glamoraImage.png';
-import berealLogo from '../assets/icons/bereal.png';
+import castMateLogo from '../assets/images/castmateLogo.svg';
+import tagnaLogo from '../assets/images/tagnaLogo.svg';
+import dapperdashLogo from '../assets/images/dapperdashLogo.svg';
+import puretiopiaLogo from '../assets/images/puretopiaLogo.svg';
+import AMLogo from '../assets/images/AMLogo.svg';
+import SyncroWaveLogo from '../assets/images/syncroWaveLoge.svg';
+import teamUnityLogo from '../assets/images/teamUnityLogo.svg';
+import sushiManLogo from '../assets/images/sushiManLogo.svg';
+import glamoraLogo from '../assets/images/glamoraLogo.svg';
+import serenityLogo from '../assets/images/serenityLogo.svg';
 
 const styles = {
   rotateY180: {
@@ -24,75 +33,85 @@ const styles = {
 // Example project data
 const projects = [
   {
-    name: 'Bereal',
+    name: 'CastMate',
     image: podcastImage,
-    logo: berealLogo,
+    logo: castMateLogo,
+    logoWithText: false,
     description:
-      'Bereal is your personal companion for capturing and sharing real moments in a visually engaging way.',
+      'Find and listen to podcasts according to your preferences with simplicity. Get access to a broad range of offline content, an intelligent recommendation system, and a huge collection of media. All on a single app!',
   },
   {
-    name: 'Sowbeez',
+    name: 'Tagna',
     image: kathrynImage,
-    logo: berealLogo,
+    logo: tagnaLogo,
+    logoWithText: true,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'This app helps you build relationships through dating, making it easier to find love or friendship. With smart matching, chatting, and customizable profiles, connecting with others has never been simpler.',
   },
   {
-    name: 'Sowbeez',
+    name: 'Dapperdash',
     image: clothesImage,
-    logo: berealLogo,
+    logo: dapperdashLogo,
+    logoWithText: true,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'An application that allows you to shop for clothes in the most interesting of ways. Go through a variety of styles, mix and match clothes to create outfits of your choice and much more, all while being catered for.',
   },
   {
-    name: 'Sowbeez',
+    name: 'Puretopia',
     image: childEducationImage,
-    logo: berealLogo,
+    logo: puretiopiaLogo,
+    logoWithText: true,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'An educational platform for preschoolers, featuring fun games and activities that support early learning and development.',
   },
   {
-    name: 'Sowbeez',
+    name: 'Avocado Mood',
     image: bioFoodImage,
-    logo: berealLogo,
+    logo: AMLogo,
+    logoWithText: false,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'Discover bio food with Avocado Mood. Find expert tips, healthy recipes, and insights on organic food to help you make nutritious choices for a balanced lifestyle.',
   },
   {
-    name: 'Sowbeez',
+    name: 'SyncroWave',
     image: salesOverviewImage,
-    logo: berealLogo,
+    logo: SyncroWaveLogo,
+    logoWithText: false,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'Manage your finances effortlessly with SyncroWave, an all-in-one dashboard designed to help you track your income, expenses, investments, and budgets. Get real-time insights and easily stay on top of your financial goals.',
   },
   {
-    name: 'Sowbeez',
+    name: 'Serenity',
     image: meditationImage,
-    logo: berealLogo,
+    logo: serenityLogo,
+    logoWithText: false,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
+      'Find peace with Serenity, the meditation app designed for relaxation, stress relief, and enhanced focus in just a few minutes each day.',
   },
- {
-    name: 'Sowbeez',
+  {
+    name: 'Team Unity',
     image: teamUnityImage,
-    logo: berealLogo,
+    logo: teamUnityLogo,
+    logoWithText: false,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  }, 
- {
-    name: 'Sowbeez',
+      'Enhance team collaboration and productivity with Team Unity. Organize tasks, monitor performance, and simplify communication, all within a single app for effortless teamwork.',
+  },
+  {
+    name: 'SushiMan',
     image: sushiImage,
-    logo: berealLogo,
+    logo: sushiManLogo,
+    logoWithText: true,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  }, 
- {
-    name: 'Sowbeez',
+      'Sushiman is the app that allows you to discover, personalize and order your favorite sushi dishes easily, and enjoy the best sushi.',
+  },
+  {
+    name: 'Glamora',
     image: glamoraImage,
-    logo: berealLogo,
+    logo: glamoraLogo,
+    logoWithText: false,
     description:
-      'SowBeez helps you track and improve emotional well-being with an intuitive interface for daily mood logging.',
-  }, 
+      'Shop fashion with Glamora, your ultimate app for trendy clothing, accessories, and more. Experience hassle-free ordering, secure payments, and quick delivery. Stay stylish with just a few taps!',
+  },
 ];
 
 function OurProjects() {
@@ -119,7 +138,7 @@ function OurProjects() {
   };
 
   return (
-    <section className="our-projects py-10 px-6 sm:px-12" id="ourProjects">
+    <section className="our-projects py-8 px-6 sm:px-12" id="ourProjects">
       <div className="text-left flex text-[22px] sm:text-[32px] font-medium mb-10">
         <h1 className="text-trBlue">✦</h1>
         <h1 className="ml-2 text-darkBlue">Our Projects</h1>
@@ -175,9 +194,11 @@ function OurProjects() {
                       alt={`${project.name} logo`}
                       className="h-10"
                     />
-                    <h3 className="text-lg text-white font-medium">
-                      {project.name}
-                    </h3>
+                    {!project.logoWithText ? (
+                      <h3 className="text-lg text-white font-medium">
+                        {project.name}
+                      </h3>
+                    ) : null}
                   </div>
                   <p className="mt-4 md:text-[16px] lg:text-[18px] text-[16px] text-white leading-relaxed">
                     {project.description}
