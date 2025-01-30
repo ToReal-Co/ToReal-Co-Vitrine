@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import logo from '../assets/images/logoToReal.svg';
 import BookaCallButton from '../common/BookACallButton';
 import 'boxicons';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,6 +55,9 @@ const Header = () => {
         <li className="hover:cursor-pointer">
           <a href="#FAQ">FAQ</a>
         </li>
+        <li className="hover:cursor-pointer">
+          <Link to="/blog">Blog</Link>
+         </li>
       </ul>
 
       <BookaCallButton
