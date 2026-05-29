@@ -22,7 +22,7 @@ const servicesData = [
 const Services = () => {
   const handleRedirect = () => {
     window.open(
-      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      'https://calendly.com/ahmedmahouachi66/project-discussion',
       '_blank'
     );
   };
@@ -40,7 +40,7 @@ const Services = () => {
           <div className=" flex justify-center mt-4 sm:mt-0 relative sm:order-1 order-last">
             {/* Image */}
             <a
-              href="https://calendly.com/d/crkr-jbr-n53/one-off-meeting"
+              href="https://calendly.com/ahmedmahouachi66/project-discussion"
               target="_blank"
             >
               <img

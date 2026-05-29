@@ -4,7 +4,7 @@ import BookaCallButton from '../common/BookACallButton';
 const CallToActionCard = ({ className = '' }) => {
   const handleRedirect = () => {
     window.open(
-      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      'https://calendly.com/ahmedmahouachi66/project-discussion',
       '_blank'
     );
   };

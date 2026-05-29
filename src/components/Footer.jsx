@@ -5,12 +5,18 @@ import linkedinIcon from '../assets/icons/linkedin.svg';
 import xIcon from '../assets/icons/x.svg';
 import whatsappIcon from '../assets/icons/whatsApp.svg';
 
+const WHATSAPP_URL = 'https://wa.me/21658693946';
+
 const Footer = () => {
   const handleRedirect = () => {
     window.open(
-      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      'https://calendly.com/ahmedmahouachi66/project-discussion',
       '_blank'
     );
+  };
+
+  const handleWhatsApp = () => {
+    window.open(WHATSAPP_URL, '_blank');
   };
 
   return (
@@ -66,11 +72,18 @@ const Footer = () => {
               className="w-6 md:w-8 h-6 md:h-8"
             />
             <img src={xIcon} alt="x" className="w-6 md:w-8 h-6 md:h-8" />
-            <img
-              src={whatsappIcon}
-              alt="whatsapp"
-              className="w-6 md:w-8 h-6 md:h-8"
-            />
+            <button
+              type="button"
+              onClick={handleWhatsApp}
+              className="cursor-pointer"
+              aria-label="WhatsApp"
+            >
+              <img
+                src={whatsappIcon}
+                alt="whatsapp"
+                className="w-6 md:w-8 h-6 md:h-8"
+              />
+            </button>
           </div>
         </div>
       </div>
