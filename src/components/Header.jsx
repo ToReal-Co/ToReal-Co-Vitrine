@@ -10,7 +10,7 @@ const Header = () => {
 
   const handleRedirect = () => {
     window.open(
-      'https://calendly.com/d/crkr-jbr-n53/one-off-meeting',
+      'https://calendly.com/ahmedmahouachi66/project-discussion',
       '_blank'
     );
   };
@@ -55,9 +55,6 @@ const Header = () => {
         <li className="hover:cursor-pointer">
           <a href="#FAQ">FAQ</a>
         </li>
-        <li className="hover:cursor-pointer">
-          <Link to="/blog">Blog</Link>
-         </li>
       </ul>
 
       <BookaCallButton

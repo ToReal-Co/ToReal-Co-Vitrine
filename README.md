@@ -19,7 +19,9 @@ cd ToReal-Co
 
 ### 2. Install Dependencies
 
-Make sure Node.js is installed on your machine. Then, install all the necessary dependencies by running the following command in the project directory:
+Installez **Node.js 26** (ou une version plus récente). Avec [nvm](https://github.com/nvm-sh/nvm) : `nvm install` puis `nvm use` à la racine du projet (fichier `.nvmrc`).
+
+Ensuite, installez les dépendances :
 
 ```bash
 npm install

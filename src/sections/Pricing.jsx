@@ -7,6 +7,9 @@ import uberIcon from '../assets/brands/uberIcon.png';
 import tinderIcon from '../assets/brands/tinderIcon.png';
 import telegramIcon from '../assets/brands/telegramIcon.png';
 
+const CALENDLY_URL =
+  'https://calendly.com/ahmedmahouachi66/project-discussion';
+
 const Pricing = () => {
   const [currency, setCurrency] = useState('USD');
   const [conversionRate, setConversionRate] = useState(1);
@@ -47,6 +50,10 @@ const Pricing = () => {
     return (
       Math.round(priceUSD * conversionRate).toLocaleString() + ` ${currency}`
     );
+  };
+
+  const handleBookCall = () => {
+    window.open(CALENDLY_URL, '_blank');
   };
 
   const handleMouseDown = (e) => {
@@ -105,7 +112,7 @@ const Pricing = () => {
               iOS & Android apps, landing page
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              +{convertPrice(12999)}
+              ± {convertPrice(4999)}
             </h3>
             <ul className="mt-6 space-y-2">
               {[
@@ -127,7 +134,11 @@ const Pricing = () => {
               ))}
             </ul>
           </div>
-          <button className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-darkBlue transition">
+          <button
+            type="button"
+            onClick={handleBookCall}
+            className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-darkBlue transition"
+          >
             Book a Call
           </button>
         </div>
@@ -141,7 +152,7 @@ const Pricing = () => {
               iOS & Android apps, website, Back-office
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              +{convertPrice(17999)}
+              ± {convertPrice(9999)}
             </h3>
             <ul className="mt-6 space-y-2">
               {[
@@ -165,7 +176,11 @@ const Pricing = () => {
               ))}
             </ul>
           </div>
-          <button className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-darkBlue transition">
+          <button
+            type="button"
+            onClick={handleBookCall}
+            className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-darkBlue transition"
+          >
             Book a Call
           </button>
         </div>
@@ -177,7 +192,7 @@ const Pricing = () => {
               iOS & Android apps, website, AI integration, Back-office
             </p>
             <h3 className="text-[28px] sm:text-[34px] font-semibold mt-4">
-              +{convertPrice(27000)}
+              ± {convertPrice(24999)}
             </h3>
             <p className="text-[12px] sm:text-[14px] font-normal mt-6">
               Develop an app similar to
@@ -197,23 +212,23 @@ const Pricing = () => {
                 {[
                   {
                     brand: 'Airbnb',
-                    price: `${currency}40,000`,
+                    price: `${currency}37,000`,
                     icon: airbnbIcon,
                   },
                   {
                     brand: 'Instagram',
-                    price: `${currency}38,000`,
+                    price: `${currency}35,000`,
                     icon: instagramIcon,
                   },
-                  { brand: 'Uber', price: `${currency}42,000`, icon: uberIcon },
+                  { brand: 'Uber', price: `${currency}39,000`, icon: uberIcon },
                   {
                     brand: 'telegram',
-                    price: `${currency}26,000`,
+                    price: `${currency}24,000`,
                     icon: telegramIcon,
                   },
                   {
                     brand: 'tinder',
-                    price: `${currency}22,000`,
+                    price: `${currency}20,000`,
                     icon: tinderIcon,
                   },
                 ].map((item, index) => (
@@ -237,7 +252,11 @@ const Pricing = () => {
             </div>
           </div>
 
-          <button className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-lightBlue transition">
+          <button
+            type="button"
+            onClick={handleBookCall}
+            className="mt-6 bg-trBlue text-white py-2 px-6 mx-auto rounded-md hover:bg-lightBlue transition"
+          >
             Book a Call
           </button>
         </div>

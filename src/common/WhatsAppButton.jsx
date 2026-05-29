@@ -4,7 +4,7 @@ import '../styles/whatsAppButton.css';
 const WhatsAppButton = () => {
   const handleRedirect = () => {
     window.open(
-      'https://api.whatsapp.com/message/MEPKHLI76T5BL1?autoload=1&app_absent=0',
+      'https://wa.me/21658693946',
       '_blank'
     );
   };
