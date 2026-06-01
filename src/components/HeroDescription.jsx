@@ -43,13 +43,13 @@ const HeroDescription = () => {
           color="dark"
           onClick={(e) => {
             e.preventDefault(); // Prevent the default anchor behavior
-            const pricingSection = document.querySelector('#pricing');
-            if (pricingSection) {
-              pricingSection.scrollIntoView({ behavior: 'smooth' });
+            const howWeWorkSection = document.querySelector('#how-we-work');
+            if (howWeWorkSection) {
+              howWeWorkSection.scrollIntoView({ behavior: 'smooth' });
             }
           }}
         >
-          View pricing
+          How we work
         </BookaCallButton>
       </div>
     </div>

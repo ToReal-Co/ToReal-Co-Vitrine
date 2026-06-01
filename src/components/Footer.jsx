@@ -34,7 +34,7 @@ const Footer = () => {
             <div>Services</div>
             <div>Who We Are</div>
             <div>Projects</div>
-            <div>Pricing</div>
+            <div>How We Work</div>
           </div>
           <div className="text-[20px] md:text-[24px] font-normal">FAQs</div>
         </div>
