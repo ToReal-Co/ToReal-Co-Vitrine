@@ -147,7 +147,7 @@ function OurProjects() {
         {projects.slice(0, visibleCount).map((project, index) => (
           <div
             key={index}
-            className="relative w-full max-w-[480px] mx-auto cursor-pointer"
+            className="group relative w-full max-w-[480px] mx-auto cursor-pointer"
             style={{ perspective: '1000px' }} // Perspective for the flip effect
           >
             <div
@@ -167,7 +167,7 @@ function OurProjects() {
               >
                 {/* Front Side */}
                 <div
-                  className="absolute inset-0 flex flex-col justify-center items-center rounded-[20px] shadow-md"
+                  className="absolute inset-0 flex flex-col justify-center items-center rounded-[20px] shadow-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.015]"
                   style={{
                     transform: 'rotateY(0deg)',
                     backfaceVisibility: 'hidden',
@@ -178,6 +178,10 @@ function OurProjects() {
                     alt={project.name}
                     className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
                   />
+                  <span className="absolute bottom-3 left-3 rounded-full bg-darkBlue/80 px-3 py-1 text-xs font-medium text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                    <span className="sm:hidden">Tap to flip</span>
+                    <span className="hidden sm:inline">Flip card</span>
+                  </span>
                 </div>
 
                 {/* Back Side */}

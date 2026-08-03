@@ -27,25 +27,44 @@ const OurPartners = ({ className = '' }) => {
         autoplay={{ delay: 7000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         loop={true}
-        className="w-full max-w-[480px] h-full min-h-[400px] m-0 active:cursor-grabbing hover:cursor-grab"
+        className="w-full max-w-[480px] h-full min-h-[250px] sm:min-h-[320px] lg:min-h-[400px] m-0 active:cursor-grabbing hover:cursor-grab"
       >
-        {partners.map((partner, index) => (
-          <SwiperSlide
-            key={index}
-            className="flex flex-col items-center justify-center "
-          >
-            <a href={partner.link} target="_blank">
+        {partners.map((partner, index) => {
+          const content = (
+            <>
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className="w-32 h-32 lg:mt-0 mt-20 mb-8 lg:mb-0 rounded-full"
+                className="w-24 h-24 sm:w-32 sm:h-32 mt-6 sm:mt-10 lg:mt-0 mb-4 sm:mb-6 rounded-full object-cover object-center"
               />
-              <p className="text-darkBlue mt-4 text-[18px] text-center">
+              <p className="text-darkBlue mt-2 text-[18px] text-center">
                 {partner.name}
               </p>
-            </a>
-          </SwiperSlide>
-        ))}
+            </>
+          );
+
+          return (
+            <SwiperSlide
+              key={index}
+              className="flex flex-col items-center justify-center"
+            >
+              {partner.link ? (
+                <a
+                  href={partner.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex flex-col items-center justify-center text-center"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div className="w-full flex flex-col items-center justify-center text-center">
+                  {content}
+                </div>
+              )}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );
