@@ -1,6 +1,6 @@
 import React from 'react';
 import BookaCallButton from '../common/BookACallButton';
-import logo from '../assets/images/logoToReal.svg';
+import logo from '../assets/images/logoOnLight.svg';
 import linkedinIcon from '../assets/icons/linkedin.svg';
 import xIcon from '../assets/icons/x.svg';
 import whatsappIcon from '../assets/icons/whatsApp.svg';
@@ -25,7 +25,7 @@ const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
         {/* Left Section - Logo */}
         <div className="flex justify-center md:justify-start">
-          <img src={logo} alt="ToReal&Co Logo" className="w-24 md:w-30" />
+          <img src={logo} alt="toReal Studio" className="w-28 md:w-32" />
         </div>
 
         {/* Middle Section - Links */}
@@ -48,15 +48,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mt-10">
         {/* Left Bottom - Copyright */}
         <div className="text-center md:text-left text-[14px] md:text-[18px] font-normal">
-          ©2025 ToReal&Co
-        </div>
-
-        {/* Middle Bottom - Address */}
-        <div className="text-center text-[14px] md:text-[16px] text-trBlue">
-          13 Rue au Maire, Paris, France
+          ©2026 toReal Studio
         </div>
 
         {/* Right Bottom - Social Media & Slogan */}

@@ -13,7 +13,7 @@ const PresentedIn = ({ className = '' }) => {
 
       {/* Marquee */}
       <div className="w-full overflow-hidden">
-        <Marquee autoFill="true">
+        <Marquee autoFill>
           <div className="flex justify-between items-center whitespace-nowrap">
             <img className="px-12 h-8" src={fiver} alt="Image description" />
             <img

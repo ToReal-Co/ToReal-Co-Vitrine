@@ -13,9 +13,14 @@ const servicesData = [
     description: 'Responsive websites with secure backend and ongoing support.',
   },
   {
-    title: 'UI UX Design',
+    title: 'Desktop Development',
     description:
-      'Intuitive designs with wireframes and prototypes for seamless user experiences.',
+      'Cross-platform desktop apps built for performance, reliability, and native feel.',
+  },
+  {
+    title: 'AI Workflows',
+    description:
+      'Automating processes with intelligent AI pipelines that save time and scale with you.',
   },
 ];
 

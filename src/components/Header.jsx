@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import logo from '../assets/images/logoToReal.svg';
+import logo from '../assets/images/logoOnLight.svg';
 import BookaCallButton from '../common/BookACallButton';
 import 'boxicons';
 import { Link } from "react-router-dom";
@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <header className="flex justify-between items-center py-8 h-auto px-8">
       <a href="/">
-        <img src={logo} alt="" className="w-24" />
+        <img src={logo} alt="toReal Studio" className="w-28 md:w-32" />
       </a>
       <ul className="hidden lg:flex items-center gap-12 text-lg font-medium text-black z-50">
         <li className="hover:cursor-pointer">
