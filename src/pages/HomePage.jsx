@@ -2,6 +2,9 @@ import React from 'react';
 import Projects from '../sections/OurProjects';
 import HowWeWork from '../sections/HowWeWork';
 import HeroSection from '../sections/Hero';
+import Testimonials from '../sections/Testimonials';
+import Stack from '../sections/Stack';
+import Contact from '../sections/Contact';
 import Footer from '../components/Footer';
 import Faq from '../sections/Faq';
 import WhatsAppButton from '../common/WhatsAppButton';
@@ -12,27 +15,36 @@ import SectionReveal from '../common/SectionReveal';
 
 const HomePage = () => {
   return (
-    <div className=" h-full w-full">
+    <div className="relative min-h-screen w-full">
       <Header />
-      <SectionReveal delay={0}>
+      <main id="top" className="relative">
         <HeroSection />
-      </SectionReveal>
-      <SectionReveal delay={40}>
-        <Services />
-      </SectionReveal>
-      <SectionReveal delay={80}>
-        <WhoWeAre />
-      </SectionReveal>
-      <SectionReveal delay={120}>
-        <Projects />
-      </SectionReveal>
-      <SectionReveal delay={160}>
-        <HowWeWork />
-      </SectionReveal>
-      <SectionReveal delay={200}>
-        <Faq />
-      </SectionReveal>
-      <SectionReveal delay={240}>
+        <SectionReveal delay={0}>
+          <Services />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <WhoWeAre />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <Projects />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <HowWeWork />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <Testimonials />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <Stack />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <Faq />
+        </SectionReveal>
+        <SectionReveal delay={0}>
+          <Contact />
+        </SectionReveal>
+      </main>
+      <SectionReveal delay={0}>
         <Footer />
       </SectionReveal>
       <WhatsAppButton />

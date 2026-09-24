@@ -1,229 +1,282 @@
-import React, { useState } from 'react';
-import podcastImage from '../assets/images/podcast.jpg';
-import kathrynImage from '../assets/images/kathryn.png';
-import clothesImage from '../assets/images/clothes.png';
-import childEducationImage from '../assets/images/childEducation.png';
-import bioFoodImage from '../assets/images/bioFood.png';
-import salesOverviewImage from '../assets/images/salesOverviewImage.png';
-import meditationImage from '../assets/images/meditationImage.png';
-import teamUnityImage from '../assets/images/teamUnity.png';
-import sushiImage from '../assets/images/sushi.png';
-import glamoraImage from '../assets/images/glamoraImage.png';
-import castMateLogo from '../assets/images/castmateLogo.svg';
-import tagnaLogo from '../assets/images/tagnaLogo.svg';
-import dapperdashLogo from '../assets/images/dapperdashLogo.svg';
-import puretiopiaLogo from '../assets/images/puretopiaLogo.svg';
-import AMLogo from '../assets/images/AMLogo.svg';
-import SyncroWaveLogo from '../assets/images/syncroWaveLoge.svg';
-import teamUnityLogo from '../assets/images/teamUnityLogo.svg';
-import sushiManLogo from '../assets/images/sushiManLogo.svg';
-import glamoraLogo from '../assets/images/glamoraLogo.svg';
-import serenityLogo from '../assets/images/serenityLogo.svg';
+import React, { useEffect, useState } from 'react';
+import TiltCard, { CardSpotlight } from '../common/TiltCard';
+import { getCmsProjects } from '../lib/projectsApi';
+import SectionHeading from '../common/SectionHeading';
+import podcastImage from '../assets/images/podcast.webp';
+import clothesImage from '../assets/images/clothes.webp';
+import childEducationImage from '../assets/images/childEducation.webp';
+import bioFoodImage from '../assets/images/bioFood.webp';
+import salesOverviewImage from '../assets/images/salesOverviewImage.webp';
+import meditationImage from '../assets/images/meditationImage.webp';
+import teamUnityImage from '../assets/images/teamUnity.webp';
+import sushiImage from '../assets/images/sushi.webp';
+import glamoraImage from '../assets/images/glamoraImage.webp';
+import secretHitlerImage from '../assets/images/secret-hitler-web-poster-square.webp';
 
-const styles = {
-  rotateY180: {
-    transform: 'rotateY(180deg)',
-  },
-  transformBase: {
-    transformStyle: 'preserve-3d',
-    transition: 'transform 0.5s',
-  },
-};
-
-// Example project data
-const projects = [
+const FALLBACK_PROJECTS = [
   {
     name: 'CastMate',
+    category: 'Mobile',
+    kind: 'Mobile app',
+    year: '2025',
     image: podcastImage,
-    logo: castMateLogo,
-    logoWithText: false,
     description:
-      'Find and listen to podcasts according to your preferences with simplicity. Get access to a broad range of offline content, an intelligent recommendation system, and a huge collection of media. All on a single app!',
+      'Find and listen to podcasts according to your preferences with simplicity. Offline content, an intelligent recommendation system, and a huge collection of media. All on a single app!',
   },
   {
-    name: 'Tagna',
-    image: kathrynImage,
-    logo: tagnaLogo,
-    logoWithText: true,
+    name: 'Secret Hitler',
+    category: 'Web',
+    kind: 'Web experience',
+    year: '2025',
+    image: secretHitlerImage,
     description:
-      'This app helps you build relationships through dating, making it easier to find love or friendship. With smart matching, chatting, and customizable profiles, connecting with others has never been simpler.',
+      'The social deduction game, online. Betrayal, votes and laws around the same table — for 5 to 10 players, in French and English.',
+    link: 'https://secret-hetler.netlify.app/',
   },
   {
     name: 'Dapperdash',
+    category: 'E-commerce',
+    kind: 'E-commerce',
+    year: '2024',
     image: clothesImage,
-    logo: dapperdashLogo,
-    logoWithText: true,
-    description:
-      'An application that allows you to shop for clothes in the most interesting of ways. Go through a variety of styles, mix and match clothes to create outfits of your choice and much more, all while being catered for.',
+    description: 'A mobile fashion store with curated collections, categories and a fast checkout.',
   },
   {
     name: 'Puretopia',
+    category: 'Web',
+    kind: 'Website',
+    year: '2024',
     image: childEducationImage,
-    logo: puretiopiaLogo,
-    logoWithText: true,
     description:
       'An educational platform for preschoolers, featuring fun games and activities that support early learning and development.',
   },
   {
     name: 'Avocado Mood',
+    category: 'Web',
+    kind: 'Website',
+    year: '2024',
     image: bioFoodImage,
-    logo: AMLogo,
-    logoWithText: false,
     description:
-      'Discover bio food with Avocado Mood. Find expert tips, healthy recipes, and insights on organic food to help you make nutritious choices for a balanced lifestyle.',
+      'Discover bio food with Avocado Mood — expert tips, healthy recipes and insights on organic food for a balanced lifestyle.',
   },
   {
     name: 'SyncroWave',
+    category: 'UI/UX',
+    kind: 'Product design',
+    year: '2025',
     image: salesOverviewImage,
-    logo: SyncroWaveLogo,
-    logoWithText: false,
-    description:
-      'Manage your finances effortlessly with SyncroWave, an all-in-one dashboard designed to help you track your income, expenses, investments, and budgets. Get real-time insights and easily stay on top of your financial goals.',
+    description: 'A sales analytics dashboard: overview, insights and targets in one screen.',
   },
   {
     name: 'Serenity',
+    category: 'Mobile',
+    kind: 'Mobile app',
+    year: '2024',
     image: meditationImage,
-    logo: serenityLogo,
-    logoWithText: false,
     description:
-      'Find peace with Serenity, the meditation app designed for relaxation, stress relief, and enhanced focus in just a few minutes each day.',
+      'Find peace with Serenity, the meditation app designed for relaxation, stress relief, and enhanced focus in just a few minutes a day.',
   },
   {
     name: 'Team Unity',
+    category: 'Web',
+    kind: 'Website',
+    year: '2024',
     image: teamUnityImage,
-    logo: teamUnityLogo,
-    logoWithText: false,
     description:
-      'Enhance team collaboration and productivity with Team Unity. Organize tasks, monitor performance, and simplify communication, all within a single app for effortless teamwork.',
+      'Enhance team collaboration and productivity — organize tasks, monitor performance, and simplify communication in one app.',
   },
   {
     name: 'SushiMan',
+    category: 'Mobile',
+    kind: 'Mobile app',
+    year: '2024',
     image: sushiImage,
-    logo: sushiManLogo,
-    logoWithText: true,
     description:
-      'Sushiman is the app that allows you to discover, personalize and order your favorite sushi dishes easily, and enjoy the best sushi.',
+      'Discover, personalize and order your favorite sushi dishes easily, and enjoy the best sushi.',
   },
   {
     name: 'Glamora',
+    category: 'E-commerce',
+    kind: 'E-commerce',
+    year: '2024',
     image: glamoraImage,
-    logo: glamoraLogo,
-    logoWithText: false,
     description:
-      'Shop fashion with Glamora, your ultimate app for trendy clothing, accessories, and more. Experience hassle-free ordering, secure payments, and quick delivery. Stay stylish with just a few taps!',
+      'Shop fashion with Glamora — trendy clothing, accessories, hassle-free ordering and secure payments.',
   },
 ];
 
 function OurProjects() {
-  const [flipped, setFlipped] = useState(Array(projects.length).fill(false));
-  const [visibleCount, setVisibleCount] = useState(6); // Number of projects to show initially
+  const [projects, setProjects] = useState(FALLBACK_PROJECTS);
+  const [filter, setFilter] = useState('All');
+  const [hovered, setHovered] = useState(null);
+  const [desktop, setDesktop] = useState(true);
 
-  const handleFlip = (index) => {
-    console.log(
-      `Card at index ${index} clicked. Current flipped state: ${flipped[index]}`
-    );
-    const updatedFlipped = [...flipped];
-    updatedFlipped[index] = !updatedFlipped[index];
-    setFlipped(updatedFlipped);
-  };
+  useEffect(() => {
+    const onResize = () => setDesktop(window.innerWidth >= 900);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
-  const handleViewMore = () => {
-    if (visibleCount < projects.length) {
-      // Show 3 more projects or all remaining projects
-      setVisibleCount((prev) => Math.min(prev + 3, projects.length));
-    } else {
-      // Reset to show the initial 6 projects
-      setVisibleCount(6);
-    }
-  };
+  useEffect(() => {
+    let cancelled = false;
+    getCmsProjects().then((cmsProjects) => {
+      if (cancelled || !cmsProjects) return;
+      const mapped = cmsProjects
+        .slice()
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .map((p) => ({
+          name: p.name,
+          category: p.category,
+          kind: p.category,
+          year: p.year || '',
+          description: p.description,
+          link: p.link || undefined,
+          image: p.imageUrl,
+        }));
+      setProjects(mapped);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const cats = ['All', ...Array.from(new Set(projects.map((p) => p.category).filter(Boolean)))];
+  const shown = filter === 'All' ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <section className="our-projects py-8 px-6 sm:px-12" id="ourProjects">
-      <div className="text-left flex text-[22px] sm:text-[32px] font-medium mb-10">
-        <h1 className="text-trBlue">✦</h1>
-        <h1 className="ml-2 text-darkBlue">Our Projects</h1>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {projects.slice(0, visibleCount).map((project, index) => (
-          <div
-            key={index}
-            className="group relative w-full max-w-[480px] mx-auto cursor-pointer"
-            style={{ perspective: '1000px' }} // Perspective for the flip effect
-          >
-            <div
-              className={`relative w-full h-0`}
-              style={{
-                paddingTop: '100%', // Maintain square aspect ratio
-                transformStyle: 'preserve-3d',
+    <section
+      id="work"
+      className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)]"
+      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+    >
+      <div className="flex flex-wrap items-end justify-between gap-7">
+        <div className="max-w-[760px]">
+          <SectionHeading eyebrow="[03] Our projects" title="Products we designed, built and shipped" />
+        </div>
+        <div
+          role="tablist"
+          aria-label="Filter projects"
+          className="flex flex-wrap gap-1.5 rounded-full border border-darkBlue/[0.07] bg-white/75 p-1.5"
+        >
+          {cats.map((c) => (
+            <button
+              key={c}
+              type="button"
+              role="tab"
+              aria-selected={filter === c}
+              onClick={() => {
+                setFilter(c);
+                setHovered(null);
               }}
+              className={`rounded-full px-[18px] py-2.5 text-[14px] font-semibold transition-colors duration-250 ${
+                filter === c ? 'bg-darkBlue text-white' : 'text-muted hover:text-darkBlue'
+              }`}
             >
-              <div
-                className="absolute inset-0"
-                style={{
-                  ...styles.transformBase,
-                  ...(flipped[index] ? styles.rotateY180 : {}),
-                }}
-                onClick={() => handleFlip(index)}
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="mt-12 grid gap-5"
+        style={{
+          gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,340px),1fr))',
+          gridAutoFlow: 'dense',
+        }}
+      >
+        {shown.map((project, index) => {
+          const isHovered = hovered === project.name;
+          const spanFirst = filter === 'All' && index === 0 && desktop;
+
+          return (
+            <TiltCard
+              key={project.name}
+              max={3}
+              spotlight
+              className={spanFirst ? 'sm:col-span-2' : ''}
+            >
+              <article
+                tabIndex={0}
+                role="button"
+                aria-label={`${project.name} — ${project.description}`}
+                onMouseEnter={() => setHovered(project.name)}
+                onMouseLeave={() => setHovered(null)}
+                onFocus={() => setHovered(project.name)}
+                onBlur={() => setHovered(null)}
+                onClick={() => setHovered((prev) => (prev === project.name ? null : project.name))}
+                className="relative h-[clamp(380px,38vw,480px)] cursor-pointer overflow-hidden rounded-[28px] bg-navy shadow-[0_20px_50px_-40px_rgba(6,19,64,0.5)] transition-shadow duration-400"
               >
-                {/* Front Side */}
+                <CardSpotlight color="rgba(91,155,255,.25)" size={420} />
+
                 <div
-                  className="absolute inset-0 flex flex-col justify-center items-center rounded-[20px] shadow-md overflow-hidden transition-transform duration-300 group-hover:scale-[1.015]"
-                  style={{
-                    transform: 'rotateY(0deg)',
-                    backfaceVisibility: 'hidden',
-                  }}
+                  className="absolute inset-0 transition-transform duration-[900ms] ease-out-magnet"
+                  style={{ transform: isHovered ? 'scale(1.07)' : 'scale(1)' }}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
-                  />
-                  <span className="absolute bottom-3 left-3 rounded-full bg-darkBlue/80 px-3 py-1 text-xs font-medium text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                    <span className="sm:hidden">Tap to flip</span>
-                    <span className="hidden sm:inline">Flip card</span>
+                  {project.image && (
+                    <img src={project.image} alt={project.name} loading="lazy" className="h-full w-full object-cover" />
+                  )}
+                </div>
+
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(180deg,rgba(6,19,64,0) 35%,rgba(6,19,64,.55) 62%,rgba(6,19,64,.94) 100%)',
+                  }}
+                />
+
+                <div className="pointer-events-none absolute inset-x-[18px] top-[18px] flex justify-between">
+                  <span className="rounded-full border border-white/25 bg-white/[0.18] px-3 py-[7px] font-mono text-[11px] uppercase tracking-[0.1em] text-white backdrop-blur-md">
+                    {project.kind}
+                  </span>
+                  <span
+                    className="grid h-9 w-9 place-items-center rounded-full bg-white text-[15px] text-darkBlue transition-transform duration-500 ease-out-magnet"
+                    style={{ transform: isHovered ? 'rotate(45deg) scale(1.08)' : 'rotate(0deg)' }}
+                  >
+                    ↗
                   </span>
                 </div>
 
-                {/* Back Side */}
-                <div
-                  className="absolute inset-0 bg-darkBlue p-6 flex flex-col justify-between items-start rounded-[20px] shadow-lg"
-                  style={{
-                    transform: 'rotateY(180deg)',
-                    backfaceVisibility: 'hidden',
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={project.logo}
-                      alt={`${project.name} logo`}
-                      className="h-10"
-                    />
-                    {!project.logoWithText ? (
-                      <h3 className="text-lg text-white font-medium">
-                        {project.name}
-                      </h3>
-                    ) : null}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 p-[26px] text-white">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="text-[clamp(26px,2.4vw,34px)] font-bold tracking-[-0.03em]">{project.name}</h3>
+                    <span className="font-mono text-[12px] text-skyline">{project.year}</span>
                   </div>
-                  <p className="mt-4 md:text-[16px] lg:text-[18px] text-[16px] text-white leading-relaxed">
-                    {project.description}
-                  </p>
+                  <div
+                    className="grid transition-[grid-template-rows] duration-500 ease-out-magnet"
+                    style={{ gridTemplateRows: isHovered ? '1fr' : '0fr' }}
+                  >
+                    <div className="overflow-hidden">
+                      <p
+                        className="mt-3 max-w-[520px] text-[15px] leading-[1.55] text-[#D5DEF3] transition-opacity duration-400"
+                        style={{ opacity: isHovered ? 1 : 0 }}
+                      >
+                        {project.description}
+                        {project.link && (
+                          <>
+                            {' '}
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="pointer-events-auto font-semibold text-electric underline underline-offset-4 hover:text-white"
+                            >
+                              Play now
+                            </a>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <h3 className="text-left mt-4 text-lg font-medium text-darkBlue">
-              {project.name}
-            </h3>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-8 flex justify-center">
-        <button
-          className="bg-trBlue text-white px-6 py-2 rounded-lg shadow-lg hover:bg-darkBlue transition-colors"
-          onClick={handleViewMore}
-        >
-          {visibleCount < projects.length ? 'View More' : 'View Less'}
-        </button>
+              </article>
+            </TiltCard>
+          );
+        })}
       </div>
     </section>
   );

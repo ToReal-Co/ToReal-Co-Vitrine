@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import plusIcon from '../assets/icons/plus.svg';
-import minusIcon from '../assets/icons/minus.svg';
+import React, { useEffect, useState } from 'react';
+import SectionHeading from '../common/SectionHeading';
+import { useBooking } from '../common/BookingContext';
+import { getCmsFaq } from '../lib/faqApi';
+import { setJsonLd } from '../lib/seo';
 
-const faqs = [
+const FALLBACK_FAQS = [
   {
     question: 'How do you ensure the quality of your work?',
     answer: `Quality is built in at every stage—not just at the end. We run a full testing campaign before each release to make sure your product is reliable and ready for users.
@@ -42,7 +44,7 @@ We pick the right combination for your goals—not every tool on every project.`
   },
   {
     question: 'How will we discuss your project?',
-    answer: `We start with a free discovery call (about 30 minutes) booked through Calendly. During the call, we review your idea, goals, budget, and timeline, and outline the next steps together.
+    answer: `We start with a free discovery call (about 30 minutes) — pick a slot right on this site and we'll confirm by email. During the call, we review your idea, goals, budget, and timeline, and outline the next steps together.
 
 You can also reach us in other ways:
 • WhatsApp — for quick messages and short requests (+216 58 693 946).
@@ -53,89 +55,103 @@ After the discovery call, we follow up with a summary and, if needed, a proposal
 ];
 
 const Faq = () => {
-  const [openFaqIndex, setOpenFaqIndex] = useState(null);
-  const [maxHeight, setMaxHeight] = useState({});
-
-  const descriptionRefs = useRef([]);
+  const [faqs, setFaqs] = useState(FALLBACK_FAQS);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const { openBooking } = useBooking();
 
   useEffect(() => {
-    const heights = {};
-    descriptionRefs.current.forEach((ref, index) => {
-      if (ref) heights[index] = ref.scrollHeight;
+    let cancelled = false;
+    getCmsFaq().then((cmsFaqs) => {
+      if (cancelled || !cmsFaqs) return;
+      const sorted = cmsFaqs.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      setFaqs(sorted);
+      setOpenFaqIndex(0);
     });
-    setMaxHeight(heights);
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const toggleFaq = (index) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index);
-  };
+  useEffect(() => {
+    setJsonLd('faq-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    });
+  }, [faqs]);
+
+  const toggleFaq = (index) => setOpenFaqIndex(openFaqIndex === index ? null : index);
 
   return (
-    <section id="FAQ" className="py-12 px-6 sm:px-12">
-      {/* Title */}
-      <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
-        <h1 className="text-trBlue">✦</h1>
-        <h1 className="ml-2 text-darkBlue">FAQs</h1>
-      </div>
-
-      {/* Subtitle */}
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-[24px] sm:text-[32px] font-semibold text-darkBlue">
-          Frequently asked questions
-        </h2>
-        <p className="text-[18px] sm:text-[24px] mt-4 leading-[1.5] px-4 sm:px-6">
-          Quick answers to questions you may have. Can’t find what you’re
-          looking for?{' '}
-          <a
-            href="https://calendly.com/ahmedmahouachi66/project-discussion"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-trBlue cursor-pointer"
+    <section
+      id="faq"
+      className="mx-auto max-w-[980px] px-[clamp(20px,4vw,48px)]"
+      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+    >
+      <div className="text-center">
+        <SectionHeading align="center" eyebrow="[07] FAQ" title="Frequently asked questions" />
+        <p className="mx-auto mt-5 max-w-xl text-[18px] text-muted">
+          Quick answers to questions you may have. Can&apos;t find what you&apos;re looking for?{' '}
+          <button
+            type="button"
+            onClick={openBooking}
+            className="font-semibold text-darkBlue underline decoration-[1.5px] underline-offset-4"
           >
             Book a call now
-          </a>
+          </button>
         </p>
       </div>
 
-      {/* FAQ Items */}
-      <div className="max-w-4xl mx-auto mt-8 sm:mt-10 space-y-4">
-        {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className="bg-blueBg text-darkBlue rounded-lg overflow-hidden transition-all duration-500"
-          >
-            {/* Question and Icon */}
-            <button
-              className="w-full flex items-center justify-between px-6 py-4 md:py-5 text-left focus:outline-none"
-              onClick={() => toggleFaq(index)}
-            >
-              <img
-                src={openFaqIndex === index ? minusIcon : plusIcon}
-                alt={openFaqIndex === index ? 'Minus' : 'Plus'}
-                className="w-6 h-6 shrink-0"
-              />
-              <span className="text-[16px] sm:text-[20px] font-medium flex-1 ml-4">
-                {' '}
-                {faq.question}
-              </span>
-            </button>
-            {/* Description with Animation */}
+      <div className="mt-12 flex flex-col gap-3">
+        {faqs.map((faq, index) => {
+          const isOpen = openFaqIndex === index;
+          return (
             <div
-              ref={(el) => (descriptionRefs.current[index] = el)}
-              className={`transition-all duration-500 ease-in-out px-6 ${
-                openFaqIndex === index ? 'opacity-100' : 'opacity-0'
-              }`}
+              key={faq.id || faq.question}
+              className="rounded-3xl bg-white/[0.82] transition-[border-color,box-shadow] duration-300"
               style={{
-                maxHeight:
-                  openFaqIndex === index ? `${maxHeight[index]}px` : '0',
+                border: `1px solid ${isOpen ? 'rgba(21,112,239,.35)' : 'rgba(10,20,51,.07)'}`,
+                boxShadow: isOpen ? '0 30px 60px -40px rgba(21,112,239,.5)' : 'none',
               }}
             >
-              <p className="pb-4 text-[14px] sm:text-[16px] text-regular whitespace-pre-line">
-                {faq.answer}
-              </p>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() => toggleFaq(index)}
+                className="flex w-full items-center justify-between gap-5 px-7 py-6 text-left"
+              >
+                <span className="text-[clamp(17px,1.5vw,20px)] font-semibold text-darkBlue">
+                  {faq.question}
+                </span>
+                <span
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[20px] transition-[transform,background,color] duration-[350ms]"
+                  style={{
+                    background: isOpen ? '#1570EF' : 'rgba(21,112,239,.1)',
+                    color: isOpen ? '#fff' : '#1570EF',
+                    transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                  }}
+                >
+                  +
+                </span>
+              </button>
+
+              <div
+                className="grid transition-[grid-template-rows] duration-[450ms] ease-out-magnet"
+                style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+              >
+                <div className="overflow-hidden">
+                  <p className="max-w-[760px] whitespace-pre-line px-7 pb-7 text-[16px] leading-[1.7] text-muted">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
