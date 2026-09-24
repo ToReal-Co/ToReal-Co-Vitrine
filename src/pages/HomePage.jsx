@@ -2,7 +2,6 @@ import React from 'react';
 import Projects from '../sections/OurProjects';
 import HowWeWork from '../sections/HowWeWork';
 import HeroSection from '../sections/Hero';
-import Testimonials from '../sections/Testimonials';
 import Stack from '../sections/Stack';
 import Contact from '../sections/Contact';
 import Footer from '../components/Footer';
@@ -30,9 +29,6 @@ const HomePage = () => {
         </SectionReveal>
         <SectionReveal delay={0}>
           <HowWeWork />
-        </SectionReveal>
-        <SectionReveal delay={0}>
-          <Testimonials />
         </SectionReveal>
         <SectionReveal delay={0}>
           <Stack />
