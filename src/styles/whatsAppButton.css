@@ -1,24 +1,19 @@
-/* From Uiverse.io by Gaurang7717 */
-.WABtn {
+.wa-btn {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  position: fixed;
   overflow: hidden;
   transition-duration: 0.3s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
   background-color: #00d757;
-  right: 15px;
-  bottom: 15px;
-  z-index: 10;
 }
 
-.sign {
+.wa-sign {
   width: 100%;
   transition-duration: 0.3s;
   display: flex;
@@ -26,14 +21,15 @@
   justify-content: center;
 }
 
-.sign svg {
+.wa-sign svg {
   width: 25px;
 }
 
-.sign svg path {
+.wa-sign svg path {
   fill: white;
 }
-.text {
+
+.wa-text {
   position: absolute;
   right: 0%;
   width: 0%;
@@ -41,27 +37,29 @@
   color: white;
   font-size: 1.2em;
   font-weight: 600;
+  white-space: nowrap;
   transition-duration: 0.3s;
 }
 
-.WABtn:hover {
+.wa-btn:hover {
   width: 150px;
   border-radius: 40px;
   transition-duration: 0.3s;
 }
 
-.WABtn:hover .sign {
+.wa-btn:hover .wa-sign {
   width: 30%;
   transition-duration: 0.3s;
   padding-left: 10px;
 }
 
-.WABtn:hover .text {
+.wa-btn:hover .wa-text {
   opacity: 1;
   width: 70%;
   transition-duration: 0.3s;
   padding-right: 10px;
 }
-.WABtn:active {
+
+.wa-btn:active {
   transform: translate(2px, 2px);
 }

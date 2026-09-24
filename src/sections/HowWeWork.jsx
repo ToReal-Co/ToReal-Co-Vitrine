@@ -1,204 +1,180 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BookaCallButton from '../common/BookACallButton';
-
-const CALENDLY_URL =
-  'https://calendly.com/ahmedmahouachi66/project-discussion';
+import SectionHeading from '../common/SectionHeading';
+import { useBooking } from '../common/BookingContext';
 
 const steps = [
   {
-    phase: 'Discovery',
+    n: '01',
     title: 'Initial contact',
-    description:
-      'We discuss your vision, goals, and project scope in a free discovery call.',
+    desc: 'We discuss your vision, goals, and project scope in a free discovery call.',
+    out: 'Call summary',
   },
   {
-    phase: 'Planning',
+    n: '02',
     title: 'Requirements document',
-    description:
-      'We draft a detailed specification: features, timeline, and deliverables.',
+    desc: 'We turn the call into a written brief: features, users, priorities and constraints.',
+    out: 'Requirements doc',
   },
   {
-    phase: 'Planning',
+    n: '03',
     title: 'Specification validation',
-    description:
-      'You review and approve the document before any development starts.',
+    desc: 'You approve the specification, timeline and budget before any code is written.',
+    out: 'Signed spec',
   },
   {
-    phase: 'Build',
+    n: '04',
     title: 'Development kickoff',
-    description:
-      'Once validated, we begin building your product with a clear roadmap.',
+    desc: 'Design and development start, with a shared board to follow every task.',
+    out: 'Project board',
   },
   {
-    phase: 'Build',
+    n: '05',
     title: 'Weekly demos',
-    description:
-      'Every week, a 30-minute session to review progress and gather your feedback.',
+    desc: 'Every week you test working software; your feedback shapes the next sprint.',
+    out: 'Weekly build',
   },
   {
-    phase: 'Launch',
+    n: '06',
     title: 'Scrum delivery',
-    description:
-      'Sprints, backlog prioritization, and continuous validation until launch.',
+    desc: 'Tested, signed off and released to production, with support after launch.',
+    out: 'Production release',
   },
 ];
 
-const StepBadge = ({ index, phase }) => (
-  <span className="inline-block px-5 py-2 rounded-full text-trWhite text-sm sm:text-base font-semibold shadow-md bg-trBlue whitespace-nowrap">
-    Step {String(index + 1).padStart(2, '0')} · {phase}
-  </span>
-);
-
-const StepContent = ({ title, description, showTitleAbove = true }) => (
-  <div className="w-full max-w-md">
-    {showTitleAbove && (
-      <h3 className="text-[18px] sm:text-[22px] font-bold text-darkBlue mb-3 sm:mb-4">
-        {title}
-      </h3>
-    )}
-    <div className="bg-trWhite rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(4,17,54,0.08)] border border-blueBg/80">
-      {!showTitleAbove && (
-        <h3 className="text-[17px] sm:text-[19px] font-bold text-darkBlue mb-2">
-          {title}
-        </h3>
-      )}
-      <p className="text-[14px] sm:text-[15px] text-darkBlue/80 leading-relaxed">
-        {description}
-      </p>
-    </div>
-  </div>
-);
-
-const TimelineDot = () => (
-  <span
-    className="relative z-10 flex h-4 w-4 sm:h-5 sm:w-5 shrink-0 rounded-full bg-trBlue ring-4 ring-trWhite shadow-md"
-    aria-hidden
-  />
-);
-
 const HowWeWork = () => {
-  const handleBookCall = () => {
-    window.open(CALENDLY_URL, '_blank');
-  };
+  const { openBooking } = useBooking();
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1280);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const procWide = width >= 1180;
+  const procCols = procWide
+    ? 'repeat(6,minmax(0,1fr))'
+    : width >= 700
+      ? 'repeat(3,minmax(0,1fr))'
+      : 'minmax(0,1fr)';
+  const procGap = procWide ? '0' : '40px 24px';
+  const tlGap = procWide ? '28px' : '48px';
+  const fill = steps.length > 1 ? (active / (steps.length - 1)) * 100 : 100;
 
   return (
-    <section id="how-we-work" className="py-12 px-6 sm:px-12 overflow-hidden">
-      <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
-        <h1 className="text-trBlue">✦</h1>
-        <h1 className="ml-2 text-darkBlue">How We Work</h1>
-      </div>
-
-      <div className="max-w-3xl mx-auto text-center mb-10 md:mb-16 px-1">
-        <p className="text-[16px] sm:text-[24px] text-darkBlue font-medium leading-relaxed">
-          A clear, transparent process from first contact to launch—no surprises,
-          full collaboration at every step.
-        </p>
-      </div>
-
-      {/* Desktop: alternating vertical timeline */}
-      <div className="hidden md:block max-w-5xl mx-auto relative">
+    <section
+      id="process"
+      className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)]"
+      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+    >
+      <div className="relative overflow-hidden rounded-[36px] bg-navy p-[clamp(28px,5vw,64px)] text-white">
         <div
-          className="absolute left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-trBlue/20"
-          aria-hidden
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px)',
+            backgroundSize: '56px 56px',
+            WebkitMaskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 75%)',
+            maskImage: 'radial-gradient(ellipse at 50% 0%, #000, transparent 75%)',
+          }}
         />
-        <ol className="space-y-14 lg:space-y-20 relative z-10">
-          {steps.map((step, index) => {
-            const contentOnRight = index % 2 === 0;
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-[260px] left-[30%] h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(21,112,239,.35),transparent_65%)]"
+        />
 
-            return (
-              <li
-                key={step.title}
-                className="grid grid-cols-[1fr_auto_1fr] gap-x-6 lg:gap-x-10 items-start"
-              >
-                <div
-                  className={`flex pt-1 ${
-                    contentOnRight
-                      ? 'justify-end pr-2 lg:pr-6'
-                      : 'justify-end flex-col items-end pr-2 lg:pr-6'
-                  }`}
-                >
-                  {contentOnRight ? (
-                    <StepBadge index={index} phase={step.phase} />
-                  ) : (
-                    <StepContent
-                      title={step.title}
-                      description={step.description}
-                    />
-                  )}
+        <div className="relative flex flex-wrap items-end justify-between gap-7">
+          <div className="max-w-[720px]">
+            <SectionHeading tone="dark" size="lg" eyebrow="[04] How we work" title="A clear process, from first contact to launch" />
+            <p className="mt-[18px] text-[18px] leading-relaxed text-periwinkle">
+              No surprises, full collaboration at every step.
+            </p>
+          </div>
+          <BookaCallButton color="white" onClick={openBooking}>
+            Book a call
+          </BookaCallButton>
+        </div>
+
+        {procWide && (
+          <div className="relative mt-16 grid grid-cols-3 font-mono text-[11px] uppercase tracking-[0.16em] text-fog">
+            {[
+              ['Define', '01 — 03'],
+              ['Build', '04 — 05'],
+              ['Ship', '06'],
+            ].map(([label, range]) => (
+              <div key={label} className="pb-3 pr-6 last:pr-0">
+                <div className="flex justify-between border-t border-white/[0.14] pt-3">
+                  <span className="text-white">{label}</span>
+                  <span>{range}</span>
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-                <div className="flex justify-center pt-2">
-                  <TimelineDot />
-                </div>
-
-                <div
-                  className={`flex pt-1 ${
-                    contentOnRight
-                      ? 'justify-start pl-2 lg:pl-6'
-                      : 'justify-start pl-2 lg:pl-6'
-                  }`}
-                >
-                  {contentOnRight ? (
-                    <StepContent
-                      title={step.title}
-                      description={step.description}
-                    />
-                  ) : (
-                    <StepBadge index={index} phase={step.phase} />
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-
-      {/* Mobile: line on the left of cards */}
-      <ol className="md:hidden mx-auto w-full max-w-sm px-2">
-        {steps.map((step, index) => {
-          const isLast = index === steps.length - 1;
-
-          return (
-            <li key={step.title} className="relative w-full pl-11 pb-6 last:pb-0">
-              {!isLast && (
-                <div
-                  className="absolute left-4 top-8 bottom-0 w-[2px] bg-trBlue/25"
-                  aria-hidden
-                />
-              )}
+        <div
+          className="relative mt-[var(--tl-gap)] grid"
+          style={{ '--tl-gap': tlGap, marginTop: tlGap, gridTemplateColumns: procCols, gap: procGap }}
+        >
+          {procWide && (
+            <>
               <span
-                className="absolute left-0 top-0 z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-trBlue text-sm font-bold text-trWhite shadow-sm"
-                aria-hidden
+                aria-hidden="true"
+                className="absolute left-[22px] top-[21px] h-0.5 rounded-full bg-white/10"
+                style={{ right: 'calc(100% / 6 - 22px)' }}
+              />
+              <span
+                aria-hidden="true"
+                className="absolute left-[22px] top-[21px] h-0.5 overflow-hidden rounded-full"
+                style={{ right: 'calc(100% / 6 - 22px)' }}
               >
-                {index + 1}
+                <span
+                  className="block h-full bg-gradient-to-r from-trBlue to-electric shadow-[0_0_14px_rgba(91,155,255,0.8)]"
+                  style={{ width: `${fill}%` }}
+                />
               </span>
+            </>
+          )}
 
-              <article className="relative z-10 w-full rounded-[20px] bg-blueBg p-5 text-left shadow-sm">
-                <div className="mb-3 flex flex-wrap items-center justify-start gap-2">
-                  <span className="rounded-md bg-trWhite px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-trBlue">
-                    {step.phase}
-                  </span>
-                </div>
-                <h3 className="text-[17px] font-bold leading-snug text-darkBlue">
+          {steps.map((step, index) => {
+            const on = index <= active;
+            return (
+              <button
+                key={step.n}
+                type="button"
+                aria-pressed={index === active}
+                onClick={() => setActive(index)}
+                className="group relative flex min-w-0 flex-col pr-6 text-left transition-opacity duration-500"
+                style={{ opacity: on ? 1 : 0.5 }}
+              >
+                <span
+                  className="relative z-[1] grid h-11 w-11 place-items-center rounded-full font-mono text-[13px] transition-[background,color,border-color,box-shadow] duration-400 group-hover:border-trBlue"
+                  style={{
+                    background: on ? '#1570EF' : '#061340',
+                    color: on ? '#fff' : '#8FA0CC',
+                    border: `1.5px solid ${on ? '#1570EF' : 'rgba(255,255,255,.18)'}`,
+                    boxShadow: on ? '0 0 0 6px rgba(21,112,239,.22)' : 'none',
+                  }}
+                >
+                  {step.n}
+                </span>
+                <h3 className="mt-6 text-[20px] font-semibold leading-[1.2] tracking-[-0.015em]" style={{ overflowWrap: 'anywhere' }}>
                   {step.title}
                 </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-darkBlue/75">
-                  {step.description}
-                </p>
-              </article>
-            </li>
-          );
-        })}
-      </ol>
-
-      <div className="max-w-2xl mx-auto text-center mt-10 md:mt-20 px-2">
-        <p className="text-[16px] sm:text-[18px] text-darkBlue mb-6">
-          Ready to start? Book a free discovery call and we&apos;ll walk you
-          through step 1.
-        </p>
-        <BookaCallButton color="blue" onClick={handleBookCall}>
-          Book a call
-        </BookaCallButton>
+                <p className="mt-2.5 text-[15px] leading-relaxed text-skyline">{step.desc}</p>
+                <div className="mt-auto pt-5">
+                  <div className="inline-flex max-w-full items-center gap-2 rounded-[10px] border border-white/[0.08] bg-white/[0.06] px-3 py-2 font-mono text-[12px] text-[#D5DEF3]">
+                    <span className="text-electric">→</span>
+                    {step.out}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

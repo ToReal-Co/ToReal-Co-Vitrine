@@ -1,36 +1,105 @@
-import React from 'react';
-import CapitalAchieved from '../components/CapitalAchieved';
-import Collaborators from '../components/Collaborators';
-import ReleasedProjects from '../components/ReleasedProjects';
-import OurPartners from '../components/OurPartners';
-import PresentedIn from '../components/PresentedIn';
-import CallToActionCard from '../components/CallToActionCard';
+import React, { useEffect, useState } from 'react';
+import TeamGrid from '../components/TeamGrid';
+import SectionHeading from '../common/SectionHeading';
+import CountUp from '../common/CountUp';
+import { FALLBACK_WHO_WE_ARE, getWhoWeAreContent } from '../lib/whoWeAreApi';
+
+const YEARS_ACTIVE = Math.max(1, new Date().getFullYear() - 2024);
 
 const WhoWeAre = () => {
+  const [content, setContent] = useState(FALLBACK_WHO_WE_ARE);
+
+  useEffect(() => {
+    let cancelled = false;
+    getWhoWeAreContent().then((data) => {
+      if (!cancelled) setContent(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const stats = [
+    { to: content.stats.capitalAchieved, prefix: '+', suffix: 'K', label: 'Capital achieved' },
+    { to: content.stats.releasedProjects, prefix: '+', suffix: '', label: 'Released projects' },
+    { to: content.stats.collaborators, prefix: '+', suffix: '', label: 'Collaborators' },
+    { to: YEARS_ACTIVE, prefix: '', suffix: ' yrs', label: 'Of experience' },
+    { to: 100, prefix: '', suffix: '%', label: 'Client satisfaction', accent: true },
+  ];
+
   return (
-    <section id="whoWeAre" className="py-12 px-6 sm:px-12">
-      <div className="mx-auto text-left flex text-[24px] sm:text-[32px] font-medium mb-6 sm:mb-12">
-        <h1 className="text-trBlue">✦</h1>
-        <h1 className="ml-2 text-darkBlue">Who We Are</h1>
+    <section
+      id="about"
+      className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)]"
+      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+    >
+      <div className="relative overflow-hidden rounded-[36px] bg-navy p-[clamp(32px,5vw,72px)] text-white">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px)',
+            backgroundSize: '56px 56px',
+            WebkitMaskImage: 'radial-gradient(ellipse at 80% 0%, #000, transparent 70%)',
+            maskImage: 'radial-gradient(ellipse at 80% 0%, #000, transparent 70%)',
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-[120px] -top-[200px] h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(21,112,239,.45),transparent_65%)]"
+        />
+
+        <div
+          className="relative grid gap-x-[72px] gap-y-10"
+          style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,420px),1fr))' }}
+        >
+          <SectionHeading
+            tone="dark"
+            size="lg"
+            eyebrow="[02] Who we are"
+            title="Mobile, web and design, under one roof"
+          />
+          <p className="text-pretty self-end text-[clamp(17px,1.4vw,20px)] leading-[1.65] text-periwinkle">
+            {content.intro}
+          </p>
+        </div>
+
+        <div
+          className="relative mt-16 grid border-t border-white/10"
+          style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))' }}
+        >
+          {stats.map((stat) => (
+            <div key={stat.label} className="pb-1 pr-5 pt-7">
+              <div
+                className={`text-[clamp(40px,4.4vw,60px)] font-bold leading-none tracking-[-0.04em] tabular ${
+                  stat.accent ? 'text-electric' : 'text-white'
+                }`}
+              >
+                <CountUp to={stat.to} prefix={stat.prefix} suffix={stat.suffix} />
+              </div>
+              <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-steel">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div>
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-4">
-          <div className="w-full lg:w-[30%] flex flex-col gap-4 text-[24px] sm:text-[32px]">
-            <CapitalAchieved className="bg-blueBg p-8 rounded-lg min-w-72 h-full" />
-            <Collaborators className="bg-blueBg p-4 rounded-lg relative flex flex-col justify-between min-w-72" />
-          </div>
-
-          <div className="w-full lg:w-[80%] flex flex-col lg:flex-row gap-4 text-base">
-            <ReleasedProjects className="bg-blueBg p-6 rounded-lg flex-1 text-center relative min-h-[400px] min-w-[300px]" />
-            <OurPartners className="bg-blueBg py-6  rounded-lg flex-1 text-center flex flex-col min-h-[350px] items-center " />{' '}
-          </div>
+      <div className="mt-[clamp(64px,8vw,110px)] flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">Our team</div>
+          <h3 className="mt-4 text-[clamp(30px,3.4vw,46px)] font-bold leading-[1.05] tracking-[-0.035em] text-darkBlue">
+            The people you&apos;ll work with
+          </h3>
         </div>
+        <p className="max-w-[400px] text-[17px] leading-relaxed text-muted">
+          The founders are on every project, from the discovery call to the release.
+        </p>
+      </div>
 
-        <div className="flex flex-col-reverse lg:flex-row gap-4 lg:gap-4 mt-4 text-base">
-          <CallToActionCard className="bg-trBlue rounded-lg flex-1 flex-row" />
-          <PresentedIn className="bg-blueBg rounded-lg flex flex-col justify-center items-center w-full overflow-hidden lg:max-w-[50%] max-w-full pb-4" />
-        </div>
+      <div className="mt-9">
+        <TeamGrid team={content.team} />
       </div>
     </section>
   );
