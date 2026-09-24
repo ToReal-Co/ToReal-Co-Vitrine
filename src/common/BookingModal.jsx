@@ -1,5 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { createBooking, getAvailability, BookingApiError, toISODate } from '../lib/bookingApi';
+import {
+  createBooking,
+  getAvailability,
+  BookingApiError,
+  toISODate,
+  formatZoneLabel,
+  formatZoneCity,
+  zonedWallTimeToUtc,
+  DEFAULT_TIMEZONE,
+  DEFAULT_SLOT_MINUTES,
+} from '../lib/bookingApi';
 import useScrollLock from './useScrollLock';
 import logoMark from '../assets/images/logoWithoutText.svg';
 
@@ -42,11 +52,9 @@ function groupSlots(slots) {
   return out;
 }
 
-function downloadIcs(dateIso, time) {
-  const [hh, mm] = time.split(':').map(Number);
-  const [y, m, d] = dateIso.split('-').map(Number);
-  const st = new Date(Date.UTC(y, m - 1, d, hh - 1, mm));
-  const en = new Date(st.getTime() + 30 * 60000);
+function downloadIcs(dateIso, time, timeZone, slotMinutes) {
+  const st = zonedWallTimeToUtc(dateIso, time, timeZone);
+  const en = new Date(st.getTime() + slotMinutes * 60000);
   const f = (x) => x.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const ics = [
     'BEGIN:VCALENDAR',
@@ -82,6 +90,8 @@ const BookingModal = ({ onClose, preset }) => {
   const [slots, setSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(true);
   const [slotsError, setSlotsError] = useState('');
+  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+  const [slotMinutes, setSlotMinutes] = useState(DEFAULT_SLOT_MINUTES);
   const [selectedTime, setSelectedTime] = useState(preset?.time || null);
   const [step, setStep] = useState(1);
 
@@ -128,6 +138,8 @@ const BookingModal = ({ onClose, preset }) => {
       .then((data) => {
         if (cancelled) return;
         setSlots(data?.slots || []);
+        if (data?.timezone) setTimezone(data.timezone);
+        if (data?.slotMinutes) setSlotMinutes(data.slotMinutes);
       })
       .catch((err) => {
         if (cancelled) return;
@@ -144,6 +156,10 @@ const BookingModal = ({ onClose, preset }) => {
   }, [selectedIso]);
 
   const groups = groupSlots(slots);
+  const zoneLabel = formatZoneLabel(
+    timezone,
+    selectedIso ? zonedWallTimeToUtc(selectedIso, selectedTime || '12:00', timezone) : undefined
+  );
   const dayLong = selectedDay
     ? selectedDay.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
     : '';
@@ -253,7 +269,8 @@ const BookingModal = ({ onClose, preset }) => {
             <>
               <div className="relative flex flex-col gap-3 text-[15px] text-periwinkle">
                 <div className="flex items-center gap-3">
-                  <span className="w-[30px] font-mono text-[11px] text-fog">DUR</span>30 minutes
+                  <span className="w-[30px] font-mono text-[11px] text-fog">DUR</span>
+                  {slotMinutes} minutes
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="w-[30px] font-mono text-[11px] text-fog">VIA</span>Google Meet, WhatsApp or phone
@@ -286,7 +303,9 @@ const BookingModal = ({ onClose, preset }) => {
               {selectedTime && selectedDay ? dayLong : 'Pick a date and time'}
             </div>
             {selectedTime && (
-              <div className="mt-0.5 font-mono text-[14px] text-electric">{selectedTime} · GMT+1</div>
+              <div className="mt-0.5 font-mono text-[14px] text-electric">
+                {selectedTime} · {zoneLabel}
+              </div>
             )}
           </div>
 
@@ -417,7 +436,7 @@ const BookingModal = ({ onClose, preset }) => {
                 <div className="flex flex-wrap items-center justify-between gap-2.5">
                   <div className="text-[16px] font-semibold">{dayLong}</div>
                   <span className="rounded-full bg-trWhite px-2.5 py-1.5 font-mono text-[11px] text-muted">
-                    GMT+1 · Tunisia
+                    {zoneLabel} · {formatZoneCity(timezone)}
                   </span>
                 </div>
 
@@ -592,13 +611,18 @@ const BookingModal = ({ onClose, preset }) => {
                 Rendez-vous confirmed
               </h3>
               <p className="animate-[fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_0.22s_both] text-[17px] leading-relaxed text-muted">
-                {dayLong} at {selectedTime} (GMT+1) — your slot is locked in. We&apos;ll get back to you by email at{' '}
+                {dayLong} at {selectedTime} ({zoneLabel}) — your slot is locked in.
+                We&apos;ll get back to you by email at{' '}
                 {form.email || 'your inbox'} to confirm the details.
               </p>
               <div className="mt-2.5 flex w-full animate-[fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_0.32s_both] flex-wrap gap-2.5">
                 <button
                   type="button"
-                  onClick={() => selectedIso && selectedTime && downloadIcs(selectedIso, selectedTime)}
+                  onClick={() =>
+                    selectedIso &&
+                    selectedTime &&
+                    downloadIcs(selectedIso, selectedTime, timezone, slotMinutes)
+                  }
                   className="flex flex-1 items-center justify-center gap-2.5 rounded-full border-[1.5px] border-darkBlue/[0.12] bg-white px-[22px] py-3.5 text-[15px] font-semibold text-darkBlue hover:border-trBlue hover:text-trBlue"
                 >
                   Add to calendar

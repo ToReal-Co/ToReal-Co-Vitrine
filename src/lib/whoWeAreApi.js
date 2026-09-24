@@ -5,12 +5,7 @@ const API_BASE =
 export const FALLBACK_WHO_WE_ARE = {
   intro:
     "ToReal&Co is an independent product studio — mobile, web and design under one roof. We work directly with founders, from the first sketch to the release, with no account managers and no hand-offs in between.",
-  foundedYear: '',
-  basedIn: '',
-  focus: '',
-  languages: '',
-  foundingStory: '',
-  stats: { capitalAchieved: 63, releasedProjects: 11, collaborators: 10 },
+  stats: { capitalAchieved: 63, releasedProjects: 11, collaborators: 12 },
   team: [
     {
       id: 'ahmed',
@@ -34,7 +29,14 @@ export async function getWhoWeAreContent() {
     const res = await fetch(`${API_BASE}/who-we-are`);
     if (!res.ok) return FALLBACK_WHO_WE_ARE;
     const data = await res.json();
-    return { ...FALLBACK_WHO_WE_ARE, ...data };
+    // Merge stats key by key: a partial or missing stats object from the CMS must
+    // not blank out the counters, since the section reads each one directly.
+    return {
+      ...FALLBACK_WHO_WE_ARE,
+      ...data,
+      stats: { ...FALLBACK_WHO_WE_ARE.stats, ...(data?.stats || {}) },
+      team: Array.isArray(data?.team) ? data.team : FALLBACK_WHO_WE_ARE.team,
+    };
   } catch {
     return FALLBACK_WHO_WE_ARE;
   }

@@ -61,6 +61,12 @@ const TeamGrid = ({ team = [] }) => {
                 {member.name}
               </h4>
 
+              {member.bio && (
+                <p className="mt-3 whitespace-pre-line text-[15px] leading-[1.6] text-muted">
+                  {member.bio}
+                </p>
+              )}
+
               <div className="mt-auto flex flex-col border-t border-dashed border-darkBlue/[0.12] pt-6">
                 {member.phone && (
                   <a

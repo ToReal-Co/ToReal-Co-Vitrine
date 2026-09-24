@@ -3,7 +3,12 @@ import TiltCard, { CardSpotlight } from '../common/TiltCard';
 import BookaCallButton from '../common/BookACallButton';
 import useMagnetic from '../common/useMagnetic';
 import { useBooking } from '../common/BookingContext';
-import { getNextAvailableSlots } from '../lib/bookingApi';
+import {
+  DEFAULT_SLOT_MINUTES,
+  DEFAULT_TIMEZONE,
+  formatZoneLabel,
+  getNextAvailableSlots,
+} from '../lib/bookingApi';
 
 const WHATSAPP_URL = 'https://wa.me/21658693946';
 
@@ -11,11 +16,16 @@ const Contact = () => {
   const { openBooking } = useBooking();
   const whatsapp = useMagnetic();
   const [nextSlots, setNextSlots] = useState([]);
+  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+  const [slotMinutes, setSlotMinutes] = useState(DEFAULT_SLOT_MINUTES);
 
   useEffect(() => {
     let cancelled = false;
-    getNextAvailableSlots(3).then((slots) => {
-      if (!cancelled) setNextSlots(slots);
+    getNextAvailableSlots(3).then((data) => {
+      if (cancelled) return;
+      setNextSlots(data.slots);
+      setTimezone(data.timezone);
+      setSlotMinutes(data.slotMinutes);
     });
     return () => {
       cancelled = true;
@@ -34,7 +44,7 @@ const Contact = () => {
       >
         <div>
           <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">
-            Free discovery call — 30 minutes
+            Free discovery call — {slotMinutes} minutes
           </div>
           <h2 className="text-balance mt-[18px] text-[clamp(40px,5.2vw,76px)] font-bold leading-[1.02] tracking-[-0.04em] text-darkBlue">
             Ready to create your project?
@@ -85,7 +95,9 @@ const Contact = () => {
               </span>
               <span className="flex flex-col">
                 <span className="text-[16px] font-semibold">Discovery call</span>
-                <span className="text-[13px] text-mutedSoft">30 min · Meet, WhatsApp or phone</span>
+                <span className="text-[13px] text-mutedSoft">
+                  {slotMinutes} min · Meet, WhatsApp or phone
+                </span>
               </span>
             </div>
             <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.1em] text-trBlue">
@@ -95,7 +107,7 @@ const Contact = () => {
           </div>
 
           <div className="relative mt-[26px] font-mono text-[11px] uppercase tracking-[0.14em] text-haze">
-            Next available · GMT+1
+            Next available · {formatZoneLabel(timezone)}
           </div>
 
           <div className="relative mt-3 flex flex-col gap-2">
