@@ -8,7 +8,7 @@
  * a local business fails to consolidate its local ranking signals.
  */
 
-export const SITE_URL = 'https://torealco.tn';
+export const SITE_URL = 'https://torealandco.live';
 
 export const SITE = {
   name: 'ToReal&Co',

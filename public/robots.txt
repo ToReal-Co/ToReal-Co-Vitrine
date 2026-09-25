@@ -1,6 +1,6 @@
-# https://torealco.tn/robots.txt
+# https://torealandco.live/robots.txt
 
 User-agent: *
 Allow: /
 
-Sitemap: https://torealco.tn/sitemap.xml
+Sitemap: https://torealandco.live/sitemap.xml
