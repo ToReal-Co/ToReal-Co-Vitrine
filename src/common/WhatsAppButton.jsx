@@ -1,13 +1,15 @@
-import React from 'react';
 import '../styles/whatsAppButton.css';
+import { useI18n } from '../i18n';
 
 const WhatsAppButton = () => {
+  const { t } = useI18n();
+
   return (
     <a
       href="https://wa.me/21658693946"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
+      aria-label={t.whatsapp.label}
       className="wa-btn fixed bottom-6 right-6 z-40"
     >
       <div className="wa-sign">

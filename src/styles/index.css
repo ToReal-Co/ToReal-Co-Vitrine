@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap');
+/*
+ * Web fonts are requested from index.html with a preconnect, not with an
+ * @import here. An @import inside the stylesheet serialises three round
+ * trips before any text can paint: fetch this file, parse it, fetch the
+ * Google Fonts stylesheet, then fetch the font itself.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -106,5 +112,33 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Scroll reveal.
+ *
+ * The hidden state is scoped to .js, a class an inline script in <head>
+ * puts on <html> before first paint. Anything that reads the page without
+ * running scripts — a crawler, a reader mode, a browser with JS off — never
+ * matches the selector and sees every section at full opacity. Without
+ * this, the prerendered HTML would be delivered fully formed and then held
+ * invisible by a transition that nothing was ever going to trigger.
+ */
+[data-reveal] {
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js [data-reveal='pending'] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal='pending'] {
+    opacity: 1;
+    transform: none;
   }
 }

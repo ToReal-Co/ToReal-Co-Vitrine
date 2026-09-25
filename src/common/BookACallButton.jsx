@@ -18,6 +18,7 @@ const BookaCallButton = ({
   className = '',
   arrow = true,
   type = 'button',
+  magnetic: magneticEnabled = true,
 }) => {
   const magnetic = useMagnetic();
   const base =
@@ -25,9 +26,9 @@ const BookaCallButton = ({
 
   return (
     <button
-      ref={magnetic.ref}
-      onMouseMove={magnetic.onMouseMove}
-      onMouseLeave={magnetic.onMouseLeave}
+      ref={magneticEnabled ? magnetic.ref : undefined}
+      onMouseMove={magneticEnabled ? magnetic.onMouseMove : undefined}
+      onMouseLeave={magneticEnabled ? magnetic.onMouseLeave : undefined}
       type={type}
       className={`${base} ${colorClasses[color] || colorClasses.blue} ${className}`}
       onClick={onClick}

@@ -2,29 +2,52 @@ import React, { useEffect, useState } from 'react';
 import TeamGrid from '../components/TeamGrid';
 import SectionHeading from '../common/SectionHeading';
 import CountUp from '../common/CountUp';
-import { FALLBACK_WHO_WE_ARE, getWhoWeAreContent } from '../lib/whoWeAreApi';
+import { getFallbackWhoWeAre, getWhoWeAreContent } from '../lib/whoWeAreApi';
+import { useI18n } from '../i18n';
 
-const YEARS_ACTIVE = Math.max(1, new Date().getFullYear() - 2024);
+const YEARS_ACTIVE = 6;
 
 const WhoWeAre = () => {
-  const [content, setContent] = useState(FALLBACK_WHO_WE_ARE);
+  const { t, locale } = useI18n();
+  const [content, setContent] = useState(() => getFallbackWhoWeAre(locale));
 
   useEffect(() => {
     let cancelled = false;
-    getWhoWeAreContent().then((data) => {
+    setContent(getFallbackWhoWeAre(locale));
+    getWhoWeAreContent(locale).then((data) => {
       if (!cancelled) setContent(data);
     });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale]);
 
   const stats = [
-    { to: content.stats.capitalAchieved, prefix: '+', suffix: 'K', label: 'Capital achieved' },
-    { to: content.stats.releasedProjects, prefix: '+', suffix: '', label: 'Released projects' },
-    { to: content.stats.collaborators, prefix: '+', suffix: '', label: 'Collaborators' },
-    { to: YEARS_ACTIVE, prefix: '', suffix: ' yrs', label: 'Of experience' },
-    { to: 100, prefix: '', suffix: '%', label: 'Client satisfaction', accent: true },
+    {
+      to: content.stats.capitalAchieved,
+      prefix: '+',
+      suffix: 'K',
+      label: t.whoWeAre.stats.capitalAchieved,
+    },
+    {
+      to: content.stats.releasedProjects,
+      prefix: '+',
+      suffix: '',
+      label: t.whoWeAre.stats.releasedProjects,
+    },
+    {
+      to: content.stats.collaborators,
+      prefix: '+',
+      suffix: '',
+      label: t.whoWeAre.stats.collaborators,
+    },
+    {
+      to: YEARS_ACTIVE,
+      prefix: '',
+      suffix: t.whoWeAre.stats.yearsSuffix,
+      label: t.whoWeAre.stats.experience,
+    },
+    { to: 100, prefix: '', suffix: '%', label: t.whoWeAre.stats.satisfaction, accent: true },
   ];
 
   return (
@@ -57,8 +80,8 @@ const WhoWeAre = () => {
           <SectionHeading
             tone="dark"
             size="lg"
-            eyebrow="[02] Who we are"
-            title="Mobile, web and design, under one roof"
+            eyebrow={t.whoWeAre.eyebrow}
+            title={t.whoWeAre.title}
           />
           <p className="text-pretty self-end text-[clamp(17px,1.4vw,20px)] leading-[1.65] text-periwinkle">
             {content.intro}
@@ -88,13 +111,15 @@ const WhoWeAre = () => {
 
       <div className="mt-[clamp(64px,8vw,110px)] flex flex-wrap items-end justify-between gap-5">
         <div>
-          <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">Our team</div>
+          <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">
+            {t.whoWeAre.teamEyebrow}
+          </div>
           <h3 className="mt-4 text-[clamp(30px,3.4vw,46px)] font-bold leading-[1.05] tracking-[-0.035em] text-darkBlue">
-            The people you&apos;ll work with
+            {t.whoWeAre.teamTitle}
           </h3>
         </div>
         <p className="max-w-[400px] text-[17px] leading-relaxed text-muted">
-          The founders are on every project, from the discovery call to the release.
+          {t.whoWeAre.teamLead}
         </p>
       </div>
 

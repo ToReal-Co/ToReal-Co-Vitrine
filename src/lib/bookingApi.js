@@ -138,7 +138,14 @@ export function toISODate(d) {
  * Also reports the studio's timezone and call length so the preview can
  * label the times it shows instead of assuming them.
  */
-export async function getNextAvailableSlots(count = 3, daysAhead = 10) {
+export async function getNextAvailableSlots(count = 3, daysAhead = 10, labels = {}) {
+  const {
+    dateLocale = 'fr-FR',
+    relToday = 'Aujourd’hui',
+    relTomorrow = 'Demain',
+    relInDays = 'Dans {n} jours',
+  } = labels;
+
   const out = [];
   let timezone = DEFAULT_TIMEZONE;
   let slotMinutes = DEFAULT_SLOT_MINUTES;
@@ -160,13 +167,8 @@ export async function getNextAvailableSlots(count = 3, daysAhead = 10) {
       out.push({
         date: iso,
         time,
-        day: d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }),
-        rel:
-          i === 0
-            ? 'Today'
-            : i === 1
-              ? 'Tomorrow'
-              : `In ${i} days`,
+        day: d.toLocaleDateString(dateLocale, { weekday: 'long', day: 'numeric', month: 'long' }),
+        rel: i === 0 ? relToday : i === 1 ? relTomorrow : relInDays.replace('{n}', String(i)),
       });
     }
   }

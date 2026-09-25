@@ -9,11 +9,14 @@ import {
   formatZoneLabel,
   getNextAvailableSlots,
 } from '../lib/bookingApi';
+import { useI18n } from '../i18n';
+import { IconArrowRight, IconArrowUpRight } from '../common/Icons';
 
 const WHATSAPP_URL = 'https://wa.me/21658693946';
 
 const Contact = () => {
   const { openBooking } = useBooking();
+  const { t } = useI18n();
   const whatsapp = useMagnetic();
   const [nextSlots, setNextSlots] = useState([]);
   const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
@@ -21,7 +24,12 @@ const Contact = () => {
 
   useEffect(() => {
     let cancelled = false;
-    getNextAvailableSlots(3).then((data) => {
+    getNextAvailableSlots(3, 10, {
+      dateLocale: t.dateLocale,
+      relToday: t.booking.relToday,
+      relTomorrow: t.booking.relTomorrow,
+      relInDays: t.booking.relInDays,
+    }).then((data) => {
       if (cancelled) return;
       setNextSlots(data.slots);
       setTimezone(data.timezone);
@@ -30,7 +38,7 @@ const Contact = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   return (
     <section
@@ -44,19 +52,18 @@ const Contact = () => {
       >
         <div>
           <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">
-            Free discovery call — {slotMinutes} minutes
+            {t.contact.eyebrowBefore} {slotMinutes} {t.contact.eyebrowAfter}
           </div>
           <h2 className="text-balance mt-[18px] text-[clamp(40px,5.2vw,76px)] font-bold leading-[1.02] tracking-[-0.04em] text-darkBlue">
-            Ready to create your project?
+            {t.contact.title}
           </h2>
           <p className="mt-[22px] max-w-[460px] text-[18px] leading-relaxed text-muted">
-            Pick a time with the founders. We&apos;ll talk through your idea, scope and next
-            steps.
+            {t.contact.lead}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <BookaCallButton color="blue" onClick={openBooking}>
-              Book a call
+              {t.contact.ctaPrimary}
             </BookaCallButton>
             <a
               ref={whatsapp.ref}
@@ -67,7 +74,7 @@ const Contact = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 whitespace-nowrap rounded-full border border-darkBlue/[0.12] bg-white/70 px-7 py-3.5 text-[17px] font-semibold text-darkBlue backdrop-blur-md transition-[transform,border-color] duration-300 ease-out-magnet hover:border-whatsapp"
             >
-              WhatsApp <span aria-hidden="true">↗</span>
+              WhatsApp <IconArrowUpRight className="h-4 w-4" />
             </a>
           </div>
 
@@ -75,8 +82,9 @@ const Contact = () => {
             <a href="tel:+21658693946" className="text-slate">
               +216 58 693 946
             </a>
-            <span>Bizerte, Tunisia</span>
-            <span>FR / EN</span>
+            {t.contact.meta.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
           </div>
         </div>
 
@@ -94,9 +102,9 @@ const Contact = () => {
                 </span>
               </span>
               <span className="flex flex-col">
-                <span className="text-[16px] font-semibold">Discovery call</span>
+                <span className="text-[16px] font-semibold">{t.contact.cardTitle}</span>
                 <span className="text-[13px] text-mutedSoft">
-                  {slotMinutes} min · Meet, WhatsApp or phone
+                  {slotMinutes} {t.contact.cardSubtitle}
                 </span>
               </span>
             </div>
@@ -107,13 +115,13 @@ const Contact = () => {
           </div>
 
           <div className="relative mt-[26px] font-mono text-[11px] uppercase tracking-[0.14em] text-haze">
-            Next available · {formatZoneLabel(timezone)}
+            {t.contact.nextAvailable} {formatZoneLabel(timezone)}
           </div>
 
           <div className="relative mt-3 flex flex-col gap-2">
             {nextSlots.length === 0 ? (
               <p className="rounded-2xl border border-dashed border-darkBlue/[0.12] px-4 py-4 text-[14px] text-muted">
-                Checking the calendar…
+                {t.contact.checking}
               </p>
             ) : (
               nextSlots.map((slot) => (
@@ -129,8 +137,8 @@ const Contact = () => {
                   </span>
                   <span className="flex items-center gap-3">
                     <span className="font-mono text-[15px] font-medium">{slot.time}</span>
-                    <span className="grid h-[30px] w-[30px] place-items-center rounded-full bg-trBlue text-[13px] text-white">
-                      →
+                    <span className="grid h-[30px] w-[30px] place-items-center rounded-full bg-trBlue text-white">
+                      <IconArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </span>
                 </button>
@@ -141,9 +149,10 @@ const Contact = () => {
           <button
             type="button"
             onClick={() => openBooking()}
-            className="relative mt-4 bg-transparent p-0 py-1.5 text-[15px] font-semibold text-trBlue"
+            className="relative mt-4 inline-flex items-center gap-2 bg-transparent p-0 py-1.5 text-[15px] font-semibold text-trBlue"
           >
-            See all times →
+            {t.contact.seeAll}
+            <IconArrowRight className="h-3.5 w-3.5" />
           </button>
         </TiltCard>
       </div>

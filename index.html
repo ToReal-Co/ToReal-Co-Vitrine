@@ -1,62 +1,65 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr-TN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logoWithoutText.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ToReal&Co — Mobile, Web & UI/UX Product Studio in Tunisia</title>
-    <meta
-      name="description"
-      content="Independent product studio in Tunisia. Mobile apps, web platforms and UI/UX design — from first sketch to release, no hand-offs. Free 30-min discovery call."
-    />
-    <link rel="canonical" href="https://torealco.tn/" />
+    <meta name="google-site-verification" content="FxAiiv3hZrA1m0uEFdHt2_NSAsm4y0Ibd4HJEm9Qzp0" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://torealco.tn/" />
-    <meta property="og:site_name" content="ToReal&Co" />
-    <meta property="og:title" content="ToReal&Co — Mobile, Web & UI/UX Product Studio in Tunisia" />
-    <meta
-      property="og:description"
-      content="Independent product studio in Tunisia. Mobile apps, web platforms and UI/UX design — from first sketch to release, no hand-offs. Free 30-min discovery call."
+    <!-- Origins the page talks to on first load; warming them early shaves
+         a full round-trip off the fonts and the ad script. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+
+    <!-- Requested here rather than through an @import in the stylesheet, so
+         the font request starts alongside the CSS instead of behind it.
+         The weight range is narrowed to the weights the design uses, and
+         display=swap keeps the text readable while the font loads. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap"
     />
+
+    <link rel="icon" type="image/svg+xml" href="/logoWithoutText.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1570EF" />
+
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="ToReal&Co" />
+    <meta name="geo.region" content="TN-23" />
+    <meta name="geo.placename" content="Bizerte" />
+    <meta name="geo.position" content="37.2746;9.8739" />
+    <meta name="ICBM" content="37.2746, 9.8739" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ToReal&Co" />
+    <meta property="og:locale" content="fr_TN" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:image" content="https://torealco.tn/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter -->
+    <meta property="og:image:alt" content="ToReal&Co — boîte de développement informatique en Tunisie" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ToReal&Co — Mobile, Web & UI/UX Product Studio in Tunisia" />
-    <meta
-      name="twitter:description"
-      content="Independent product studio in Tunisia. Mobile apps, web platforms and UI/UX design — from first sketch to release, no hand-offs. Free 30-min discovery call."
-    />
     <meta name="twitter:image" content="https://torealco.tn/og-image.jpg" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ToReal&Co",
-        "url": "https://torealco.tn/",
-        "logo": "https://torealco.tn/logoWithoutText.svg",
-        "description": "Independent product studio — mobile, web and design under one roof. We work directly with founders, from the first sketch to the release, with no account managers and no hand-offs in between.",
-        "slogan": "From Concept to Real — bring your digital vision to life.",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+216-58-693-946",
-          "contactType": "customer service",
-          "areaServed": "TN"
-        }
-      }
+    <!--app-head-->
+
+    <!-- Marks the document as script-capable before first paint, which is
+         what gates the scroll-reveal animation. Readers that do not run
+         scripts keep every prerendered section fully visible. -->
+    <script>
+      document.documentElement.classList.add('js');
     </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131326018443"
-     crossorigin="anonymous"></script>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131326018443"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

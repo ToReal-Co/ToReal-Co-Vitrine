@@ -1,88 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import SectionHeading from '../common/SectionHeading';
 import { useBooking } from '../common/BookingContext';
 import { getCmsFaq } from '../lib/faqApi';
 import { setJsonLd } from '../lib/seo';
-
-const FALLBACK_FAQS = [
-  {
-    question: 'How do you ensure the quality of your work?',
-    answer: `Quality is built in at every stage—not just at the end. We run a full testing campaign before each release to make sure your product is reliable and ready for users.
-
-Our approach includes:
-• Functional testing — every feature is checked against the approved specification.
-• Cross-device & cross-browser testing — consistent experience on mobile, tablet, and desktop.
-• Performance & security checks — fast load times and protection of user data.
-• Peer code reviews — a second developer reviews the code before it ships.
-• User acceptance testing (UAT) — you validate the build before we deliver.
-
-We fix issues as we find them and only move forward when the quality bar is met.`,
-  },
-  {
-    question: 'What tools and technologies do you use?',
-    answer: `We choose modern, proven technologies based on your project—mobile app, web platform, or both. Our stack is built for performance, scalability, and long-term maintenance.
-
-• Frontend & mobile — React, React Native, Tailwind CSS, and Vite for fast, responsive interfaces on web and mobile.
-• Backend & APIs — Node.js, REST APIs, and secure authentication for your business logic and data.
-• Design — Figma for wireframes, UI design, and interactive prototypes before development starts.
-• Cloud & hosting — Netlify and Render for reliable deployment, storage, and scaling.
-• Payments & analytics — Stripe, in-app purchases, and tools like Google Analytics or Mixpanel to track growth.
-• Collaboration — Git, Jira/Linear, Discord, and WhatsApp to keep you updated throughout the project.
-
-We pick the right combination for your goals—not every tool on every project.`,
-  },
-  {
-    question: 'How does your project process work?',
-    answer: `Our process follows clear steps from first contact to delivery:
-
-1. Initial contact — We discuss your vision, goals, and project scope.
-2. Requirements document — We draft a detailed specification (features, timeline, and deliverables).
-3. Specification validation — You review and approve the document before any development starts.
-4. Development kickoff — Once validated, we begin building your product.
-5. Weekly demos — Every week, a 30-minute session to review progress and gather your feedback.
-6. Scrum delivery — We apply Agile/Scrum practices: sprints, backlog prioritization, and continuous validation until launch.`,
-  },
-  {
-    question: 'How will we discuss your project?',
-    answer: `We start with a free discovery call (about 30 minutes) — pick a slot right on this site and we'll confirm by email. During the call, we review your idea, goals, budget, and timeline, and outline the next steps together.
-
-You can also reach us in other ways:
-• WhatsApp — for quick messages and short requests (+216 58 693 946).
-• Discord — join our channel for reviews, feedback, and project updates during development.
-
-After the discovery call, we follow up with a summary and, if needed, a proposal for the requirements document.`,
-  },
-];
+import { buildFaqJsonLd } from '../lib/routes';
+import { SITE_URL } from '../lib/siteConfig';
+import { useI18n } from '../i18n';
 
 const Faq = () => {
-  const [faqs, setFaqs] = useState(FALLBACK_FAQS);
-  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const { t, locale } = useI18n();
+  const [faqs, setFaqs] = useState(t.faq.items);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const { openBooking } = useBooking();
+  const { pathname } = useLocation();
+
+  // Keep the visible list in step with the active locale — switching
+  // languages must not leave the previous language's questions on screen.
+  useEffect(() => {
+    setFaqs(t.faq.items);
+    setOpenFaqIndex(null);
+  }, [t]);
 
   useEffect(() => {
     let cancelled = false;
-    getCmsFaq().then((cmsFaqs) => {
+    getCmsFaq(locale).then((cmsFaqs) => {
       if (cancelled || !cmsFaqs) return;
       const sorted = cmsFaqs.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
       setFaqs(sorted);
-      setOpenFaqIndex(0);
+      setOpenFaqIndex(null);
     });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale]);
 
+  // Rewrite the prerendered FAQ markup whenever the rendered questions
+  // change, so the structured data always describes what is on the page.
   useEffect(() => {
-    setJsonLd('faq-jsonld', {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map((faq) => ({
-        '@type': 'Question',
-        name: faq.question,
-        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-      })),
-    });
-  }, [faqs]);
+    const url = `${SITE_URL}${pathname.endsWith('/') ? pathname : `${pathname}/`}`;
+    setJsonLd('faq-jsonld', buildFaqJsonLd(url, faqs));
+  }, [faqs, pathname]);
 
   const toggleFaq = (index) => setOpenFaqIndex(openFaqIndex === index ? null : index);
 
@@ -93,15 +51,15 @@ const Faq = () => {
       style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
     >
       <div className="text-center">
-        <SectionHeading align="center" eyebrow="[07] FAQ" title="Frequently asked questions" />
+        <SectionHeading align="center" eyebrow={t.faq.eyebrow} title={t.faq.title} />
         <p className="mx-auto mt-5 max-w-xl text-[18px] text-muted">
-          Quick answers to questions you may have. Can&apos;t find what you&apos;re looking for?{' '}
+          {t.faq.leadBefore}{' '}
           <button
             type="button"
             onClick={openBooking}
             className="font-semibold text-darkBlue underline decoration-[1.5px] underline-offset-4"
           >
-            Book a call now
+            {t.faq.leadCta}
           </button>
         </p>
       </div>
@@ -118,26 +76,27 @@ const Faq = () => {
                 boxShadow: isOpen ? '0 30px 60px -40px rgba(21,112,239,.5)' : 'none',
               }}
             >
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                onClick={() => toggleFaq(index)}
-                className="flex w-full items-center justify-between gap-5 px-7 py-6 text-left"
-              >
-                <span className="text-[clamp(17px,1.5vw,20px)] font-semibold text-darkBlue">
-                  {faq.question}
-                </span>
-                <span
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[20px] transition-[transform,background,color] duration-[350ms]"
-                  style={{
-                    background: isOpen ? '#1570EF' : 'rgba(21,112,239,.1)',
-                    color: isOpen ? '#fff' : '#1570EF',
-                    transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
-                  }}
+              <h3 className="m-0">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => toggleFaq(index)}
+                  className="flex w-full items-center justify-between gap-5 px-7 py-6 text-left text-[clamp(17px,1.5vw,20px)] font-semibold text-darkBlue"
                 >
-                  +
-                </span>
-              </button>
+                  {faq.question}
+                  <span
+                    aria-hidden="true"
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[20px] font-normal transition-[transform,background,color] duration-[350ms]"
+                    style={{
+                      background: isOpen ? '#1570EF' : 'rgba(21,112,239,.1)',
+                      color: isOpen ? '#fff' : '#1570EF',
+                      transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                    }}
+                  >
+                    +
+                  </span>
+                </button>
+              </h3>
 
               <div
                 className="grid transition-[grid-template-rows] duration-[450ms] ease-out-magnet"

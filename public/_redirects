@@ -1,0 +1,9 @@
+# Netlify redirects.
+#
+# One canonical host only — serving the site on both the apex and the www
+# subdomain splits ranking signals between two URLs for the same page.
+https://www.torealco.tn/*  https://torealco.tn/:splat  301!
+
+# No SPA catch-all on purpose: every route is prerendered to a real file,
+# so unmatched URLs fall through to 404.html with a genuine 404 status
+# instead of answering 200 with the homepage (a soft 404).

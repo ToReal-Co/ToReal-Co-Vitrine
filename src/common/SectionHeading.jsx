@@ -18,19 +18,38 @@ const SectionHeading = ({
   const titleSize =
     size === 'lg' ? 'text-[clamp(34px,4.2vw,58px)] leading-[1.04]' : 'text-[clamp(36px,4.6vw,64px)] leading-[1.02]';
 
+  const match = typeof eyebrow === 'string' ? eyebrow.match(/^\[([^\]]+)\]\s*(.*)$/) : null;
+  const eyebrowIndex = match?.[1];
+  const eyebrowLabel = match?.[2] || eyebrow;
+
   return (
     <div className={`${align === 'center' ? 'text-center' : 'text-left'} ${className}`}>
       {eyebrow && (
         <div
-          className={`font-mono text-[12px] uppercase tracking-[0.14em] ${
-            isDark ? 'text-electric' : 'text-trBlue'
-          }`}
+          className={`inline-flex items-center gap-2.5 font-mono text-[13px] font-normal uppercase tracking-[0.12em] ${
+            align === 'center' ? 'justify-center' : ''
+          } ${isDark ? 'text-electric' : 'text-trBlue'}`}
         >
-          {eyebrow}
+          {eyebrowIndex ? (
+            <>
+              <span
+                className={`inline-grid h-8 min-w-8 place-items-center rounded-lg px-2 tracking-[0.08em] ${
+                  isDark
+                    ? 'bg-white/[0.08] ring-1 ring-inset ring-white/20'
+                    : 'bg-trBlue/[0.1] ring-1 ring-inset ring-trBlue/20'
+                }`}
+              >
+                {eyebrowIndex}
+              </span>
+              <span>{eyebrowLabel}</span>
+            </>
+          ) : (
+            <span>{eyebrow}</span>
+          )}
         </div>
       )}
       <h2
-        className={`text-balance mt-[18px] font-bold tracking-[-0.04em] ${titleSize} ${
+        className={`text-balance mt-5 font-bold tracking-[-0.04em] ${titleSize} ${
           isDark ? 'text-white' : 'text-darkBlue'
         }`}
       >

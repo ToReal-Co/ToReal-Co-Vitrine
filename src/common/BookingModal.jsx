@@ -11,10 +11,11 @@ import {
   DEFAULT_SLOT_MINUTES,
 } from '../lib/bookingApi';
 import useScrollLock from './useScrollLock';
-import logoMark from '../assets/images/logoWithoutText.svg';
+import { useI18n } from '../i18n';
+import { IconArrowLeft, IconArrowRight, IconClose } from './Icons';
+import logo from '../assets/images/logoOnDark.svg';
 
 const DAYS_AHEAD = 14;
-const PROJECT_TYPES = ['Mobile app', 'Website', 'UI/UX design', 'Not sure yet'];
 const CONFETTI_COLORS = ['#1570EF', '#5B9BFF', '#0B4FD1', '#DBE9FE', '#0A1433'];
 const CONFETTI_DURATION_MS = 2600;
 
@@ -43,16 +44,16 @@ function buildDays() {
   return out;
 }
 
-function groupSlots(slots) {
+function groupSlots(slots, labels) {
   const morning = slots.filter((t) => Number(t.split(':')[0]) < 12);
   const afternoon = slots.filter((t) => Number(t.split(':')[0]) >= 12);
   const out = [];
-  if (morning.length) out.push({ label: 'Morning', slots: morning });
-  if (afternoon.length) out.push({ label: 'Afternoon', slots: afternoon });
+  if (morning.length) out.push({ label: labels.morning, slots: morning });
+  if (afternoon.length) out.push({ label: labels.afternoon, slots: afternoon });
   return out;
 }
 
-function downloadIcs(dateIso, time, timeZone, slotMinutes) {
+function downloadIcs(dateIso, time, timeZone, slotMinutes, summary) {
   const st = zonedWallTimeToUtc(dateIso, time, timeZone);
   const en = new Date(st.getTime() + slotMinutes * 60000);
   const f = (x) => x.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -65,7 +66,7 @@ function downloadIcs(dateIso, time, timeZone, slotMinutes) {
     `DTSTAMP:${f(new Date())}`,
     `DTSTART:${f(st)}`,
     `DTEND:${f(en)}`,
-    'SUMMARY:Discovery call — ToReal&Co',
+    `SUMMARY:${summary}`,
     'END:VEVENT',
     'END:VCALENDAR',
   ].join('\r\n');
@@ -76,6 +77,10 @@ function downloadIcs(dateIso, time, timeZone, slotMinutes) {
 }
 
 const BookingModal = ({ onClose, preset }) => {
+  const { t, locale } = useI18n();
+  const b = t.booking;
+  const dateLocale = t.dateLocale;
+  const PROJECT_TYPES = b.projectTypes;
   const days = useMemo(buildDays, []);
   const closeRef = useRef(null);
   const [wide, setWide] = useState(typeof window !== 'undefined' ? window.innerWidth >= 820 : true);
@@ -144,7 +149,7 @@ const BookingModal = ({ onClose, preset }) => {
       .catch((err) => {
         if (cancelled) return;
         setSlotsError(
-          err instanceof BookingApiError ? err.message : "Couldn't load available times."
+          err instanceof BookingApiError ? err.message : b.loadError
         );
       })
       .finally(() => {
@@ -155,16 +160,16 @@ const BookingModal = ({ onClose, preset }) => {
     };
   }, [selectedIso]);
 
-  const groups = groupSlots(slots);
+  const groups = groupSlots(slots, b);
   const zoneLabel = formatZoneLabel(
     timezone,
     selectedIso ? zonedWallTimeToUtc(selectedIso, selectedTime || '12:00', timezone) : undefined
   );
   const dayLong = selectedDay
-    ? selectedDay.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
+    ? selectedDay.toLocaleDateString(dateLocale, { weekday: 'long', day: 'numeric', month: 'long' })
     : '';
   const monthLabel = days[page * 7]
-    ? days[page * 7].toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+    ? days[page * 7].toLocaleDateString(dateLocale, { month: 'long', year: 'numeric' })
     : '';
   const maxPage = Math.max(0, Math.ceil(days.length / 7) - 1);
 
@@ -172,7 +177,7 @@ const BookingModal = ({ onClose, preset }) => {
     e.preventDefault();
     if (!selectedTime || !selectedIso) return;
     if (!form.name.trim() || !form.email.trim()) {
-      setSubmitError('Name and email are required.');
+      setSubmitError(b.requiredFields);
       return;
     }
     setSubmitting(true);
@@ -196,7 +201,7 @@ const BookingModal = ({ onClose, preset }) => {
           getAvailability(selectedIso).then((data) => setSlots(data?.slots || []));
         }
       } else {
-        setSubmitError('Something went wrong. Please try again.');
+        setSubmitError(b.genericError);
       }
     } finally {
       setSubmitting(false);
@@ -207,7 +212,7 @@ const BookingModal = ({ onClose, preset }) => {
     <div
       role="presentation"
       aria-modal="true"
-      aria-label="Book a discovery call"
+      aria-label={b.dialogLabel}
       onClick={(e) => e.target === e.currentTarget && onClose()}
       className={
         wide
@@ -251,17 +256,22 @@ const BookingModal = ({ onClose, preset }) => {
             className="pointer-events-none absolute -bottom-40 -left-[120px] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(21,112,239,.5),transparent_65%)]"
           />
 
-          <div className="relative flex items-center gap-2.5">
-            <img src={logoMark} alt="" width={30} height={30} className="block" />
-            <span className="text-[17px] font-bold">ToReal&amp;Co</span>
+          <div className="relative flex items-center">
+            <img
+              src={logo}
+              alt="ToReal&Co"
+              width={110}
+              height={40}
+              className="block h-9 w-auto"
+            />
           </div>
 
           <div className="relative">
             <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-electric">
-              Free discovery call
+              {b.eyebrow}
             </div>
             <h3 className="mt-2.5 text-[clamp(26px,2.6vw,34px)] font-semibold leading-[1.05] tracking-[-0.03em]">
-              Let&apos;s talk about your project
+              {b.title}
             </h3>
           </div>
 
@@ -270,13 +280,15 @@ const BookingModal = ({ onClose, preset }) => {
               <div className="relative flex flex-col gap-3 text-[15px] text-periwinkle">
                 <div className="flex items-center gap-3">
                   <span className="w-[30px] font-mono text-[11px] text-fog">DUR</span>
-                  {slotMinutes} minutes
+                  {slotMinutes} {b.duration}
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="w-[30px] font-mono text-[11px] text-fog">VIA</span>Google Meet, WhatsApp or phone
+                  <span className="w-[30px] font-mono text-[11px] text-fog">VIA</span>
+                  {b.via}
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="w-[30px] font-mono text-[11px] text-fog">LNG</span>Français or English
+                  <span className="w-[30px] font-mono text-[11px] text-fog">LNG</span>
+                  {b.languages}
                 </div>
               </div>
               <div className="relative flex items-center gap-3">
@@ -289,18 +301,16 @@ const BookingModal = ({ onClose, preset }) => {
                   </span>
                 </span>
                 <span className="text-[14px] leading-[1.35] text-periwinkle">
-                  With Ahmed &amp; Skander,
-                  <br />
-                  the founders
+                  {b.withFounders}
                 </span>
               </div>
             </>
           )}
 
           <div className="relative mt-auto rounded-2xl border border-white/10 bg-white/[0.06] p-[18px]">
-            <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog">Your slot</div>
+            <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog">{b.yourSlot}</div>
             <div className="mt-2 text-[20px] font-semibold tracking-[-0.01em]">
-              {selectedTime && selectedDay ? dayLong : 'Pick a date and time'}
+              {selectedTime && selectedDay ? dayLong : b.pickDateTime}
             </div>
             {selectedTime && (
               <div className="mt-0.5 font-mono text-[14px] text-electric">
@@ -325,22 +335,27 @@ const BookingModal = ({ onClose, preset }) => {
           <div className="relative shrink-0 bg-navy px-5 pb-4 pt-3 text-white">
             <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-white/25" />
             <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <img src={logoMark} alt="" width={24} height={24} className="block" />
-                <span className="text-[15px] font-bold">ToReal&amp;Co</span>
+              <div className="flex items-center">
+                <img
+                  src={logo}
+                  alt="ToReal&Co"
+                  width={96}
+                  height={35}
+                  className="block h-8 w-auto"
+                />
               </div>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={onClose}
-                aria-label="Close"
-                className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-[16px] text-white"
+                aria-label={b.close}
+                className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white"
               >
-                ✕
+                <IconClose className="h-4 w-4" />
               </button>
             </div>
             <h3 className="mt-3 text-[20px] font-semibold leading-tight tracking-[-0.02em]">
-              {selectedTime && selectedDay ? `${dayLong} · ${selectedTime}` : "Let's talk about your project"}
+              {selectedTime && selectedDay ? `${dayLong} · ${selectedTime}` : b.title}
             </h3>
             <div className="relative mt-3.5 flex gap-1.5">
               {[1, 2, 3].map((n) => (
@@ -366,10 +381,10 @@ const BookingModal = ({ onClose, preset }) => {
               ref={closeRef}
               type="button"
               onClick={onClose}
-              aria-label="Close"
-              className="absolute right-[18px] top-[18px] z-[2] grid h-[42px] w-[42px] place-items-center rounded-full border border-darkBlue/10 bg-white text-[18px] text-darkBlue hover:bg-trWhite"
+              aria-label={b.close}
+              className="absolute right-[18px] top-[18px] z-[2] grid h-[42px] w-[42px] place-items-center rounded-full border border-darkBlue/10 bg-white text-darkBlue hover:bg-trWhite"
             >
-              ✕
+              <IconClose className="h-[18px] w-[18px]" />
             </button>
           )}
 
@@ -377,32 +392,32 @@ const BookingModal = ({ onClose, preset }) => {
             <div className="flex h-full flex-col gap-[26px]">
               <div className={`flex items-center justify-between gap-3 ${wide ? 'pr-14' : ''}`}>
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-haze">Step 1 / 2</div>
+                  <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-haze">{b.step1}</div>
                   <div className="mt-1.5 text-[22px] font-semibold tracking-[-0.02em]">{monthLabel}</div>
                 </div>
                 <div className="flex gap-1.5">
                   <button
                     type="button"
-                    aria-label="Previous week"
+                    aria-label={b.prevWeek}
                     disabled={page === 0}
                     onClick={() => setPage((p) => Math.max(0, p - 1))}
-                    className="grid h-10 w-10 place-items-center rounded-full border border-darkBlue/[0.12] bg-white text-[16px] disabled:opacity-35"
+                    className="grid h-10 w-10 place-items-center rounded-full border border-darkBlue/[0.12] bg-white disabled:opacity-35"
                   >
-                    ←
+                    <IconArrowLeft className="h-4 w-4" />
                   </button>
                   <button
                     type="button"
-                    aria-label="Next week"
+                    aria-label={b.nextWeek}
                     disabled={page === maxPage}
                     onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
-                    className="grid h-10 w-10 place-items-center rounded-full border border-darkBlue/[0.12] bg-white text-[16px] disabled:opacity-35"
+                    className="grid h-10 w-10 place-items-center rounded-full border border-darkBlue/[0.12] bg-white disabled:opacity-35"
                   >
-                    →
+                    <IconArrowRight className="h-4 w-4" />
                   </button>
                 </div>
               </div>
 
-              <div role="listbox" aria-label="Date" className="grid grid-cols-7 gap-1.5">
+              <div role="listbox" aria-label={b.dateListLabel} className="grid grid-cols-7 gap-1.5">
                 {days.slice(page * 7, page * 7 + 7).map((d, k) => {
                   const i = page * 7 + k;
                   const on = i === dayIndex;
@@ -424,7 +439,7 @@ const BookingModal = ({ onClose, preset }) => {
                       }}
                     >
                       <span className="font-mono text-[10px] uppercase tracking-[0.12em] opacity-75">
-                        {d.toLocaleDateString('en-GB', { weekday: 'short' })}
+                        {d.toLocaleDateString(dateLocale, { weekday: 'short' })}
                       </span>
                       <span className="tabular text-[20px] font-semibold">{d.getDate()}</span>
                     </button>
@@ -441,12 +456,12 @@ const BookingModal = ({ onClose, preset }) => {
                 </div>
 
                 {slotsLoading ? (
-                  <p className="mt-4 text-[14px] text-haze">Loading available times…</p>
+                  <p className="mt-4 text-[14px] text-haze">{b.loadingTimes}</p>
                 ) : slotsError ? (
                   <p className="mt-4 text-[14px] text-red-500">{slotsError}</p>
                 ) : groups.length === 0 ? (
                   <div className="mt-[18px] rounded-[14px] border-[1.5px] border-dashed border-darkBlue/[0.12] p-[22px] text-[15px] text-muted">
-                    No times left on this day — pick another date.
+                    {b.noTimes}
                   </div>
                 ) : (
                   groups.map((g) => (
@@ -490,7 +505,7 @@ const BookingModal = ({ onClose, preset }) => {
                 className="mt-auto flex w-full items-center justify-center gap-2.5 rounded-full px-[26px] py-4 text-[16px] font-semibold text-white transition-colors duration-250 disabled:cursor-not-allowed"
                 style={{ background: selectedTime ? '#1570EF' : '#B8C6E3' }}
               >
-                Continue <span aria-hidden="true">→</span>
+                Continue <IconArrowRight className="h-4 w-4" />
               </button>
             </div>
           )}
@@ -498,13 +513,13 @@ const BookingModal = ({ onClose, preset }) => {
           {step === 2 && (
             <form onSubmit={handleSubmit} className="flex h-full flex-col gap-[18px]">
               <div className={wide ? 'pr-14' : ''}>
-                <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-haze">Step 2 / 2</div>
-                <div className="mt-1.5 text-[22px] font-semibold tracking-[-0.02em]">Your details</div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-haze">{b.step2}</div>
+                <div className="mt-1.5 text-[22px] font-semibold tracking-[-0.02em]">{b.yourDetails}</div>
               </div>
 
               <div className="grid gap-3.5" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))' }}>
                 <label className="flex flex-col gap-2 text-[14px] font-semibold">
-                  Name
+                  {b.name}
                   <input
                     required
                     value={form.name}
@@ -514,7 +529,7 @@ const BookingModal = ({ onClose, preset }) => {
                   />
                 </label>
                 <label className="flex flex-col gap-2 text-[14px] font-semibold">
-                  Email
+                  {b.email}
                   <input
                     required
                     type="email"
@@ -527,7 +542,7 @@ const BookingModal = ({ onClose, preset }) => {
               </div>
 
               <div>
-                <div className="mb-2.5 text-[14px] font-semibold">What do you need?</div>
+                <div className="mb-2.5 text-[14px] font-semibold">{b.projectTypeLabel}</div>
                 <div className="flex flex-wrap gap-2">
                   {PROJECT_TYPES.map((t) => {
                     const on = ptype === t;
@@ -552,7 +567,8 @@ const BookingModal = ({ onClose, preset }) => {
               </div>
 
               <label className="flex flex-col gap-2 text-[14px] font-semibold">
-                Anything we should know? <span className="-mt-1 font-normal text-haze">Optional</span>
+                {b.notesLabel}{' '}
+                <span className="-mt-1 font-normal text-haze">{b.optional}</span>
                 <textarea
                   rows={3}
                   value={form.notes}
@@ -567,16 +583,17 @@ const BookingModal = ({ onClose, preset }) => {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="self-start bg-transparent p-0 py-2.5 text-[15px] font-semibold text-muted"
+                  className="inline-flex items-center gap-2 self-start bg-transparent p-0 py-2.5 text-[15px] font-semibold text-muted"
                 >
-                  ← Change time
+                  <IconArrowLeft className="h-3.5 w-3.5" />
+                  {b.changeTime}
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
                   className="flex w-full items-center justify-center gap-2.5 rounded-full bg-trBlue px-[26px] py-4 text-[16px] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(21,112,239,0.7)] transition-colors hover:bg-trBlueDark disabled:opacity-60"
                 >
-                  {submitting ? 'Sending…' : 'Confirm booking'} <span aria-hidden="true">→</span>
+                  {submitting ? b.submitting : b.submit} <IconArrowRight className="h-4 w-4" />
                 </button>
               </div>
             </form>
@@ -608,12 +625,12 @@ const BookingModal = ({ onClose, preset }) => {
                 </span>
               </div>
               <h3 className="mt-3.5 animate-[fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_0.12s_both] text-[clamp(28px,3vw,38px)] font-semibold tracking-[-0.03em]">
-                Rendez-vous confirmed
+                {b.successTitle}
               </h3>
               <p className="animate-[fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_0.22s_both] text-[17px] leading-relaxed text-muted">
-                {dayLong} at {selectedTime} ({zoneLabel}) — your slot is locked in.
-                We&apos;ll get back to you by email at{' '}
-                {form.email || 'your inbox'} to confirm the details.
+                {dayLong} {b.successAt} {selectedTime} ({zoneLabel}) {b.successLocked}{' '}
+                {b.successEmail}{' '}
+                {form.email || b.successInbox} {b.successConfirm}
               </p>
               <div className="mt-2.5 flex w-full animate-[fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_0.32s_both] flex-wrap gap-2.5">
                 <button
@@ -621,18 +638,18 @@ const BookingModal = ({ onClose, preset }) => {
                   onClick={() =>
                     selectedIso &&
                     selectedTime &&
-                    downloadIcs(selectedIso, selectedTime, timezone, slotMinutes)
+                    downloadIcs(selectedIso, selectedTime, timezone, slotMinutes, b.icsSummary)
                   }
                   className="flex flex-1 items-center justify-center gap-2.5 rounded-full border-[1.5px] border-darkBlue/[0.12] bg-white px-[22px] py-3.5 text-[15px] font-semibold text-darkBlue hover:border-trBlue hover:text-trBlue"
                 >
-                  Add to calendar
+                  {b.addToCalendar}
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
                   className="flex-1 rounded-full bg-darkBlue px-[22px] py-3.5 text-[15px] font-semibold text-white"
                 >
-                  Done
+                  {b.done}
                 </button>
               </div>
             </div>
