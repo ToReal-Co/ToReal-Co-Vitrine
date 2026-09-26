@@ -2,7 +2,7 @@
 #
 # One canonical host only — serving the site on both the apex and the www
 # subdomain splits ranking signals between two URLs for the same page.
-https://www.torealandco.live/*  https://torealandco.live/:splat  301!
+https://www.toreal-co.com/*  https://toreal-co.com/:splat  301!
 
 # No SPA catch-all on purpose: every route is prerendered to a real file,
 # so unmatched URLs fall through to 404.html with a genuine 404 status

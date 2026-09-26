@@ -68,7 +68,7 @@ function buildHead(route) {
   lines.push(`<meta property="og:description" content="${escapeHtml(seo.description)}" />`);
   lines.push(`<meta property="og:locale" content="${ogLocale}" />`);
   lines.push(`<meta property="og:locale:alternate" content="${ogAltLocale}" />`);
-  lines.push(`<meta property="og:image" content="https://torealandco.live/og-image.jpg" />`);
+  lines.push(`<meta property="og:image" content="https://toreal-co.com/og-image.jpg" />`);
   lines.push(`<meta property="og:image:width" content="1200" />`);
   lines.push(`<meta property="og:image:height" content="630" />`);
   lines.push(`<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />`);
@@ -76,7 +76,7 @@ function buildHead(route) {
   lines.push(`<meta name="twitter:card" content="summary_large_image" />`);
   lines.push(`<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`);
   lines.push(`<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`);
-  lines.push(`<meta name="twitter:image" content="https://torealandco.live/og-image.jpg" />`);
+  lines.push(`<meta name="twitter:image" content="https://toreal-co.com/og-image.jpg" />`);
 
   if (route.jsonLd) {
     lines.push(
