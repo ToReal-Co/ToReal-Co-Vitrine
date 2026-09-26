@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useI18n } from '../i18n';
 import { IconCheck } from '../common/Icons';
 
 /**
- * three.js is the heaviest dependency on the page (~100KB+). We skip it on
- * mobile / reduced-motion, and on desktop only load after the first pointer
- * move over the hero (or a long fallback) so PageSpeed does not pay for it
- * during the lab window.
+ * three.js is heavy (~100KB). Skip on mobile / reduced-motion. On desktop,
+ * load shortly after first paint so the mark appears quickly without
+ * blocking FCP/LCP.
  */
 const HeroShowcase = () => {
   const { t } = useI18n();
   const [Cube, setCube] = useState(null);
-  const rootRef = useRef(null);
-  const loading = useRef(false);
 
   useEffect(() => {
     let alive = true;
-    let fallbackId;
+    let idleId;
+    let timeoutId;
 
     const skipCube =
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
@@ -26,35 +24,33 @@ const HeroShowcase = () => {
     if (skipCube) return undefined;
 
     const load = () => {
-      if (!alive || loading.current) return;
-      loading.current = true;
       import('./HeroCube')
         .then((mod) => {
           if (alive) setCube(() => mod.default);
         })
-        .catch(() => {
-          loading.current = false;
-        });
+        .catch(() => {});
     };
 
-    const el = rootRef.current;
-    const onIntent = () => load();
-    el?.addEventListener('pointerenter', onIntent, { once: true, passive: true });
-    // Fallback for users who never hover — well after typical PSI measurement.
-    fallbackId = window.setTimeout(load, 12000);
+    const start = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(load, { timeout: 1200 });
+      } else {
+        timeoutId = window.setTimeout(load, 400);
+      }
+    };
+
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
 
     return () => {
       alive = false;
-      el?.removeEventListener('pointerenter', onIntent);
-      window.clearTimeout(fallbackId);
+      if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
     };
   }, []);
 
   return (
-    <div
-      ref={rootRef}
-      className="relative z-[1] h-[clamp(360px,46vw,600px)] -translate-y-3 sm:-translate-y-4 lg:-translate-y-6"
-    >
+    <div className="relative z-[1] h-[clamp(360px,46vw,600px)] -translate-y-3 sm:-translate-y-4 lg:-translate-y-6">
       {Cube ? <Cube /> : null}
 
       <div className="pointer-events-none absolute right-[2%] top-[4%] flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/[0.66] py-2.5 pl-2.5 pr-4 shadow-[0_16px_40px_-18px_rgba(10,20,51,0.35)] backdrop-blur-md">
