@@ -19,6 +19,15 @@ const HeroShowcase = () => {
     let idleId;
     let timeoutId;
 
+    // Skip WebGL on mobile / reduced-motion / data-saver — three.js is the
+    // heaviest cost on the critical path and tanks mobile Lighthouse scores.
+    const skipCube =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(max-width: 900px)').matches ||
+      Boolean(navigator.connection?.saveData);
+
+    if (skipCube) return undefined;
+
     const load = () => {
       import('./HeroCube')
         .then((mod) => {
@@ -30,11 +39,16 @@ const HeroShowcase = () => {
         });
     };
 
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(load, { timeout: 2500 });
-    } else {
-      timeoutId = setTimeout(load, 300);
-    }
+    const start = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(load, { timeout: 6000 });
+      } else {
+        timeoutId = setTimeout(load, 1500);
+      }
+    };
+
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
 
     return () => {
       alive = false;
