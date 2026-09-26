@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 
 import logo from '../assets/images/logoToRealSVG.svg';
@@ -96,6 +97,18 @@ const Header = () => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
+    <>
+      {menuOpen &&
+        createPortal(
+          <button
+            type="button"
+            aria-label={locale === 'en' ? 'Close menu' : 'Fermer le menu'}
+            className="fixed inset-0 z-40 cursor-default border-0 bg-inkDeep/35 backdrop-blur-[2px] min-[900px]:hidden"
+            onClick={closeMenu}
+          />,
+          document.body
+        )}
+
     <header
       className="fixed inset-x-0 top-3.5 z-50 px-3.5 transition-transform duration-[450ms] ease-out-magnet sm:px-8"
       style={{ transform: hidden && !menuOpen ? 'translateY(calc(-100% - 24px))' : 'translateY(0)' }}
@@ -195,6 +208,7 @@ const Header = () => {
         </div>
       )}
     </header>
+    </>
   );
 };
 
