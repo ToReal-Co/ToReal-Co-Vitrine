@@ -1,5 +1,5 @@
-import ahmedPhoto from '../assets/images/team/ahmedmahouachi.jpg';
-import skanderPhoto from '../assets/images/team/skanderzouaoui.jpeg';
+import ahmedPhoto from '../assets/images/team/ahmedmahouachi.webp';
+import skanderPhoto from '../assets/images/team/skanderzouaoui.webp';
 
 const TEAM = [
   {

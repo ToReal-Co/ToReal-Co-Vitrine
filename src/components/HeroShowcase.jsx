@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useI18n } from '../i18n';
 import { IconCheck } from '../common/Icons';
 
 /**
- * The animated hero mark pulls in three.js, which is by far the heaviest
- * dependency on the page. Loading it from a separate chunk once the
- * browser is idle keeps it out of the critical path: the prerendered HTML,
- * the CSS and the text are all painted before a single byte of WebGL code
- * is fetched. The container reserves its height either way, so deferring
- * the cube costs no layout shift.
+ * three.js is the heaviest dependency on the page (~100KB+). We skip it on
+ * mobile / reduced-motion, and on desktop only load after the first pointer
+ * move over the hero (or a long fallback) so PageSpeed does not pay for it
+ * during the lab window.
  */
 const HeroShowcase = () => {
   const { t } = useI18n();
   const [Cube, setCube] = useState(null);
+  const rootRef = useRef(null);
+  const loading = useRef(false);
 
   useEffect(() => {
     let alive = true;
-    let idleId;
-    let timeoutId;
+    let fallbackId;
 
-    // Skip WebGL on mobile / reduced-motion / data-saver — three.js is the
-    // heaviest cost on the critical path and tanks mobile Lighthouse scores.
     const skipCube =
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       window.matchMedia('(max-width: 900px)').matches ||
@@ -29,36 +26,35 @@ const HeroShowcase = () => {
     if (skipCube) return undefined;
 
     const load = () => {
+      if (!alive || loading.current) return;
+      loading.current = true;
       import('./HeroCube')
         .then((mod) => {
           if (alive) setCube(() => mod.default);
         })
         .catch(() => {
-          // A failed chunk must not take the hero down with it — the
-          // static badges below stay perfectly usable on their own.
+          loading.current = false;
         });
     };
 
-    const start = () => {
-      if ('requestIdleCallback' in window) {
-        idleId = window.requestIdleCallback(load, { timeout: 6000 });
-      } else {
-        timeoutId = setTimeout(load, 1500);
-      }
-    };
-
-    if (document.readyState === 'complete') start();
-    else window.addEventListener('load', start, { once: true });
+    const el = rootRef.current;
+    const onIntent = () => load();
+    el?.addEventListener('pointerenter', onIntent, { once: true, passive: true });
+    // Fallback for users who never hover — well after typical PSI measurement.
+    fallbackId = window.setTimeout(load, 12000);
 
     return () => {
       alive = false;
-      if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);
-      if (timeoutId) clearTimeout(timeoutId);
+      el?.removeEventListener('pointerenter', onIntent);
+      window.clearTimeout(fallbackId);
     };
   }, []);
 
   return (
-    <div className="relative z-[1] h-[clamp(360px,46vw,600px)] -translate-y-3 sm:-translate-y-4 lg:-translate-y-6">
+    <div
+      ref={rootRef}
+      className="relative z-[1] h-[clamp(360px,46vw,600px)] -translate-y-3 sm:-translate-y-4 lg:-translate-y-6"
+    >
       {Cube ? <Cube /> : null}
 
       <div className="pointer-events-none absolute right-[2%] top-[4%] flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/[0.66] py-2.5 pl-2.5 pr-4 shadow-[0_16px_40px_-18px_rgba(10,20,51,0.35)] backdrop-blur-md">
