@@ -7,26 +7,6 @@
     <meta name="google-site-verification" content="FxAiiv3hZrA1m0uEFdHt2_NSAsm4y0Ibd4HJEm9Qzp0" />
     <meta name="msvalidate.01" content="D809662E1A413709F97B474A0AEA7D00" />
 
-    <!-- Origins the page talks to on first load; warming them early shaves
-         a full round-trip off the fonts and the ad script. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Non-blocking font CSS: print media swaps to all after load so FCP
-         is not held behind fonts.googleapis.com. -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      />
-    </noscript>
-
     <link rel="icon" type="image/svg+xml" href="/logoWithoutText.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -62,27 +42,5 @@
   <body>
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.jsx"></script>
-    <!-- AdSense after first paint / idle — keeps it off the critical path. -->
-    <script>
-      (function () {
-        var loadAds = function () {
-          var s = document.createElement('script');
-          s.async = true;
-          s.src =
-            'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131326018443';
-          s.crossOrigin = 'anonymous';
-          document.body.appendChild(s);
-        };
-        var schedule = function () {
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadAds, { timeout: 4000 });
-          } else {
-            setTimeout(loadAds, 2000);
-          }
-        };
-        if (document.readyState === 'complete') schedule();
-        else window.addEventListener('load', schedule, { once: true });
-      })();
-    </script>
   </body>
 </html>

@@ -119,7 +119,7 @@ const ServicePage = ({ slug }) => {
           </header>
 
           <SectionReveal delay={0}>
-            <div className="mt-[clamp(56px,7vw,96px)] grid gap-x-[72px] gap-y-12 lg:grid-cols-[minmax(0,1fr)_360px]">
+            <div className="mt-[clamp(40px,5vw,72px)] grid gap-x-[72px] gap-y-12 lg:grid-cols-[minmax(0,1fr)_360px]">
               <div className="flex flex-col gap-[clamp(40px,5vw,64px)]">
                 {page.sections.map((section) => (
                   <section key={section.h2}>
@@ -163,7 +163,7 @@ const ServicePage = ({ slug }) => {
 
           {showcaseProjects.length > 0 && (
             <SectionReveal delay={0}>
-              <section className="mt-[clamp(64px,8vw,110px)]">
+              <section className="mt-[clamp(40px,5vw,72px)]">
                 <div className="flex flex-wrap items-end justify-between gap-6">
                   <div>
                     <h2 className="text-balance text-[clamp(26px,3vw,42px)] font-bold leading-[1.1] tracking-[-0.035em] text-darkBlue">
@@ -235,7 +235,7 @@ const ServicePage = ({ slug }) => {
           )}
 
           <SectionReveal delay={0}>
-            <section className="mt-[clamp(64px,8vw,110px)]">
+            <section className="mt-[clamp(40px,5vw,72px)]">
               <h2 className="text-balance text-center text-[clamp(26px,3vw,42px)] font-bold leading-[1.1] tracking-[-0.035em] text-darkBlue">
                 {t.servicePage.faqTitle}
               </h2>
@@ -291,7 +291,7 @@ const ServicePage = ({ slug }) => {
           </SectionReveal>
 
           <SectionReveal delay={0}>
-            <section className="mt-[clamp(64px,8vw,110px)]">
+            <section className="mt-[clamp(40px,5vw,72px)]">
               <h2 className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">
                 {t.servicePage.relatedTitle}
               </h2>

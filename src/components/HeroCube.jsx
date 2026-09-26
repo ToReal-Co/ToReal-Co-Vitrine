@@ -238,10 +238,10 @@ const HeroCube = () => {
       aria-hidden="true"
       className="absolute pointer-events-auto cursor-pointer"
       style={{
-        inset: '-30% -40%',
+        inset: '-36% -40% -24% -40%',
         WebkitMaskImage:
-          'radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%)',
-        maskImage: 'radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%)',
+          'radial-gradient(ellipse 50% 50% at 50% 48%, #000 58%, transparent 100%)',
+        maskImage: 'radial-gradient(ellipse 50% 50% at 50% 48%, #000 58%, transparent 100%)',
       }}
     />
   );

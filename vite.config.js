@@ -38,10 +38,11 @@ function wakeBookingApiHtml(apiBase) {
   return {
     name: 'wake-booking-api-html',
     transformIndexHtml(html) {
-      return html.replace(
-        '<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />',
-        `<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />\n${snippet}`
-      );
+      // Inject right after the early "js" flag script in <head>.
+      const anchor =
+        "document.documentElement.classList.add('js');\n    </script>";
+      if (!html.includes(anchor)) return html;
+      return html.replace(anchor, `${anchor}\n${snippet}`);
     },
   };
 }

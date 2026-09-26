@@ -1,8 +1,6 @@
 /*
- * Web fonts are requested from index.html with a preconnect, not with an
- * @import here. An @import inside the stylesheet serialises three round
- * trips before any text can paint: fetch this file, parse it, fetch the
- * Google Fonts stylesheet, then fetch the font itself.
+ * Fonts are self-hosted via @fontsource (imported from main.jsx) so the
+ * first paint never waits on fonts.googleapis.com / fonts.gstatic.com.
  */
 
 @tailwind base;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/images/logoOnDark.svg';
+import footerWallpaper from '../assets/images/footer-wallpaper.webp';
 import { useBooking } from '../common/BookingContext';
 import { useI18n, localizePath } from '../i18n';
 import { CONTACT, ADDRESS, SOCIAL } from '../lib/siteConfig';
@@ -44,13 +45,20 @@ const Footer = () => {
     <footer
       data-screen-label="Footer"
       className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] pb-6"
-      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+      style={{ paddingTop: 'clamp(56px,7vw,96px)' }}
     >
       <div className="relative overflow-hidden rounded-[36px] bg-navy px-[clamp(28px,5vw,64px)] pb-7 pt-[clamp(28px,5vw,64px)] text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-[300px] -right-[200px] h-[700px] w-[700px] rounded-full bg-[radial-gradient(circle,rgba(21,112,239,.4),transparent_65%)]"
-        />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <img
+            src={footerWallpaper}
+            alt=""
+            className="h-full w-full object-cover object-center"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-navy/78" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020A22]/85 via-navy/40 to-navy/55" />
+        </div>
 
         <div className="relative grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="relative z-[1] min-w-0 sm:col-span-2 lg:col-span-1">
@@ -153,30 +161,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 1000 150"
-          className="relative mt-16 block w-full select-none"
-          preserveAspectRatio="xMinYMid meet"
-        >
-          <text
-            x="0"
-            y="118"
-            textLength="1000"
-            lengthAdjust="spacingAndGlyphs"
-            fill="none"
-            stroke="rgba(255,255,255,0.18)"
-            strokeWidth="2.5"
-            style={{
-              fontFamily: 'Outfit, system-ui, sans-serif',
-              fontWeight: 800,
-              fontSize: 148,
-              letterSpacing: '-0.06em',
-            }}
-          >
-            ToReal&amp;Co
-          </text>
-        </svg>
+        <p className="relative mt-16 max-w-[18ch] text-balance text-[clamp(1.75rem,4.8vw,3.25rem)] font-semibold leading-[1.12] tracking-[-0.035em] text-white/90">
+          {t.footer.motto}
+        </p>
 
         <div className="relative mt-7 flex flex-wrap justify-between gap-3 border-t border-white/10 pt-[22px] text-[14px] text-steel">
           <span>{t.footer.rights}</span>
@@ -195,7 +182,6 @@ const Footer = () => {
             </Link>
           </nav>
           <span className="font-mono text-[12px]">{t.footer.location}</span>
-          <span>{t.footer.motto}</span>
         </div>
       </div>
     </footer>

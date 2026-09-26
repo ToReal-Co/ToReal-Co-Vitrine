@@ -43,7 +43,7 @@ const WhoWeAre = () => {
     <section
       id="about"
       className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)]"
-      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+      style={{ paddingTop: 'clamp(56px,7vw,96px)' }}
     >
       <div className="relative overflow-hidden rounded-[36px] bg-navy p-[clamp(32px,5vw,72px)] text-white">
         <div
@@ -98,7 +98,7 @@ const WhoWeAre = () => {
         </div>
       </div>
 
-      <div className="mt-[clamp(64px,8vw,110px)] flex flex-wrap items-end justify-between gap-5">
+      <div className="mt-[clamp(40px,5vw,72px)] flex flex-wrap items-end justify-between gap-5">
         <div>
           <div className="font-mono text-[12px] uppercase tracking-[0.14em] text-trBlue">
             {t.whoWeAre.teamEyebrow}

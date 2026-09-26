@@ -58,10 +58,10 @@ const HeroShowcase = () => {
   }, []);
 
   return (
-    <div className="relative z-[1] h-[clamp(360px,46vw,600px)]">
+    <div className="relative z-[1] h-[clamp(360px,46vw,600px)] -translate-y-3 sm:-translate-y-4 lg:-translate-y-6">
       {Cube ? <Cube /> : null}
 
-      <div className="pointer-events-none absolute right-[2%] top-[8%] flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/[0.66] py-2.5 pl-2.5 pr-4 shadow-[0_16px_40px_-18px_rgba(10,20,51,0.35)] backdrop-blur-md">
+      <div className="pointer-events-none absolute right-[2%] top-[4%] flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/[0.66] py-2.5 pl-2.5 pr-4 shadow-[0_16px_40px_-18px_rgba(10,20,51,0.35)] backdrop-blur-md">
         <span className="grid h-[30px] w-[30px] place-items-center rounded-full bg-trBlue/[0.12] text-trBlue">
           <IconCheck className="h-3.5 w-3.5" />
         </span>

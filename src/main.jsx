@@ -1,6 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import '@fontsource/outfit/400.css';
+import '@fontsource/outfit/500.css';
+import '@fontsource/outfit/600.css';
+import '@fontsource/outfit/700.css';
+import '@fontsource/outfit/800.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
 import './styles/index.css';
 import App from './App.jsx';
 import { wakeBookingApi } from './lib/bookingApi';

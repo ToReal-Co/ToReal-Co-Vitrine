@@ -12,13 +12,13 @@ const HeroDescription = () => {
   const { t } = useI18n();
 
   return (
-    <div className="relative z-[2]">
+    <div className="relative z-[2] -translate-y-2 sm:-translate-y-3 lg:-translate-y-4">
       <div className="inline-flex max-w-full items-start gap-2.5 rounded-full border border-trBlue/[0.14] bg-white/80 px-3.5 py-2 font-mono text-[11px] uppercase leading-snug tracking-[0.06em] text-slate sm:items-center sm:text-[12px] sm:tracking-[0.08em] lg:w-max lg:max-w-none lg:whitespace-nowrap">
         <span className="mt-[0.35em] h-[7px] w-[7px] shrink-0 rounded-full bg-trBlue shadow-[0_0_0_4px_rgba(21,112,239,0.15)] lg:mt-0" />
         <span className="min-w-0 text-pretty lg:min-w-min">{t.hero.badge}</span>
       </div>
 
-      <h1 className="mt-7 text-balance text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-darkBlue">
+      <h1 className="mt-6 text-balance text-[clamp(1.95rem,3.6vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-darkBlue">
         {t.hero.h1Lead} <span className="text-trBlue">{t.hero.h1Accent}</span> {t.hero.h1Tail}{' '}
         <img
           src={logoMark}
@@ -32,7 +32,7 @@ const HeroDescription = () => {
         <span className="text-[0.72em] font-normal text-slate">{t.hero.h1Sub}</span>
       </h1>
 
-      <p className="text-pretty mt-7 max-w-[540px] text-[clamp(17px,1.4vw,20px)] leading-[1.6] text-muted">
+      <p className="text-pretty mt-6 max-w-[500px] text-[clamp(16px,1.25vw,18px)] leading-[1.6] text-muted">
         {t.hero.lead}{' '}
         <strong className="font-semibold text-darkBlue">{t.hero.leadStrong}</strong>
       </p>

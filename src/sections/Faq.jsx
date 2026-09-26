@@ -30,7 +30,7 @@ const Faq = () => {
     <section
       id="faq"
       className="mx-auto max-w-[980px] px-[clamp(20px,4vw,48px)]"
-      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+      style={{ paddingTop: 'clamp(56px,7vw,96px)' }}
     >
       <div className="text-center">
         <SectionHeading align="center" eyebrow={t.faq.eyebrow} title={t.faq.title} />

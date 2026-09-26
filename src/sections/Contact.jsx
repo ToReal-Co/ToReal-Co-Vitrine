@@ -44,7 +44,7 @@ const Contact = () => {
     <section
       id="contact"
       className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)]"
-      style={{ paddingTop: 'clamp(90px,11vw,150px)' }}
+      style={{ paddingTop: 'clamp(56px,7vw,96px)' }}
     >
       <div
         className="grid items-center gap-x-[72px] gap-y-10"
