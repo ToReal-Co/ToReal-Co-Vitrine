@@ -10,7 +10,7 @@
 import { SITE, SITE_URL, CONTACT, ADDRESS, AREAS_SERVED, OPENING_HOURS, sameAs } from './siteConfig';
 import { SERVICE_PAGES } from '../content/services';
 import { LEGAL_PAGES } from '../content/legal';
-import fr from '../i18n/fr';
+import fr from '../i18n/fr'; 
 import en from '../i18n/en';
 
 const abs = (path) => `${SITE_URL}${path}`;
