@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TiltCard, { CardSpotlight } from '../common/TiltCard';
-import { getCmsProjects } from '../lib/projectsApi';
 import SectionHeading from '../common/SectionHeading';
 import { localizedProjects } from '../content/projects';
 import { useI18n } from '../i18n';
@@ -15,43 +14,9 @@ function OurProjects() {
   const trackRef = useRef(null);
 
   useEffect(() => {
-    let cancelled = false;
     setProjects(localizedProjects(locale));
     setFilter(ALL);
-    getCmsProjects(locale).then((cmsProjects) => {
-      if (cancelled || !cmsProjects) return;
-      const mapped = cmsProjects
-        .slice()
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-        .map((p) => ({
-          name: p.name,
-          category: p.category,
-          kind: p.category,
-          year: p.year || '',
-          description: p.description,
-          link: p.link || undefined,
-          image: p.imageUrl,
-        }));
-      setProjects(mapped);
-    });
-    return () => {
-      cancelled = true;
-    };
   }, [locale, ALL]);
-
-  // Vertical wheel over the catalogue scrolls projects sideways instead of the page.
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    const onWheel = (e) => {
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      if (el.scrollWidth <= el.clientWidth) return;
-      e.preventDefault();
-      el.scrollLeft += e.deltaY;
-    };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [filter, projects]);
 
   useEffect(() => {
     trackRef.current?.scrollTo({ left: 0, behavior: 'smooth' });

@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TeamGrid from '../components/TeamGrid';
 import SectionHeading from '../common/SectionHeading';
 import CountUp from '../common/CountUp';
-import { getFallbackWhoWeAre, getWhoWeAreContent } from '../lib/whoWeAreApi';
+import { getWhoWeAreContent } from '../lib/whoWeAreApi';
 import { useI18n } from '../i18n';
 
 const YEARS_ACTIVE = 6;
 
 const WhoWeAre = () => {
   const { t, locale } = useI18n();
-  const [content, setContent] = useState(() => getFallbackWhoWeAre(locale));
-
-  useEffect(() => {
-    let cancelled = false;
-    setContent(getFallbackWhoWeAre(locale));
-    getWhoWeAreContent(locale).then((data) => {
-      if (!cancelled) setContent(data);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [locale]);
+  const content = getWhoWeAreContent(locale);
 
   const stats = [
     {

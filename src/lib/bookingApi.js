@@ -117,6 +117,22 @@ export function getAvailability(dateISO) {
   return request(`/availability?date=${encodeURIComponent(dateISO)}`);
 }
 
+/**
+ * Lightweight GET fired on first paint to wake a cold API host (e.g. Render)
+ * before the visitor opens the booking modal.
+ */
+export function wakeBookingApi() {
+  try {
+    const today = toISODate(new Date());
+    fetch(`${API_BASE}/availability?date=${encodeURIComponent(today)}`, {
+      method: 'GET',
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Wake-up must never break the site.
+  }
+}
+
 export function createBooking({ name, email, phone, notes, date, time }) {
   return request('/bookings', {
     method: 'POST',

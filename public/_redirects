@@ -4,6 +4,9 @@
 # subdomain splits ranking signals between two URLs for the same page.
 https://www.toreal-co.com/*  https://toreal-co.com/:splat  301!
 
+# Alias without .xml — easier for some crawlers / validators.
+/sitemap  /sitemap.xml  200
+
 # No SPA catch-all on purpose: every route is prerendered to a real file,
 # so unmatched URLs fall through to 404.html with a genuine 404 status
 # instead of answering 200 with the homepage (a soft 404).

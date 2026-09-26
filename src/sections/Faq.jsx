@@ -2,41 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SectionHeading from '../common/SectionHeading';
 import { useBooking } from '../common/BookingContext';
-import { getCmsFaq } from '../lib/faqApi';
 import { setJsonLd } from '../lib/seo';
 import { buildFaqJsonLd } from '../lib/routes';
 import { SITE_URL } from '../lib/siteConfig';
 import { useI18n } from '../i18n';
 
 const Faq = () => {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const [faqs, setFaqs] = useState(t.faq.items);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const { openBooking } = useBooking();
   const { pathname } = useLocation();
 
-  // Keep the visible list in step with the active locale — switching
-  // languages must not leave the previous language's questions on screen.
   useEffect(() => {
     setFaqs(t.faq.items);
     setOpenFaqIndex(null);
   }, [t]);
 
-  useEffect(() => {
-    let cancelled = false;
-    getCmsFaq(locale).then((cmsFaqs) => {
-      if (cancelled || !cmsFaqs) return;
-      const sorted = cmsFaqs.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-      setFaqs(sorted);
-      setOpenFaqIndex(null);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [locale]);
-
-  // Rewrite the prerendered FAQ markup whenever the rendered questions
-  // change, so the structured data always describes what is on the page.
   useEffect(() => {
     const url = `${SITE_URL}${pathname.endsWith('/') ? pathname : `${pathname}/`}`;
     setJsonLd('faq-jsonld', buildFaqJsonLd(url, faqs));
